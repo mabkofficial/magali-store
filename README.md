@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Magali E-Commerce Website
+
+A Next.js storefront for Magali botanical hair care, wellness products, and Caribbean food favorites.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
+cp .env.local.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_SITE_URL` | Public site URL (required for Stripe, SEO, sitemap) |
+| `STRIPE_SECRET_KEY` | Stripe secret key for checkout |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key |
+| `STRIPE_WEBHOOK_SECRET` | Optional webhook secret |
+| `CONTACT_TO_EMAIL` | Email address for contact form submissions |
+| `RESEND_API_KEY` | Resend API key for contact emails |
+| `NEXT_PUBLIC_GA_ID` | Optional Google Analytics ID |
 
-## Learn More
+## Product Data
 
-To learn more about Next.js, take a look at the following resources:
+Products are defined in `src/data/products.json`. To update:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Edit the JSON file
+2. Replace images in `public/images/products/`
+3. Redeploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Stripe Checkout
 
-## Deploy on Vercel
+- Checkout re-reads prices server-side from product data (never trusts client prices)
+- Frozen beef pies are gated until `FROZEN_CHECKOUT_ENABLED` is set to `true` in `src/config/site.ts`
+- Without Stripe keys, cart works but checkout shows a contact fallback
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push to GitHub
+2. Import to Vercel
+3. Set environment variables
+4. Connect GoDaddy domain via DNS records provided by Vercel
+
+## Documentation
+
+- `docs/CURSOR_BUILD_PLAN.md` — full build specification
+- `docs/LAUNCH_UNKNOWN.md` — items pending client confirmation
+
+## Trademark Launch Checklist
+
+- [ ] Live URL with SSL
+- [ ] Magali brand visible in header/footer
+- [ ] All 4 products with names, prices, images
+- [ ] Add to Cart / Checkout path for standard items
+- [ ] About and Contact pages live

@@ -1,0 +1,165 @@
+[
+  {
+    "id": "hair-oil",
+    "slug": "magali-botanical-hair-oil",
+    "name": "Magali Botanical Hair Oil",
+    "shortName": "Botanical Hair Oil",
+    "category": "Hair Care",
+    "price": 39.98,
+    "currency": "USD",
+    "size": "8.5 fl oz / 250 ml",
+    "tagline": "Nourish • Strengthen • Shine",
+    "shortDescription": "A nutrient-rich botanical hair oil infused with 14 herbal botanicals and 3 natural oils to nourish the scalp and roots, support stronger-looking hair, improve softness and manageability, and add natural shine.",
+    "overview": "Transform your hair-care routine from root to tip with Magali Botanical Hair Oil. The client-supplied formula combines 14 botanical infusions with olive, castor, and coconut oils. It is positioned for all hair textures, including natural, color-treated, and chemically processed hair.",
+    "benefits": [
+      "Nourishes the scalp and hair roots",
+      "Supports stronger-looking hair and reduced breakage",
+      "Enhances natural shine and softness",
+      "Helps smooth frizz and improve manageability",
+      "Suitable for all hair types and textures"
+    ],
+    "ingredients": {
+      "naturalOils": ["Olive Oil", "Castor Oil", "Coconut Oil"],
+      "botanicals": ["Hibiscus Flower", "Neem", "Rosemary", "Black Seed", "Amla", "Chebe", "Fenugreek", "Ginger", "Purple Onion", "Garlic", "Flax Seed", "Fennel Seed", "Clove", "Cinnamon Bark"]
+    },
+    "claims": ["Paraben-Free", "Sulfate-Free", "Cruelty-Free", "Made in USA"],
+    "directions": [
+      "Apply a small amount directly to the scalp and hair.",
+      "Massage gently into the scalp for 3–5 minutes.",
+      "Leave in as a daily treatment or wash out with shampoo if preferred.",
+      "Use 3–4 times per week for best results."
+    ],
+    "caution": "For external use only. Avoid contact with eyes. Discontinue use if irritation occurs. Keep out of reach of children.",
+    "storage": "Store in a cool, dry place away from direct sunlight.",
+    "images": [
+      "/images/products/hair-oil/01-hero-white.png",
+      "/images/products/hair-oil/02-angled-white.png",
+      "/images/products/hair-oil/03-botanical-lifestyle.png"
+    ],
+    "featured": true,
+    "shippingClass": "standard",
+    "status": "active-working-copy"
+  },
+  {
+    "id": "pureheal-oil",
+    "slug": "magali-pureheal-oil",
+    "name": "Magali PureHeal Oil",
+    "shortName": "PureHeal Oil",
+    "category": "Wellness",
+    "price": 24.98,
+    "currency": "USD",
+    "size": "60 ml / 2.03 fl oz",
+    "tagline": "Advanced Botanical Relief Oil",
+    "shortDescription": "A botanical oil blend made with cold-pressed castor oil and pure clove essential oil, positioned by the client for targeted external comfort and moisture support.",
+    "overview": "Magali PureHeal Oil combines cold-pressed castor oil and pure clove essential oil in a 60 ml amber dropper bottle. The current client materials position it for external topical use on dry or irritated skin, lip-area discomfort, and areas experiencing everyday muscle or joint stiffness.",
+    "benefits": [
+      "Helps soothe and moisturize dry, rough, or irritated skin",
+      "Provides a warming botanical sensation from clove essential oil",
+      "Convenient dropper format for targeted application",
+      "Can be massaged into areas of everyday muscle or joint stiffness"
+    ],
+    "ingredients": {
+      "botanicalBlend": ["Cold-Pressed Castor Oil", "Pure Clove Essential Oil"]
+    },
+    "claims": ["100% Pure Botanical Oil Blend", "Made in USA"],
+    "directions": [
+      "Dispense a few drops onto clean fingertips or a cotton swab.",
+      "Apply directly to the external target area.",
+      "Use 2–3 times daily or as needed."
+    ],
+    "caution": "For external use only. Avoid direct contact with eyes. Keep out of reach of children. Discontinue use if irritation occurs.",
+    "storage": "Use the storage directions shown on the final approved label once confirmed.",
+    "images": [
+      "/images/products/pureheal-oil/01-hero-white.png",
+      "/images/products/pureheal-oil/02-botanical-still-life.png",
+      "/images/products/pureheal-oil/03-golden-splash.png"
+    ],
+    "featured": true,
+    "shippingClass": "standard",
+    "status": "active-working-copy",
+    "complianceNote": "Client materials include stronger relief/medical-style claims. Review final public wording before launch, especially references to cold sores, oral discomfort, and muscle/joint relief."
+  },
+  {
+    "id": "hair-grease",
+    "slug": "magali-herbal-hair-grease",
+    "name": "Magali Herbal Hair Grease",
+    "shortName": "Herbal Hair Grease",
+    "category": "Hair Care",
+    "price": 39.00,
+    "currency": "USD",
+    "size": "185 g / 6.5 oz (working label value)",
+    "tagline": "Herbal Goodness Rooted in Nature",
+    "shortDescription": "A rich herbal hair grease made with traditional herbs, natural oils, and shea butter to nourish the scalp, support stronger-looking hair, add shine, and improve manageability.",
+    "overview": "Magali Herbal Hair Grease is a botanical hair-care formula built around herbs, oils, and shea butter. Current label messaging emphasizes scalp nourishment, stronger-looking hair, shine, everyday care, and suitability for all hair types.",
+    "benefits": [
+      "Helps nourish the scalp",
+      "Supports stronger-looking hair",
+      "Adds shine",
+      "Helps hair feel soft and manageable",
+      "For all hair types"
+    ],
+    "ingredients": {
+      "formula": ["Coriander", "Cinnamon Powder", "Turmeric", "Rosemary", "Neem Powder", "Fenugreek Powder", "Castor Oil", "Olive Oil", "Coconut Oil", "Cloves", "Black Seed", "Shea Butter"]
+    },
+    "claims": ["Natural Ingredients", "Scalp Nourishment", "Stronger Hair", "Adds Shine", "Non-Greasy Formula", "Daily Care", "Made in USA"],
+    "directions": [
+      "Take a small amount and apply evenly to scalp and hair.",
+      "Massage gently with fingertips.",
+      "Use 1–3 times a week for best results."
+    ],
+    "caution": "For external use only. Avoid contact with eyes. If irritation occurs, discontinue use. Keep out of reach of children.",
+    "storage": "Store in a cool, dry place away from direct sunlight.",
+    "images": [
+      "/images/products/hair-grease/01-hero-white.png",
+      "/images/products/hair-grease/02-botanical-still-life.png",
+      "/images/products/hair-grease/03-golden-splash.png"
+    ],
+    "featured": true,
+    "shippingClass": "standard",
+    "status": "active-working-copy",
+    "verificationNote": "Client called this an 8 oz jar, while the supplied working label states 185 g / 6.5 oz. Keep 185 g / 6.5 oz as the temporary website value until confirmed."
+  },
+  {
+    "id": "beef-pies",
+    "slug": "magali-caribbean-style-beef-pies-8-pack",
+    "name": "Magali Caribbean Style Beef Pies — 8 Pack",
+    "shortName": "Caribbean Style Beef Pies",
+    "category": "Food",
+    "price": 18.98,
+    "currency": "USD",
+    "size": "32 oz / 2 lbs — 8 pack",
+    "tagline": "Taste the Islands",
+    "shortDescription": "A family-size 8-pack of frozen Caribbean-style beef pies with a flaky pastry crust and savory seasoned ground-beef filling.",
+    "overview": "Bring home the savory flavors of the Caribbean with Magali Caribbean Style Beef Pies. The current client and packaging materials describe an 8-pack family-size frozen product designed for convenient oven, air-fryer, or pan-fry preparation.",
+    "benefits": [
+      "Family-size 8 pack",
+      "Flaky golden pastry",
+      "Savory seasoned ground-beef filling",
+      "Oven, air fryer, or skillet preparation",
+      "Keep frozen until ready to cook"
+    ],
+    "ingredients": {
+      "protein": ["Ground Beef"],
+      "aromatics": ["Onion", "Garlic", "Shallots", "Bell Peppers (green, yellow, red)"],
+      "seasoningsAndSpices": ["Caribbean All-Purpose Seasoning", "Adobo Seasoning", "Thyme", "Rosemary", "Salt", "Black Pepper", "Red Hot Pepper (optional)", "Habanero Peppers", "Epis (Haitian Seasoning Base)", "Lime Juice", "Tomato Paste"],
+      "other": ["Enriched all-purpose flour"]
+    },
+    "nutritionHighlights": ["420 calories per serving", "15 g protein", "3 g sugar", "0 g trans fat"],
+    "directions": {
+      "oven": "Preheat oven to 375°F (190°C). Place frozen patties on a parchment-lined baking tray. Bake 25–30 minutes, flipping halfway through, until golden brown and fully heated.",
+      "airFryer": "Preheat air fryer to 350°F (175°C). Place patties in a single layer and cook 15–18 minutes, flipping halfway through, until crispy and heated through.",
+      "skillet": "Heat 2–3 tbsp oil in a skillet over medium heat. Place frozen patties directly into hot oil and cook 6–8 minutes per side until golden and fully cooked."
+    },
+    "caution": "Always ensure patties reach an internal temperature of 160°F (71°C) before serving. Cooking times may vary depending on oven, air fryer, or stove.",
+    "storage": "Keep frozen.",
+    "images": [
+      "/images/products/beef-pies/01-package-white.png",
+      "/images/products/beef-pies/02-package-lifestyle.png",
+      "/images/products/beef-pies/03-plated-cooked-pies.png"
+    ],
+    "featured": true,
+    "shippingClass": "frozen",
+    "status": "active-working-copy",
+    "verificationNote": "Confirm final customer-facing naming (pies vs patties/pasties), allergen statement, and frozen-shipping method before launch."
+  }
+]
