@@ -10,7 +10,7 @@ export function getProductMetadata(product: Product) {
     "magali-pureheal-oil":
       "Magali PureHeal Oil 60 ml | Castor & Clove Botanical Oil",
     "magali-caribbean-style-beef-pies-8-pack":
-      "Magali Caribbean Style Beef Pies 8 Pack | 32 oz",
+      "Magali Caribbean Style Beef Pies, 8 Pack | 32 oz",
   };
 
   return {

@@ -1,72 +1,58 @@
 export const metadata = {
   title: "Terms of Service",
-  description: "Magali terms of service.",
+  description: "Terms and conditions for using the Magali website and purchasing products.",
 };
 
 export default function TermsPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16 lg:px-8">
-      <div className="mb-8 rounded-xl bg-amber-50 p-4 text-sm text-amber-900">
-        These terms require legal review before final launch.
-      </div>
+    <div className="mx-auto max-w-2xl px-4 py-16 lg:px-8 lg:py-24">
+      <p className="eyebrow text-muted">Legal</p>
+      <h1 className="mt-4 font-display text-4xl text-ink">Terms of Service</h1>
+      <p className="mt-4 text-sm text-muted">Last updated: August 2026</p>
 
-      <h1 className="font-display text-4xl font-semibold text-magali-green-950">
-        Terms of Service
-      </h1>
-
-      <div className="mt-10 space-y-6 text-magali-ink/70">
+      <div className="mt-12 space-y-10 text-sm leading-relaxed text-muted">
         <section>
-          <h2 className="font-display text-xl font-semibold text-magali-green-950">
-            Acceptance of Terms
-          </h2>
+          <h2 className="font-display text-xl text-ink">Acceptance of terms</h2>
           <p className="mt-3">
             By accessing and using the Magali website, you agree to these terms
             of service. If you do not agree, please do not use this site.
           </p>
         </section>
 
-        <section>
-          <h2 className="font-display text-xl font-semibold text-magali-green-950">
-            Products & Pricing
-          </h2>
+        <section className="border-t border-border pt-10">
+          <h2 className="font-display text-xl text-ink">Products and pricing</h2>
           <p className="mt-3">
-            All product descriptions, prices, and availability are subject to
-            change without notice. We reserve the right to limit quantities and
-            refuse service.
+            Product descriptions, prices, and availability may change without
+            notice. We reserve the right to limit quantities or refuse service
+            at our discretion.
           </p>
         </section>
 
-        <section>
-          <h2 className="font-display text-xl font-semibold text-magali-green-950">
-            Orders & Payment
-          </h2>
+        <section className="border-t border-border pt-10">
+          <h2 className="font-display text-xl text-ink">Orders and payment</h2>
           <p className="mt-3">
-            Orders are processed through Stripe. By placing an order, you
-            represent that the payment information provided is accurate and that
-            you are authorized to use the payment method.
+            Orders are processed through Stripe. By placing an order, you confirm
+            that your payment information is accurate and that you are authorized
+            to use the payment method provided.
           </p>
         </section>
 
-        <section>
-          <h2 className="font-display text-xl font-semibold text-magali-green-950">
-            Product Use
-          </h2>
+        <section className="border-t border-border pt-10">
+          <h2 className="font-display text-xl text-ink">Product use</h2>
           <p className="mt-3">
             Beauty and wellness products are for external use unless otherwise
-            stated. Food products must be cooked to the recommended internal
-            temperature before serving. Follow all product label directions and
+            stated on the label. Food products must be cooked to the recommended
+            internal temperature before serving. Follow all label directions and
             cautions.
           </p>
         </section>
 
-        <section>
-          <h2 className="font-display text-xl font-semibold text-magali-green-950">
-            Limitation of Liability
-          </h2>
+        <section className="border-t border-border pt-10">
+          <h2 className="font-display text-xl text-ink">Limitation of liability</h2>
           <p className="mt-3">
-            Magali shall not be liable for any indirect, incidental, or
-            consequential damages arising from the use of our products or website.
-            Full legal terms will be finalized with counsel review.
+            Magali is not liable for indirect, incidental, or consequential
+            damages arising from the use of our products or website, to the
+            fullest extent permitted by law.
           </p>
         </section>
       </div>

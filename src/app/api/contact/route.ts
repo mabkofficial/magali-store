@@ -41,7 +41,7 @@ export async function POST(request: Request) {
         body: JSON.stringify({
           from: "Magali Contact <onboarding@resend.dev>",
           to: contactEmail,
-          subject: `[Magali Contact] ${data.subject} — ${data.name}`,
+          subject: `[Magali Contact] ${data.subject} | ${data.name}`,
           text: `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone ?? "N/A"}\nSubject: ${data.subject}\n\nMessage:\n${data.message}`,
         }),
       });

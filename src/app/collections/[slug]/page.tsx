@@ -1,4 +1,6 @@
 import { notFound } from "next/navigation";
+import { PageContainer } from "@/components/layout/page-container";
+import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { ProductGrid } from "@/components/product/product-grid";
 import {
   collections,
@@ -37,16 +39,22 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
   const products = getProductsByCollection(slug as CollectionSlug);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
-      <div className="mb-10 text-center">
-        <h1 className="font-display text-4xl font-semibold text-magali-green-950">
+    <PageContainer className="py-10 sm:py-12 lg:py-16">
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Shop", href: "/shop" },
+          { label: collection.name },
+        ]}
+      />
+      <div className="mb-12 border-b border-border pb-8">
+        <p className="eyebrow text-muted">Collection</p>
+        <h1 className="mt-2 font-display text-4xl text-ink lg:text-5xl">
           {collection.name}
         </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-magali-ink/60">
-          {collection.description}
-        </p>
+        <p className="mt-4 max-w-xl text-sm text-muted">{collection.description}</p>
       </div>
       <ProductGrid products={products} />
-    </div>
+    </PageContainer>
   );
 }

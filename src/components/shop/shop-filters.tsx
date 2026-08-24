@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import { Select } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 const categories = ["All", "Hair Care", "Wellness", "Food"] as const;
@@ -21,17 +22,16 @@ export function CategoryChips() {
   };
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-6" role="group" aria-label="Filter by category">
       {categories.map((category) => (
         <button
           key={category}
           type="button"
           onClick={() => setCategory(category)}
+          aria-pressed={active === category}
           className={cn(
-            "rounded-full px-4 py-2 text-sm font-medium transition-colors",
-            active === category
-              ? "bg-magali-green-950 text-white"
-              : "bg-magali-cream-100 text-magali-green-950 hover:bg-magali-cream-100/80",
+            "eyebrow cursor-pointer transition-opacity duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink",
+            active === category ? "text-ink" : "text-muted hover:text-ink",
           )}
         >
           {category}
@@ -53,16 +53,16 @@ export function SortDropdown() {
   };
 
   return (
-    <select
+    <Select
       value={sort}
       onChange={handleChange}
-      className="rounded-xl border border-magali-cream-100 bg-white px-4 py-2 text-sm"
       aria-label="Sort products"
+      className="w-auto min-w-[160px] border-0 border-b border-border px-0 py-1"
     >
       <option value="featured">Featured</option>
       <option value="price-asc">Price: Low to High</option>
       <option value="price-desc">Price: High to Low</option>
       <option value="name">Name</option>
-    </select>
+    </Select>
   );
 }

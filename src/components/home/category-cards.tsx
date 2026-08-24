@@ -1,46 +1,56 @@
-import Image from "next/image";
 import Link from "next/link";
+import { PageContainer } from "@/components/layout/page-container";
+import { SquareImageFrame } from "@/components/ui/square-image-frame";
 import { collections } from "@/lib/products";
 
 const collectionImages: Record<string, string> = {
-  "hair-care": "/images/products/hair-oil/03-botanical-lifestyle.png",
-  wellness: "/images/products/pureheal-oil/02-botanical-still-life.png",
-  food: "/images/products/beef-pies/03-plated-cooked-pies.png",
+  "hair-care": "/images/products/hair-oil/01-hero-white.png",
+  wellness: "/images/products/pureheal-oil/01-hero-white.png",
+  food: "/images/products/beef-pies/01-package-white.png",
 };
 
 export function CategoryCards() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16 lg:px-8">
-      <h2 className="text-center font-display text-3xl font-semibold text-magali-green-950">
-        Shop by Category
-      </h2>
-      <div className="mt-10 grid gap-6 md:grid-cols-3">
-        {collections.map((collection) => (
+    <section className="border-b border-border bg-surface-muted">
+      <PageContainer className="py-12 sm:py-16 lg:py-20">
+        <div className="mb-8 flex items-end justify-between gap-4 border-b border-border pb-6">
+          <div>
+            <p className="eyebrow text-muted">Browse</p>
+            <h2 className="mt-2 font-display text-3xl text-ink lg:text-4xl">
+              Shop by category
+            </h2>
+          </div>
           <Link
-            key={collection.slug}
-            href={`/collections/${collection.slug}`}
-            className="group overflow-hidden rounded-2xl bg-white shadow-sm transition-shadow hover:shadow-md"
+            href="/shop"
+            className="eyebrow shrink-0 text-muted transition-opacity hover:text-ink"
           >
-            <div className="relative aspect-[4/3]">
-              <Image
+            View all
+          </Link>
+        </div>
+
+        <div className="grid min-w-0 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+          {collections.map((collection) => (
+            <Link
+              key={collection.slug}
+              href={`/collections/${collection.slug}`}
+              className="group min-w-0 cursor-pointer bg-surface"
+            >
+              <SquareImageFrame
                 src={collectionImages[collection.slug]}
                 alt={collection.name}
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                padding="md"
               />
-            </div>
-            <div className="p-6">
-              <h3 className="font-display text-xl font-semibold text-magali-green-950">
-                {collection.name}
-              </h3>
-              <p className="mt-2 text-sm text-magali-ink/60">
-                {collection.description}
-              </p>
-            </div>
-          </Link>
-        ))}
-      </div>
+              <div className="border border-t-0 border-border px-4 py-4">
+                <p className="eyebrow text-ink">{collection.name}</p>
+                <p className="mt-2 line-clamp-2 text-sm text-muted">
+                  {collection.description}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </PageContainer>
     </section>
   );
 }

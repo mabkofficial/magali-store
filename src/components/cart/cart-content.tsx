@@ -4,15 +4,15 @@ import { Minus, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { ProductGridSkeleton } from "@/components/ui/skeleton";
 import { FROZEN_CHECKOUT_ENABLED } from "@/config/site";
 import { formatUSD } from "@/lib/currency";
 import { isStripeConfigured } from "@/lib/stripe";
 import { useCartStore } from "@/store/cart-store";
 
 export function CartContent() {
-  const { items, updateQuantity, removeItem, clearCart, getSubtotal, hasFrozenItems } =
+  const { items, updateQuantity, removeItem, clearCart, getSubtotal, hasFrozenItems, openCart } =
     useCartStore();
   const [loading, setLoading] = useState(false);
   const subtotal = getSubtotal();
@@ -21,18 +21,8 @@ export function CartContent() {
 
   const handleCheckout = async () => {
     if (items.length === 0) return;
-
-    if (frozenBlocked) {
-      toast.error(
-        "Frozen-item shipping is being finalized. Please contact Magali to order this item.",
-      );
-      return;
-    }
-
-    if (!stripeReady) {
-      toast.error("Checkout is temporarily unavailable. Please contact us to place an order.");
-      return;
-    }
+    if (frozenBlocked) return;
+    if (!stripeReady) return;
 
     setLoading(true);
     try {
@@ -54,10 +44,8 @@ export function CartContent() {
       }
 
       window.location.href = data.url;
-    } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "Unable to start checkout",
-      );
+    } catch {
+      openCart();
     } finally {
       setLoading(false);
     }
@@ -65,9 +53,9 @@ export function CartContent() {
 
   if (items.length === 0) {
     return (
-      <div className="py-16 text-center">
-        <p className="text-lg text-magali-ink/60">Your cart is empty.</p>
-        <Link href="/shop" className="mt-6 inline-block">
+      <div className="py-20 text-center">
+        <p className="text-sm text-muted">Your cart is empty.</p>
+        <Link href="/shop" className="mt-8 inline-block">
           <Button>Continue Shopping</Button>
         </Link>
       </div>
@@ -75,12 +63,12 @@ export function CartContent() {
   }
 
   return (
-    <div className="grid gap-10 lg:grid-cols-3">
+    <div className="grid gap-12 lg:grid-cols-3">
       <div className="lg:col-span-2">
-        <ul className="divide-y divide-magali-cream-100">
+        <ul className="divide-y divide-border">
           {items.map((item) => (
             <li key={item.productId} className="flex gap-4 py-6">
-              <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-white">
+              <div className="relative h-24 w-24 shrink-0 bg-surface-muted">
                 <Image
                   src={item.image}
                   alt={item.name}
@@ -92,39 +80,41 @@ export function CartContent() {
               <div className="flex flex-1 flex-col">
                 <Link
                   href={`/products/${item.slug}`}
-                  className="font-medium text-magali-green-950 hover:text-magali-gold-600"
+                  className="text-sm text-ink hover:underline"
                 >
                   {item.name}
                 </Link>
-                <p className="mt-1 text-sm text-magali-ink/60">
+                <p className="mt-1 text-xs text-muted">
                   {formatUSD(item.price)} each
-                  {item.shippingClass === "frozen" && " • Frozen item"}
+                  {item.shippingClass === "frozen" && " · Frozen"}
                 </p>
                 <div className="mt-auto flex items-center gap-3">
                   <button
                     type="button"
                     onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                    className="rounded-lg border border-magali-cream-100 p-1 hover:bg-magali-cream-100"
+                    className="pressable border border-border p-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
                     aria-label="Decrease quantity"
                   >
-                    <Minus className="h-4 w-4" />
+                    <Minus className="h-4 w-4" strokeWidth={1.5} />
                   </button>
-                  <span className="w-8 text-center text-sm">{item.quantity}</span>
+                  <span className="w-8 text-center text-sm" aria-live="polite">
+                    {item.quantity}
+                  </span>
                   <button
                     type="button"
                     onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                    className="rounded-lg border border-magali-cream-100 p-1 hover:bg-magali-cream-100"
+                    className="pressable border border-border p-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
                     aria-label="Increase quantity"
                   >
-                    <Plus className="h-4 w-4" />
+                    <Plus className="h-4 w-4" strokeWidth={1.5} />
                   </button>
                   <button
                     type="button"
                     onClick={() => removeItem(item.productId)}
-                    className="ml-auto rounded-lg p-1 text-magali-red-700 hover:bg-red-50"
+                    className="pressable ml-auto p-1.5 text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
                     aria-label={`Remove ${item.name}`}
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="h-4 w-4" strokeWidth={1.5} />
                   </button>
                 </div>
               </div>
@@ -134,55 +124,60 @@ export function CartContent() {
         <button
           type="button"
           onClick={clearCart}
-          className="mt-4 text-sm text-magali-ink/60 hover:text-magali-red-700"
+          className="mt-6 cursor-pointer text-xs uppercase tracking-[0.1em] text-muted hover:text-ink"
         >
           Clear cart
         </button>
       </div>
 
-      <div className="rounded-2xl bg-white p-6 shadow-sm">
-        <h2 className="font-display text-xl font-semibold text-magali-green-950">
-          Order Summary
-        </h2>
+      <div className="border border-border p-6 lg:p-8">
+        <h2 className="eyebrow text-ink">Summary</h2>
         <div className="mt-6 flex justify-between text-sm">
-          <span>Subtotal</span>
-          <span className="font-semibold">{formatUSD(subtotal)}</span>
+          <span className="text-muted">Subtotal</span>
+          <span className="font-medium text-ink">{formatUSD(subtotal)}</span>
         </div>
-        <p className="mt-4 text-xs text-magali-ink/60">
-          Shipping and taxes calculated at checkout.
+        <p className="mt-4 text-xs leading-relaxed text-muted">
+          Shipping and taxes calculated at checkout. Secure payment via Stripe.
         </p>
 
         {frozenBlocked && (
-          <div className="mt-4 rounded-xl bg-amber-50 p-4 text-sm text-amber-900">
+          <p className="mt-4 text-xs leading-relaxed text-muted">
             Frozen-item shipping is being finalized. Please{" "}
-            <Link href="/contact" className="font-medium underline">
-              contact Magali
+            <Link href="/contact" className="text-ink underline">
+              contact us
             </Link>{" "}
             to order frozen items.
-          </div>
+          </p>
         )}
 
         {!stripeReady && !frozenBlocked && (
-          <div className="mt-4 rounded-xl bg-magali-cream-100 p-4 text-sm text-magali-ink/80">
+          <p className="mt-4 text-xs leading-relaxed text-muted">
             Checkout is temporarily unavailable. Please{" "}
-            <Link href="/contact" className="font-medium underline">
+            <Link href="/contact" className="text-ink underline">
               contact us
             </Link>{" "}
             to place an order.
-          </div>
+          </p>
         )}
 
         <Button
-          className="mt-6 w-full"
+          className="mt-8 w-full"
           onClick={handleCheckout}
           disabled={loading || frozenBlocked || !stripeReady}
         >
           {loading ? "Processing..." : "Checkout"}
         </Button>
-        <Link href="/shop" className="mt-4 block text-center text-sm text-magali-gold-600 hover:underline">
+        <Link
+          href="/shop"
+          className="mt-4 block text-center text-xs uppercase tracking-[0.1em] text-muted hover:text-ink"
+        >
           Continue Shopping
         </Link>
       </div>
     </div>
   );
+}
+
+export function CartContentFallback() {
+  return <ProductGridSkeleton />;
 }

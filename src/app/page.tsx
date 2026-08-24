@@ -4,21 +4,17 @@ import { FeaturedProducts } from "@/components/home/featured-products";
 import { HeroSection } from "@/components/home/hero-section";
 import {
   BrandStorySection,
-  FoodSpotlight,
-  TrustStrip,
-  WellnessSpotlight,
+  ProductHighlightsSection,
 } from "@/components/home/sections";
 
 export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <CategoryCards />
       <FeaturedProducts />
+      <CategoryCards />
       <BrandStorySection />
-      <WellnessSpotlight />
-      <FoodSpotlight />
-      <TrustStrip />
+      <ProductHighlightsSection />
       <EmailSignup />
     </>
   );

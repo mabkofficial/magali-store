@@ -6,10 +6,10 @@ export const siteConfig = {
   name: "Magali",
   title: "Magali",
   description:
-    "Shop Magali botanical hair care, targeted wellness products, and Caribbean-style food favorites.",
+    "Shop Magali botanical hair care, wellness oils, and Caribbean food favorites.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   announcement:
-    "Botanical beauty • Caribbean flavor • Made with care",
+    "Botanical hair care, wellness oils, and Caribbean food favorites.",
   contactEmail: process.env.CONTACT_TO_EMAIL ?? "",
 };
 

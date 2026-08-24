@@ -1,5 +1,7 @@
 import { Suspense } from "react";
-import { CartContent } from "@/components/cart/cart-content";
+import { PageContainer } from "@/components/layout/page-container";
+import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { CartContent, CartContentFallback } from "@/components/cart/cart-content";
 import { CheckoutStatus } from "@/components/cart/checkout-status";
 
 export const metadata = {
@@ -9,16 +11,21 @@ export const metadata = {
 
 export default function CartPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
-      <h1 className="mb-10 font-display text-4xl font-semibold text-magali-green-950">
-        Your Cart
-      </h1>
+    <PageContainer className="py-10 sm:py-12 lg:py-16">
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Shop", href: "/shop" },
+          { label: "Cart" },
+        ]}
+      />
+      <h1 className="mb-10 font-display text-4xl text-ink lg:text-5xl">Cart</h1>
       <Suspense fallback={null}>
         <CheckoutStatus />
       </Suspense>
-      <Suspense fallback={<p>Loading cart...</p>}>
+      <Suspense fallback={<CartContentFallback />}>
         <CartContent />
       </Suspense>
-    </div>
+    </PageContainer>
   );
 }

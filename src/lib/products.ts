@@ -27,7 +27,7 @@ export const collections: Collection[] = [
     slug: "food",
     name: "Caribbean Food",
     description:
-      "Bold Caribbean flavors made for family tables — convenient frozen favorites ready to cook.",
+      "Bold Caribbean flavors for family meals. Convenient frozen favorites ready to cook at home.",
     categories: ["Food"],
   },
 ];

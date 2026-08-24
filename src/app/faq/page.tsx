@@ -2,16 +2,33 @@ import { AccordionItem } from "@/components/ui/accordion";
 
 export const metadata = {
   title: "FAQ",
-  description: "Frequently asked questions about Magali products.",
+  description: "Frequently asked questions about Magali products, orders, and shipping.",
 };
 
 const faqSections = [
+  {
+    title: "Orders and shipping",
+    items: [
+      {
+        q: "How long does shipping take?",
+        a: "Processing and delivery times depend on your location and the items in your order. Standard products ship through our regular fulfillment process. Frozen items may require separate arrangements. Contact us if you need help with a specific order.",
+      },
+      {
+        q: "Can I order frozen beef pies online?",
+        a: "Frozen items may require special shipping. If online checkout is unavailable for beef pies, use the contact form and our team will help you place your order.",
+      },
+      {
+        q: "How do I track my order?",
+        a: "You will receive order confirmation by email after checkout. Tracking details are sent when your order ships.",
+      },
+    ],
+  },
   {
     title: "Hair Oil",
     items: [
       {
         q: "How often should I use Magali Botanical Hair Oil?",
-        a: "Use 3–4 times per week for best results. Apply a small amount to the scalp and hair, massage for 3–5 minutes, and leave in or wash out with shampoo.",
+        a: "Use 3 to 4 times per week for best results. Apply a small amount to the scalp and hair, massage for 3 to 5 minutes, and leave in or wash out with shampoo.",
       },
       {
         q: "Is it suitable for all hair types?",
@@ -19,7 +36,7 @@ const faqSections = [
       },
       {
         q: "Can I leave it in my hair?",
-        a: "Yes. You can leave it in as a daily treatment or wash out with shampoo if preferred.",
+        a: "Yes. You can leave it in as a daily treatment or wash out with shampoo if you prefer.",
       },
     ],
   },
@@ -28,7 +45,7 @@ const faqSections = [
     items: [
       {
         q: "How often should I use the hair grease?",
-        a: "Use 1–3 times a week. Apply a small amount evenly to scalp and hair and massage gently with fingertips.",
+        a: "Use 1 to 3 times a week. Apply a small amount evenly to the scalp and hair, then massage gently with your fingertips.",
       },
       {
         q: "Is it suitable for all hair types?",
@@ -41,10 +58,10 @@ const faqSections = [
     items: [
       {
         q: "How do I apply PureHeal Oil?",
-        a: "Dispense a few drops onto clean fingertips or a cotton swab and apply directly to the external target area. Use 2–3 times daily or as needed.",
+        a: "Dispense a few drops onto clean fingertips or a cotton swab and apply to the external target area. Use 2 to 3 times daily or as needed.",
       },
       {
-        q: "What are its ingredients?",
+        q: "What are the ingredients?",
         a: "PureHeal Oil contains cold-pressed castor oil and pure clove essential oil.",
       },
       {
@@ -58,7 +75,7 @@ const faqSections = [
     items: [
       {
         q: "How many pies are in a pack?",
-        a: "Each pack contains 8 Caribbean-style beef pies (32 oz / 2 lbs total).",
+        a: "Each pack contains 8 Caribbean-style beef pies, 32 oz / 2 lbs total.",
       },
       {
         q: "Do I cook them from frozen?",
@@ -66,7 +83,7 @@ const faqSections = [
       },
       {
         q: "Can I use an air fryer?",
-        a: "Yes. Preheat to 350°F (175°C), cook in a single layer for 15–18 minutes, flipping halfway through.",
+        a: "Yes. Preheat to 350°F (175°C), cook in a single layer for 15 to 18 minutes, flipping halfway through.",
       },
       {
         q: "What internal temperature should they reach?",
@@ -78,20 +95,18 @@ const faqSections = [
 
 export default function FAQPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16 lg:px-8">
-      <h1 className="font-display text-4xl font-semibold text-magali-green-950">
-        Frequently Asked Questions
+    <div className="mx-auto max-w-2xl px-4 py-16 lg:px-8 lg:py-24">
+      <p className="eyebrow text-muted">FAQ</p>
+      <h1 className="mt-4 font-display text-4xl text-ink lg:text-5xl">
+        Frequently asked questions
       </h1>
-      <p className="mt-4 text-magali-ink/60">
-        Answers based on current product information. Shipping and return
-        policies will be added once confirmed.
+      <p className="mt-6 text-sm text-muted">
+        Quick answers about our products, orders, and shipping.
       </p>
 
       {faqSections.map((section) => (
-        <section key={section.title} className="mt-12">
-          <h2 className="mb-4 font-display text-xl font-semibold text-magali-green-950">
-            {section.title}
-          </h2>
+        <section key={section.title} className="mt-16 border-t border-border pt-12">
+          <h2 className="eyebrow mb-6 text-ink">{section.title}</h2>
           {section.items.map((item) => (
             <AccordionItem key={item.q} title={item.q}>
               <p>{item.a}</p>

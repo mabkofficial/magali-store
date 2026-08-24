@@ -8,7 +8,7 @@ export const Input = forwardRef<
   <input
     ref={ref}
     className={cn(
-      "w-full rounded-xl border border-magali-cream-100 bg-white px-4 py-3 text-sm text-magali-ink placeholder:text-magali-ink/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magali-gold-600",
+      "w-full border border-border bg-surface px-4 py-3 text-sm text-ink placeholder:text-muted-light focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink",
       className,
     )}
     {...props}
@@ -24,7 +24,7 @@ export const Textarea = forwardRef<
   <textarea
     ref={ref}
     className={cn(
-      "w-full rounded-xl border border-magali-cream-100 bg-white px-4 py-3 text-sm text-magali-ink placeholder:text-magali-ink/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magali-gold-600",
+      "w-full border border-border bg-surface px-4 py-3 text-sm text-ink placeholder:text-muted-light focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink",
       className,
     )}
     {...props}
@@ -38,7 +38,7 @@ export const Label = ({
   ...props
 }: React.LabelHTMLAttributes<HTMLLabelElement>) => (
   <label
-    className={cn("mb-2 block text-sm font-medium text-magali-green-950", className)}
+    className={cn("eyebrow mb-2 block text-ink", className)}
     {...props}
   />
 );
@@ -50,7 +50,7 @@ export const Select = forwardRef<
   <select
     ref={ref}
     className={cn(
-      "w-full rounded-xl border border-magali-cream-100 bg-white px-4 py-3 text-sm text-magali-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magali-gold-600",
+      "w-full cursor-pointer border border-border bg-surface px-4 py-2.5 text-sm text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink",
       className,
     )}
     {...props}

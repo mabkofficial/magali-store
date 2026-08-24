@@ -1,15 +1,18 @@
 import { Suspense } from "react";
+import { PageContainer } from "@/components/layout/page-container";
+import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { ProductGrid } from "@/components/product/product-grid";
 import { CategoryChips, SortDropdown } from "@/components/shop/shop-filters";
-import { getAllProducts, sortProducts } from "@/lib/products";
+import { searchProducts } from "@/lib/search-products";
+import { sortProducts } from "@/lib/products";
 import type { ProductCategory } from "@/types/product";
 
 interface ShopPageProps {
-  searchParams: Promise<{ category?: string; sort?: string }>;
+  searchParams: Promise<{ category?: string; sort?: string; q?: string }>;
 }
 
 export const metadata = {
-  title: "Shop All Products",
+  title: "Shop",
   description:
     "Browse Magali botanical hair care, wellness oils, and Caribbean food favorites.",
 };
@@ -17,13 +20,14 @@ export const metadata = {
 export default async function ShopPage({ searchParams }: ShopPageProps) {
   const params = await searchParams;
   const category = params.category;
+  const query = params.q;
   const sort = (params.sort ?? "featured") as
     | "featured"
     | "price-asc"
     | "price-desc"
     | "name";
 
-  let products = getAllProducts();
+  let products = query ? searchProducts(query) : searchProducts("");
 
   if (category && category !== "All") {
     products = products.filter(
@@ -34,27 +38,36 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   products = sortProducts(products, sort);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
-      <div className="mb-10 text-center">
-        <h1 className="font-display text-4xl font-semibold text-magali-green-950">
-          Shop All Products
+    <PageContainer className="py-10 sm:py-12 lg:py-16">
+      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Shop" }]} />
+
+      <div className="mb-12 border-b border-border pb-8">
+        <h1 className="font-display text-4xl text-ink lg:text-5xl">
+          {query ? `“${query}”` : "Shop"}
         </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-magali-ink/60">
-          Discover our complete collection of botanical hair care, targeted
-          wellness products, and Caribbean-style food favorites.
-        </p>
+        {query && (
+          <p className="mt-3 text-sm text-muted">
+            {products.length} {products.length === 1 ? "result" : "results"}
+          </p>
+        )}
       </div>
 
-      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <Suspense fallback={<div className="h-10" />}>
+      <div className="mb-12 flex flex-col gap-6 border-b border-border pb-8 sm:flex-row sm:items-center sm:justify-between">
+        <Suspense fallback={<div className="skeleton h-4 w-48" />}>
           <CategoryChips />
         </Suspense>
-        <Suspense fallback={<div className="h-10" />}>
+        <Suspense fallback={<div className="skeleton h-4 w-32" />}>
           <SortDropdown />
         </Suspense>
       </div>
 
-      <ProductGrid products={products} />
-    </div>
+      {products.length === 0 ? (
+        <p className="py-20 text-center text-sm text-muted">
+          No products match your search.
+        </p>
+      ) : (
+        <ProductGrid products={products} />
+      )}
+    </PageContainer>
   );
 }

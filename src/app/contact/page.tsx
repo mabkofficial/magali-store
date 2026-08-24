@@ -40,13 +40,12 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="mx-auto max-w-xl px-4 py-16 lg:px-8">
-      <h1 className="font-display text-4xl font-semibold text-magali-green-950">
-        Contact Us
-      </h1>
-      <p className="mt-4 text-magali-ink/60">
-        Have a question about our products or need help with an order? Send us a
-        message and we will get back to you.
+    <div className="mx-auto max-w-xl px-4 py-16 lg:px-8 lg:py-24">
+      <p className="eyebrow text-muted">Contact</p>
+      <h1 className="mt-4 font-display text-4xl text-ink">Contact us</h1>
+      <p className="mt-6 text-sm text-muted">
+        Have a question about our products or your order? Send us a message and
+        we will respond within one to two business days.
       </p>
 
       <form onSubmit={handleSubmit} className="mt-10 space-y-6">

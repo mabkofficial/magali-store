@@ -1,8 +1,12 @@
 import { notFound } from "next/navigation";
+import { PageContainer } from "@/components/layout/page-container";
+import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { AddToCartSection } from "@/components/product/add-to-cart-section";
 import { ProductAccordions } from "@/components/product/product-accordions";
 import { ProductGallery } from "@/components/product/product-gallery";
 import { RelatedProducts } from "@/components/product/related-products";
+import { StickyBuyBar } from "@/components/product/sticky-buy-bar";
+import { categoryToCollection } from "@/config/site";
 import {
   getAllProductSlugs,
   getProductBySlug,
@@ -45,6 +49,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const related = getRelatedProducts(product);
   const jsonLd = getProductJsonLd(product);
+  const collectionSlug = categoryToCollection[product.category];
 
   return (
     <>
@@ -52,14 +57,28 @@ export default async function ProductPage({ params }: ProductPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-[58%_42%]">
-          <ProductGallery images={product.images} productName={product.name} />
+      <PageContainer className="py-10 pb-24 sm:py-12 lg:pb-12 lg:py-16">
+        <Breadcrumbs
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Shop", href: "/shop" },
+            {
+              label: product.category,
+              href: `/collections/${collectionSlug}`,
+            },
+            { label: product.shortName },
+          ]}
+        />
+        <div className="grid min-w-0 gap-10 lg:grid-cols-2 lg:gap-16">
+          <div className="min-w-0">
+            <ProductGallery images={product.images} productName={product.name} />
+          </div>
           <AddToCartSection product={product} />
         </div>
         <ProductAccordions product={product} />
         <RelatedProducts products={related} />
-      </div>
+      </PageContainer>
+      <StickyBuyBar product={product} />
     </>
   );
 }

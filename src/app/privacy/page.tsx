@@ -1,74 +1,59 @@
 export const metadata = {
   title: "Privacy Policy",
-  description: "Magali privacy policy.",
+  description: "How Magali collects, uses, and protects your personal information.",
 };
 
 export default function PrivacyPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16 lg:px-8">
-      <div className="mb-8 rounded-xl bg-amber-50 p-4 text-sm text-amber-900">
-        This policy requires legal review before final launch.
-      </div>
+    <div className="mx-auto max-w-2xl px-4 py-16 lg:px-8 lg:py-24">
+      <p className="eyebrow text-muted">Legal</p>
+      <h1 className="mt-4 font-display text-4xl text-ink">Privacy Policy</h1>
+      <p className="mt-4 text-sm text-muted">Last updated: August 2026</p>
 
-      <h1 className="font-display text-4xl font-semibold text-magali-green-950">
-        Privacy Policy
-      </h1>
-
-      <div className="prose prose-neutral mt-10 max-w-none space-y-6 text-magali-ink/70">
+      <div className="mt-12 space-y-10 text-sm leading-relaxed text-muted">
         <section>
-          <h2 className="font-display text-xl font-semibold text-magali-green-950">
-            Information We Collect
-          </h2>
+          <h2 className="font-display text-xl text-ink">Information we collect</h2>
           <p className="mt-3">
-            When you use our contact form, we collect the information you
-            provide such as your name, email address, phone number (if provided),
-            and message content.
+            When you contact us, we collect the information you provide, including
+            your name, email address, phone number if you choose to share it, and
+            your message.
           </p>
           <p className="mt-3">
-            When you make a purchase, payment processing is handled by Stripe.
-            We do not store your full payment card details on our servers.
+            When you make a purchase, payment processing is handled by Stripe. We
+            do not store your full payment card details on our servers.
           </p>
         </section>
 
-        <section>
-          <h2 className="font-display text-xl font-semibold text-magali-green-950">
-            How We Use Information
-          </h2>
+        <section className="border-t border-border pt-10">
+          <h2 className="font-display text-xl text-ink">How we use information</h2>
           <p className="mt-3">
-            We use contact form submissions to respond to your inquiries. Order
-            information is used to fulfill purchases and provide customer
-            support.
+            We use your information to respond to inquiries, process orders,
+            provide customer support, and improve our website and services.
           </p>
         </section>
 
-        <section>
-          <h2 className="font-display text-xl font-semibold text-magali-green-950">
-            Third-Party Services
-          </h2>
+        <section className="border-t border-border pt-10">
+          <h2 className="font-display text-xl text-ink">Third-party services</h2>
           <ul className="mt-3 list-disc space-y-2 pl-5">
-            <li>Stripe — payment processing</li>
-            <li>Vercel — website hosting</li>
-            <li>Analytics services — if enabled with client approval</li>
+            <li>Stripe for secure payment processing</li>
+            <li>Vercel for website hosting</li>
           </ul>
         </section>
 
-        <section>
-          <h2 className="font-display text-xl font-semibold text-magali-green-950">
-            Cookies
-          </h2>
+        <section className="border-t border-border pt-10">
+          <h2 className="font-display text-xl text-ink">Cookies</h2>
           <p className="mt-3">
-            We may use cookies for essential site functionality and, with
-            consent, analytics. Details will be updated when analytics are
-            enabled.
+            We use cookies and similar technologies for essential site
+            functionality, such as keeping items in your cart. You can control
+            cookies through your browser settings.
           </p>
         </section>
 
-        <section>
-          <h2 className="font-display text-xl font-semibold text-magali-green-950">
-            Contact
-          </h2>
+        <section className="border-t border-border pt-10">
+          <h2 className="font-display text-xl text-ink">Contact</h2>
           <p className="mt-3">
-            For privacy-related questions, please use our contact form.
+            For privacy questions, reach us through the contact form on this
+            website.
           </p>
         </section>
       </div>

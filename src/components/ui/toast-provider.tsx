@@ -8,7 +8,7 @@ export function ToastProvider() {
       position="top-center"
       toastOptions={{
         classNames: {
-          toast: "rounded-xl border border-magali-cream-100 bg-white text-magali-ink shadow-lg",
+          toast: "border border-border bg-surface text-ink text-sm",
         },
       }}
     />

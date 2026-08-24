@@ -6,10 +6,15 @@ import type { CartItem, Product } from "@/types/product";
 
 interface CartState {
   items: CartItem[];
+  isOpen: boolean;
+  bumpKey: number;
   addItem: (product: Product, quantity?: number) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   removeItem: (productId: string) => void;
   clearCart: () => void;
+  openCart: () => void;
+  closeCart: () => void;
+  toggleCart: () => void;
   getItemCount: () => number;
   getSubtotal: () => number;
   hasFrozenItems: () => boolean;
@@ -19,6 +24,8 @@ export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       items: [],
+      isOpen: false,
+      bumpKey: 0,
 
       addItem: (product, quantity = 1) => {
         set((state) => {
@@ -26,30 +33,26 @@ export const useCartStore = create<CartState>()(
             (item) => item.productId === product.id,
           );
 
-          if (existing) {
-            return {
-              items: state.items.map((item) =>
+          const items = existing
+            ? state.items.map((item) =>
                 item.productId === product.id
                   ? { ...item, quantity: item.quantity + quantity }
                   : item,
-              ),
-            };
-          }
+              )
+            : [
+                ...state.items,
+                {
+                  productId: product.id,
+                  slug: product.slug,
+                  name: product.name,
+                  price: product.price,
+                  quantity,
+                  image: product.images[0],
+                  shippingClass: product.shippingClass,
+                },
+              ];
 
-          return {
-            items: [
-              ...state.items,
-              {
-                productId: product.id,
-                slug: product.slug,
-                name: product.name,
-                price: product.price,
-                quantity,
-                image: product.images[0],
-                shippingClass: product.shippingClass,
-              },
-            ],
-          };
+          return { items, bumpKey: state.bumpKey + 1, isOpen: true };
         });
       },
 
@@ -74,6 +77,10 @@ export const useCartStore = create<CartState>()(
 
       clearCart: () => set({ items: [] }),
 
+      openCart: () => set({ isOpen: true }),
+      closeCart: () => set({ isOpen: false }),
+      toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
+
       getItemCount: () =>
         get().items.reduce((total, item) => total + item.quantity, 0),
 
@@ -88,6 +95,7 @@ export const useCartStore = create<CartState>()(
     }),
     {
       name: "magali-cart",
+      partialize: (state) => ({ items: state.items }),
     },
   ),
 );

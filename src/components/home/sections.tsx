@@ -1,127 +1,102 @@
-import Image from "next/image";
 import Link from "next/link";
+import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
+import { SquareImageFrame } from "@/components/ui/square-image-frame";
+
+function EditorialBlock({
+  eyebrow,
+  title,
+  description,
+  href,
+  cta,
+  imageSrc,
+  imageAlt,
+  reverse = false,
+}: {
+  eyebrow: string;
+  title: string;
+  description: string;
+  href: string;
+  cta: string;
+  imageSrc: string;
+  imageAlt: string;
+  reverse?: boolean;
+}) {
+  return (
+    <div
+      className={`grid min-w-0 items-center gap-8 lg:grid-cols-2 lg:gap-12 ${
+        reverse ? "lg:[&>*:first-child]:order-2" : ""
+      }`}
+    >
+      <SquareImageFrame
+        src={imageSrc}
+        alt={imageAlt}
+        sizes="(max-width: 1024px) 100vw, 50vw"
+        padding="md"
+        className="border border-border bg-surface"
+      />
+      <div className="min-w-0 px-1 lg:px-0">
+        <p className="eyebrow text-muted">{eyebrow}</p>
+        <h2 className="mt-3 font-display text-2xl text-ink sm:text-3xl">{title}</h2>
+        <p className="mt-4 max-w-md text-sm leading-relaxed text-muted">{description}</p>
+        <Link href={href} className="mt-8 inline-block">
+          <Button variant="outline">{cta}</Button>
+        </Link>
+      </div>
+    </div>
+  );
+}
 
 export function BrandStorySection() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16 lg:px-8">
-      <div className="grid items-center gap-12 lg:grid-cols-2">
-        <div className="relative aspect-square overflow-hidden rounded-2xl">
-          <Image
-            src="/images/products/hair-oil/03-botanical-lifestyle.png"
-            alt="Magali botanical hair care"
-            fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover"
-          />
-        </div>
-        <div>
-          <h2 className="font-display text-3xl font-semibold text-magali-green-950">
-            Botanical Care From Root to Tip
-          </h2>
-          <p className="mt-6 leading-relaxed text-magali-ink/70">
-            Magali hair care combines time-honored herbs and natural oils —
-            from hibiscus and rosemary to castor and coconut — to nourish the
-            scalp, support stronger-looking hair, and add natural shine for all
-            hair types.
-          </p>
-          <Link href="/collections/hair-care" className="mt-8 inline-block">
-            <Button variant="outline">Shop Hair Care</Button>
-          </Link>
-        </div>
-      </div>
+    <section className="border-b border-border">
+      <PageContainer className="py-12 sm:py-16 lg:py-20">
+        <EditorialBlock
+          eyebrow="Hair Care"
+          title="Botanical care from root to tip"
+          description="Herbs and natural oils, including hibiscus, rosemary, castor, and coconut, work together to nourish the scalp and support stronger-looking, more manageable hair."
+          href="/collections/hair-care"
+          cta="Shop Hair Care"
+          imageSrc="/images/products/hair-grease/01-hero-white.png"
+          imageAlt="Magali Herbal Hair Grease"
+        />
+      </PageContainer>
     </section>
   );
 }
 
-export function WellnessSpotlight() {
+export function ProductHighlightsSection() {
   return (
-    <section className="bg-magali-cream-100 py-16">
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
-        <div className="order-2 lg:order-1">
-          <h2 className="font-display text-3xl font-semibold text-magali-green-950">
-            Targeted Botanical Care
+    <section className="border-b border-border bg-surface-muted">
+      <PageContainer className="py-12 sm:py-16 lg:py-20">
+        <div className="mb-10 border-b border-border pb-6">
+          <p className="eyebrow text-muted">Highlights</p>
+          <h2 className="mt-2 font-display text-3xl text-ink lg:text-4xl">
+            More from Magali
           </h2>
-          <p className="mt-6 leading-relaxed text-magali-ink/70">
-            A concentrated castor-and-clove botanical blend in a convenient
-            dropper format for targeted external application. For external use
-            only.
-          </p>
-          <Link href="/products/magali-pureheal-oil" className="mt-8 inline-block">
-            <Button>Shop PureHeal Oil</Button>
-          </Link>
         </div>
-        <div className="relative order-1 aspect-square overflow-hidden rounded-2xl lg:order-2">
-          <Image
-            src="/images/products/pureheal-oil/01-hero-white.png"
-            alt="Magali PureHeal Oil"
-            fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-contain bg-white p-8"
-          />
-        </div>
-      </div>
-    </section>
-  );
-}
 
-export function FoodSpotlight() {
-  return (
-    <section className="mx-auto max-w-7xl px-4 py-16 lg:px-8">
-      <div className="grid items-center gap-12 lg:grid-cols-2">
-        <div className="relative aspect-square overflow-hidden rounded-2xl">
-          <Image
-            src="/images/products/beef-pies/03-plated-cooked-pies.png"
-            alt="Magali Caribbean Style Beef Pies"
-            fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover"
+        <div className="grid min-w-0 gap-12 lg:grid-cols-2 lg:gap-16">
+          <EditorialBlock
+            eyebrow="Wellness"
+            title="Targeted botanical care"
+            description="PureHeal Oil delivers a concentrated castor and clove blend in a precise dropper format. For external use only."
+            href="/products/magali-pureheal-oil"
+            cta="Shop PureHeal Oil"
+            imageSrc="/images/products/pureheal-oil/01-hero-white.png"
+            imageAlt="Magali PureHeal Oil"
           />
-        </div>
-        <div>
-          <p className="text-sm font-medium uppercase tracking-widest text-magali-red-700">
-            Caribbean Food
-          </p>
-          <h2 className="mt-2 font-display text-3xl font-semibold text-magali-navy-800">
-            A Taste of the Caribbean
-          </h2>
-          <p className="mt-6 leading-relaxed text-magali-ink/70">
-            Flaky pastry, savory seasoned beef, and family-size convenience —
-            ready for the oven, air fryer, or skillet.
-          </p>
-          <Link
+          <EditorialBlock
+            eyebrow="Food"
+            title="A taste of the Caribbean"
+            description="Golden flaky pastry and seasoned beef in a family-size 8 pack. Cook from frozen in the oven, air fryer, or skillet."
             href="/products/magali-caribbean-style-beef-pies-8-pack"
-            className="mt-8 inline-block"
-          >
-            <Button variant="secondary">Shop Beef Pies</Button>
-          </Link>
+            cta="Shop Beef Pies"
+            imageSrc="/images/products/beef-pies/01-package-white.png"
+            imageAlt="Magali Caribbean Style Beef Pies"
+          />
         </div>
-      </div>
+      </PageContainer>
     </section>
   );
 }
-
-export function TrustStrip() {
-  const values = [
-    "Botanical ingredients",
-    "Thoughtfully prepared formulas",
-    "Made in USA on applicable beauty products",
-    "Convenient everyday care",
-  ];
-
-  return (
-    <section className="border-y border-magali-cream-100 bg-white py-12">
-      <div className="mx-auto grid max-w-7xl gap-6 px-4 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
-        {values.map((value) => (
-          <div
-            key={value}
-            className="text-center text-sm font-medium text-magali-green-950"
-          >
-            {value}
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-

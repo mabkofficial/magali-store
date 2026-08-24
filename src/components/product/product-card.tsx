@@ -2,14 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { categoryToCollection } from "@/config/site";
+import { useAddToCart } from "@/hooks/use-cart-ui";
 import { formatUSD } from "@/lib/currency";
-import { cn } from "@/lib/utils";
-import { useCartStore } from "@/store/cart-store";
 import type { Product } from "@/types/product";
 
 interface ProductCardProps {
@@ -17,75 +13,60 @@ interface ProductCardProps {
   priority?: boolean;
 }
 
-function getBadgeVariant(category: Product["category"]) {
-  if (category === "Food") return "food";
-  if (category === "Wellness") return "wellness";
-  return "default";
-}
-
 export function ProductCard({ product, priority = false }: ProductCardProps) {
-  const [hovered, setHovered] = useState(false);
-  const addItem = useCartStore((state) => state.addItem);
+  const addToCart = useAddToCart();
 
   const handleQuickAdd = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
-    addItem(product);
-    toast.success(`${product.shortName} added to cart`);
+    addToCart(product);
   };
 
   return (
-    <article className="group flex flex-col">
+    <article className="group flex min-w-0 flex-col">
       <Link
         href={`/products/${product.slug}`}
-        className="relative mb-4 block aspect-square overflow-hidden rounded-2xl bg-white shadow-sm"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
+        className="product-card-hover relative block aspect-square w-full min-w-0 overflow-hidden border border-border bg-surface-muted"
       >
         <Image
           src={product.images[0]}
           alt={product.name}
           fill
           priority={priority}
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          className={cn(
-            "object-contain p-4 transition-opacity duration-300",
-            hovered && product.images[1] ? "opacity-0" : "opacity-100",
-          )}
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          className="product-image-primary object-contain p-4 sm:p-6"
         />
         {product.images[1] && (
           <Image
             src={product.images[1]}
             alt={`${product.name} alternate view`}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            className={cn(
-              "object-contain p-4 transition-opacity duration-300",
-              hovered ? "opacity-100" : "opacity-0",
-            )}
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            className="product-image-secondary hidden object-contain p-4 sm:p-6 lg:block"
           />
         )}
       </Link>
 
-      <div className="flex flex-1 flex-col">
-        <Link href={`/collections/${categoryToCollection[product.category]}`}>
-          <Badge variant={getBadgeVariant(product.category)}>
-            {product.category}
-          </Badge>
+      <div className="flex flex-1 flex-col pt-4">
+        <Link href={`/collections/${categoryToCollection[product.category]}`} className="cursor-pointer">
+          <Badge>{product.category}</Badge>
         </Link>
-        <Link href={`/products/${product.slug}`}>
-          <h3 className="mt-2 font-display text-lg font-medium text-magali-green-950 group-hover:text-magali-gold-600">
+        <Link href={`/products/${product.slug}`} className="cursor-pointer">
+          <h3 className="mt-2 line-clamp-2 font-display text-base leading-snug text-ink">
             {product.name}
           </h3>
         </Link>
-        <p className="mt-1 text-sm text-magali-ink/60">{product.size}</p>
-        <div className="mt-auto flex items-center justify-between pt-4">
-          <span className="text-lg font-semibold text-magali-green-950">
-            {formatUSD(product.price)}
-          </span>
-          <Button size="sm" onClick={handleQuickAdd} aria-label={`Add ${product.name} to cart`}>
-            Quick Add
-          </Button>
+        <p className="mt-1 text-xs text-muted">{product.size}</p>
+        <div className="mt-auto flex items-baseline justify-between gap-3 pt-4">
+          <span className="text-sm font-medium text-ink">{formatUSD(product.price)}</span>
+          <button
+            type="button"
+            onClick={handleQuickAdd}
+            className="eyebrow shrink-0 cursor-pointer text-ink underline-offset-4 hover:underline"
+            aria-label={`Add ${product.name} to cart`}
+          >
+            Add
+          </button>
         </div>
       </div>
     </article>
