@@ -23,8 +23,8 @@ No gold, green, red, or navy in UI chrome. Color exists only in product photogra
 
 ## Typography
 
-- **Display:** Newsreader — headlines, product names, wordmark moments
-- **UI:** IBM Plex Sans — navigation, body, controls, prices
+- **Wordmark:** Magali logo asset (`/brand/magali-logo.png`) in header; lockup in footer
+- **Mark:** M icon (`/brand/magali-mark.png`) used for favicon and app icons
 
 ### Scale
 

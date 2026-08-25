@@ -4,10 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, Search, ShoppingBag, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { BrandLogo } from "@/components/layout/brand-logo";
 import { PageContainer } from "@/components/layout/page-container";
 import { SearchDialog } from "@/components/shop/search-dialog";
 import { IconButton } from "@/components/ui/icon-button";
-import { navLinks, siteConfig } from "@/config/site";
+import { navLinks } from "@/config/site";
 import { useBodyScrollLock, useCartBump, useFocusTrap } from "@/hooks/use-cart-ui";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/cart-store";
@@ -67,12 +68,11 @@ export function Header() {
             </nav>
           </div>
 
-          <Link
-            href="/"
-            className="absolute left-1/2 -translate-x-1/2 font-display text-xl tracking-tight text-ink sm:text-2xl"
-          >
-            {siteConfig.name}
-          </Link>
+          <BrandLogo
+            variant="logo"
+            className="absolute left-1/2 -translate-x-1/2"
+            priority
+          />
 
           <div className="flex shrink-0 items-center">
             <IconButton
@@ -118,7 +118,7 @@ export function Header() {
             className="drawer-panel-left absolute left-0 top-0 flex h-full w-80 max-w-[85vw] flex-col border-r border-border bg-surface p-8"
           >
             <div className="mb-12 flex items-center justify-between">
-              <span className="font-display text-xl text-ink">{siteConfig.name}</span>
+              <BrandLogo variant="logo" className="hover:opacity-100" />
               <IconButton onClick={() => setMobileOpen(false)} aria-label="Close menu">
                 <X className="h-5 w-5" strokeWidth={1.5} />
               </IconButton>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLogo } from "@/components/layout/brand-logo";
 import { PageContainer } from "@/components/layout/page-container";
 import { footerLinks, siteConfig } from "@/config/site";
 
@@ -7,8 +8,8 @@ export function Footer() {
     <footer className="mt-auto border-t border-border bg-surface">
       <PageContainer className="grid gap-10 py-12 sm:grid-cols-2 sm:py-16 lg:grid-cols-4 lg:gap-12 lg:py-20">
         <div className="min-w-0 sm:col-span-2 lg:col-span-1">
-          <p className="font-display text-2xl text-ink">{siteConfig.name}</p>
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
+          <BrandLogo variant="lockup" href="/" className="hover:opacity-100" />
+          <p className="mt-6 max-w-xs text-sm leading-relaxed text-muted">
             Botanical hair care, wellness oils, and Caribbean food favorites.
             Crafted for everyday life.
           </p>
