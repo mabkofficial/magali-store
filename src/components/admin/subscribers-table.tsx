@@ -25,6 +25,7 @@ import {
 export type SubscriberRow = {
   email: string;
   source: string;
+  promo_interest: boolean;
   created_at: string;
 };
 
@@ -62,6 +63,7 @@ export function SubscribersTable({ subscribers }: { subscribers: SubscriberRow[]
             <TableRow>
               <TableHead>Email</TableHead>
               <TableHead>Source</TableHead>
+              <TableHead>Promo</TableHead>
               <TableHead className="text-right">Joined</TableHead>
               <TableHead className="w-12" />
             </TableRow>
@@ -69,7 +71,7 @@ export function SubscribersTable({ subscribers }: { subscribers: SubscriberRow[]
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={4} className="h-24 text-center text-muted-foreground">
+                <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
                   No subscribers found.
                 </TableCell>
               </TableRow>
@@ -79,6 +81,9 @@ export function SubscribersTable({ subscribers }: { subscribers: SubscriberRow[]
                   <TableCell>{row.email}</TableCell>
                   <TableCell className="capitalize text-muted-foreground">
                     {row.source}
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {row.promo_interest ? "Yes" : "—"}
                   </TableCell>
                   <TableCell className="text-right text-muted-foreground">
                     {format(new Date(row.created_at), "MMM d, yyyy")}

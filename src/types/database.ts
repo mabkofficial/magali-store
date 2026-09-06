@@ -17,18 +17,21 @@ export type Database = {
           created_at: string
           email: string
           id: string
+          promo_interest: boolean
           source: string
         }
         Insert: {
           created_at?: string
           email: string
           id?: string
+          promo_interest?: boolean
           source?: string
         }
         Update: {
           created_at?: string
           email?: string
           id?: string
+          promo_interest?: boolean
           source?: string
         }
         Relationships: []

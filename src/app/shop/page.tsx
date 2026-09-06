@@ -1,6 +1,8 @@
+import Link from "next/link";
 import { Suspense } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { Button } from "@/components/ui/button";
 import { ProductGrid } from "@/components/product/product-grid";
 import { CategoryChips, SortDropdown } from "@/components/shop/shop-filters";
 import { searchProducts } from "@/lib/search-products";
@@ -59,6 +61,22 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
         <Suspense fallback={<div className="skeleton h-4 w-32" />}>
           <SortDropdown />
         </Suspense>
+      </div>
+
+      <div className="mb-12 flex flex-col items-start justify-between gap-4 border border-border bg-surface-muted p-6 sm:flex-row sm:items-center">
+        <div>
+          <p className="eyebrow text-botanical">Need guidance?</p>
+          <p className="mt-2 font-display text-xl text-ink">
+            Not sure where to start?
+          </p>
+          <p className="mt-2 max-w-md text-sm text-muted">
+            Take our quick routine quiz to find the Magali products best suited
+            to your hair type and concerns.
+          </p>
+        </div>
+        <Link href="/find-your-routine" className="shrink-0">
+          <Button variant="outline">Find your routine</Button>
+        </Link>
       </div>
 
       {products.length === 0 ? (

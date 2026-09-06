@@ -48,6 +48,7 @@ export const footerLinks = {
     { href: "/collections/food", label: "Food" },
   ],
   care: [
+    { href: "/find-your-routine", label: "Find Your Routine" },
     { href: "/faq", label: "FAQ" },
     { href: "/shipping-returns", label: "Shipping & Returns" },
     { href: "/contact", label: "Contact" },

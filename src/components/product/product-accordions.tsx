@@ -1,4 +1,5 @@
 import { AccordionItem } from "@/components/ui/accordion";
+import { ProductTestimonials } from "@/components/product/product-testimonials";
 import type { Product, ProductDirections } from "@/types/product";
 
 interface ProductAccordionsProps {
@@ -89,6 +90,7 @@ export function ProductAccordions({ product }: ProductAccordionsProps) {
       <AccordionItem title="Storage">
         <p>{product.storage}</p>
       </AccordionItem>
+      <ProductTestimonials productId={product.id} />
     </div>
   );
 }

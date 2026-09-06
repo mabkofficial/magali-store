@@ -3,6 +3,7 @@ import { EmailSignup } from "@/components/home/email-signup";
 import { FeaturedProducts } from "@/components/home/featured-products";
 import { HeroSection } from "@/components/home/hero-section";
 import { StorySection } from "@/components/home/sections";
+import { TestimonialsSection } from "@/components/home/testimonials-section";
 import { TrustBadges } from "@/components/layout/trust-badges";
 
 export default function HomePage() {
@@ -13,6 +14,7 @@ export default function HomePage() {
       <CategoryCards />
       <StorySection />
       <TrustBadges />
+      <TestimonialsSection />
       <EmailSignup />
     </>
   );

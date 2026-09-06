@@ -31,10 +31,10 @@ export async function GET() {
 
   const { data } = await admin
     .from("newsletter_subscribers")
-    .select("email, source, created_at")
+    .select("email, source, promo_interest, created_at")
     .order("created_at", { ascending: false });
 
-  const headers = ["email", "source", "created_at"];
+  const headers = ["email", "source", "promo_interest", "created_at"];
   const rows = data ?? [];
 
   const csv = toCsv(headers, rows);

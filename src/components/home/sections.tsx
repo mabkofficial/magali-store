@@ -15,9 +15,14 @@ export function StorySection() {
             Caribbean food favorites — all rooted in thoughtfully selected
             ingredients and traditions you can trust for daily use.
           </p>
-          <Link href="/about" className="mt-8 inline-block">
-            <Button variant="outline">Read our story</Button>
-          </Link>
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Link href="/about">
+              <Button variant="outline">Read our story</Button>
+            </Link>
+            <Link href="/find-your-routine">
+              <Button variant="ghost">Not sure where to start?</Button>
+            </Link>
+          </div>
         </div>
       </PageContainer>
     </section>

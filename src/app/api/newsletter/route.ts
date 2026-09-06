@@ -5,6 +5,7 @@ import { getAdminClient } from "@/lib/supabase/admin";
 const subscribeSchema = z.object({
   email: z.string().email(),
   source: z.string().optional(),
+  promoInterest: z.boolean().optional(),
 });
 
 export async function POST(request: Request) {
@@ -23,8 +24,9 @@ export async function POST(request: Request) {
         {
           email: parsed.data.email.toLowerCase(),
           source: parsed.data.source ?? "homepage",
+          promo_interest: parsed.data.promoInterest ?? false,
         },
-        { onConflict: "email", ignoreDuplicates: true },
+        { onConflict: "email" },
       );
 
       if (error) {

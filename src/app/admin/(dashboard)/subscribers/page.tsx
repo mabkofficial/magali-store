@@ -6,7 +6,7 @@ export default async function AdminSubscribersPage() {
   const { data: subscribers } = admin
     ? await admin
         .from("newsletter_subscribers")
-        .select("email, source, created_at")
+        .select("email, source, promo_interest, created_at")
         .order("created_at", { ascending: false })
     : { data: [] };
 
