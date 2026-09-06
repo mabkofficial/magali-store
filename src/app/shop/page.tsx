@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { Button } from "@/components/ui/button";
+import { BundlesComingSoon } from "@/components/shop/bundles-coming-soon";
 import { ProductGrid } from "@/components/product/product-grid";
 import { CategoryChips, SortDropdown } from "@/components/shop/shop-filters";
 import { searchProducts } from "@/lib/search-products";
@@ -43,18 +44,29 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
     <PageContainer className="py-10 sm:py-12 lg:py-16">
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Shop" }]} />
 
-      <div className="mb-12 border-b border-border pb-8">
-        <h1 className="font-display text-4xl text-ink lg:text-5xl">
+      <header className="mb-8 border-b border-border pb-8">
+        <h1 className="font-display text-3xl text-ink sm:text-4xl">
           {query ? `“${query}”` : "Shop"}
         </h1>
+        {!query && (
+          <p className="mt-3 max-w-xl text-sm text-muted">
+            Individual products and curated sets. Filter by category or sort below.
+          </p>
+        )}
         {query && (
           <p className="mt-3 text-sm text-muted">
             {products.length} {products.length === 1 ? "result" : "results"}
           </p>
         )}
-      </div>
+      </header>
 
-      <div className="mb-12 flex flex-col gap-6 border-b border-border pb-8 sm:flex-row sm:items-center sm:justify-between">
+      {!query && (!category || category === "All") && (
+        <div className="mb-10">
+          <BundlesComingSoon />
+        </div>
+      )}
+
+      <div className="mb-8 flex flex-col gap-6 border-b border-border pb-8 sm:flex-row sm:items-center sm:justify-between">
         <Suspense fallback={<div className="skeleton h-4 w-48" />}>
           <CategoryChips />
         </Suspense>
@@ -63,7 +75,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
         </Suspense>
       </div>
 
-      <div className="mb-12 flex flex-col items-start justify-between gap-4 border border-border bg-surface-muted p-6 sm:flex-row sm:items-center">
+      <div className="mb-8 flex flex-col items-start justify-between gap-4 border border-border bg-surface-muted p-5 sm:flex-row sm:items-center sm:p-6">
         <div>
           <p className="eyebrow text-botanical">Need guidance?</p>
           <p className="mt-2 font-display text-xl text-ink">

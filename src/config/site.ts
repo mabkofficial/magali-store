@@ -31,23 +31,27 @@ export const siteConfig = {
   },
 };
 
-export const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/shop", label: "Shop" },
+export const shopNavLinks = [
+  { href: "/shop", label: "All Products" },
   { href: "/collections/hair-care", label: "Hair Care" },
   { href: "/collections/wellness", label: "Wellness" },
   { href: "/collections/food", label: "Food" },
-  { href: "/find-your-routine", label: "Find Routine" },
+] as const;
+
+/** Minimal top navigation — categories live on Shop via filters and footer. */
+export const primaryNavLinks = [
+  { href: "/shop", label: "Shop" },
   { href: "/about", label: "About" },
 ] as const;
 
+/** Flat list for surfaces that need the full link set (footer, sitemap, etc.). */
+export const navLinks = [
+  { href: "/", label: "Home" },
+  ...primaryNavLinks,
+] as const;
+
 export const footerLinks = {
-  shop: [
-    { href: "/shop", label: "All Products" },
-    { href: "/collections/hair-care", label: "Hair Care" },
-    { href: "/collections/wellness", label: "Wellness" },
-    { href: "/collections/food", label: "Food" },
-  ],
+  shop: [...shopNavLinks],
   care: [
     { href: "/find-your-routine", label: "Find Your Routine" },
     { href: "/faq", label: "FAQ" },

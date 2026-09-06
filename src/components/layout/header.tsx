@@ -8,17 +8,19 @@ import { BrandLogo } from "@/components/layout/brand-logo";
 import { PageContainer } from "@/components/layout/page-container";
 import { SearchDialog } from "@/components/shop/search-dialog";
 import { IconButton } from "@/components/ui/icon-button";
-import { navLinks, productSlugToCollection } from "@/config/site";
+import { primaryNavLinks, productSlugToCollection } from "@/config/site";
 import { useBodyScrollLock, useCartBump, useFocusTrap } from "@/hooks/use-cart-ui";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/cart-store";
 
-const desktopNav = navLinks.filter((link) => link.href !== "/");
-
 function isNavLinkActive(href: string, pathname: string): boolean {
   if (href === "/") return pathname === "/";
   if (href === "/shop") {
-    return pathname === "/shop" || pathname.startsWith("/products/");
+    return (
+      pathname === "/shop" ||
+      pathname.startsWith("/products/") ||
+      pathname.startsWith("/collections/")
+    );
   }
   if (href.startsWith("/collections/")) {
     if (pathname === href || pathname.startsWith(`${href}/`)) return true;
@@ -30,6 +32,14 @@ function isNavLinkActive(href: string, pathname: string): boolean {
   }
   return pathname === href || pathname.startsWith(`${href}/`);
 }
+
+const navLinkClass = (isActive: boolean) =>
+  cn(
+    "eyebrow relative cursor-pointer pb-1 transition-colors duration-150 hover:text-botanical",
+    isActive
+      ? "text-ink after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-botanical"
+      : "text-muted",
+  );
 
 export function Header() {
   const pathname = usePathname();
@@ -53,6 +63,8 @@ export function Header() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [mobileOpen]);
 
+  const mobileNavLinks = [{ href: "/", label: "Home" }, ...primaryNavLinks];
+
   return (
     <>
       <header className="sticky top-0 z-40 border-b border-border bg-surface">
@@ -66,19 +78,14 @@ export function Header() {
             >
               <Menu className="h-5 w-5" strokeWidth={1.5} />
             </IconButton>
-            <nav className="hidden items-center gap-6 lg:flex" aria-label="Main">
-              {desktopNav.map((link) => {
+            <nav className="hidden items-center gap-8 lg:flex" aria-label="Main">
+              {primaryNavLinks.map((link) => {
                 const isActive = isNavLinkActive(link.href, pathname);
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={cn(
-                      "eyebrow relative cursor-pointer pb-1 transition-colors duration-150 hover:text-botanical",
-                      isActive
-                        ? "text-ink after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-botanical"
-                        : "text-muted",
-                    )}
+                    className={navLinkClass(isActive)}
                     aria-current={isActive ? "page" : undefined}
                   >
                     {link.label}
@@ -144,7 +151,7 @@ export function Header() {
               </IconButton>
             </div>
             <nav className="flex flex-col gap-6" aria-label="Mobile">
-              {navLinks.map((link) => {
+              {mobileNavLinks.map((link) => {
                 const isActive = isNavLinkActive(link.href, pathname);
                 return (
                   <Link

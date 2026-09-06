@@ -7,14 +7,20 @@ import { categoryToCollection } from "@/config/site";
 import { useAddToCart } from "@/hooks/use-cart-ui";
 import { formatUSD } from "@/lib/currency";
 import { getPrimaryImageUrl } from "@/lib/products/images";
+import { cn } from "@/lib/utils";
 import type { Product } from "@/types/product";
 
 interface ProductCardProps {
   product: Product;
   priority?: boolean;
+  compact?: boolean;
 }
 
-export function ProductCard({ product, priority = false }: ProductCardProps) {
+export function ProductCard({
+  product,
+  priority = false,
+  compact = true,
+}: ProductCardProps) {
   const addToCart = useAddToCart();
 
   const isOutOfStock = product.inventoryCount <= 0;
@@ -41,7 +47,10 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           fill
           priority={priority}
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          className="product-image-primary object-contain p-4 sm:p-6"
+          className={cn(
+            "product-image-primary object-contain",
+            compact ? "p-2.5 sm:p-3" : "p-4 sm:p-6",
+          )}
         />
         {secondaryImage && (
           <Image
@@ -49,30 +58,49 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
             alt={product.images[1]?.alt || `${product.name} alternate view`}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            className="product-image-secondary hidden object-contain p-4 sm:p-6 lg:block"
+            className={cn(
+              "product-image-secondary hidden object-contain lg:block",
+              compact ? "p-2.5 sm:p-3" : "p-4 sm:p-6",
+            )}
           />
         )}
       </Link>
 
-      <div className="flex flex-1 flex-col pt-4">
+      <div className={cn("flex flex-1 flex-col", compact ? "pt-2.5" : "pt-4")}>
         <Link href={`/collections/${categoryToCollection[product.category]}`} className="cursor-pointer">
-          <Badge category={product.category}>{product.category}</Badge>
+          <Badge category={product.category} className="text-[10px]">
+            {product.category}
+          </Badge>
         </Link>
         <Link href={`/products/${product.slug}`} className="cursor-pointer">
-          <h3 className="mt-2 line-clamp-2 font-display text-base leading-snug text-ink">
+          <h3
+            className={cn(
+              "mt-1.5 line-clamp-2 leading-snug text-ink",
+              compact
+                ? "text-sm font-medium"
+                : "font-display text-base",
+            )}
+          >
             {product.name}
           </h3>
         </Link>
-        <p className="mt-1 text-xs text-muted">{product.size}</p>
-        <div className="mt-auto flex items-baseline justify-between gap-3 pt-4">
+        <p className="mt-0.5 text-[11px] text-muted">{product.size}</p>
+        <div
+          className={cn(
+            "mt-auto flex items-baseline justify-between gap-2",
+            compact ? "pt-2" : "pt-4",
+          )}
+        >
           <span className="text-sm font-medium text-ink">{formatUSD(product.price)}</span>
           {isOutOfStock ? (
-            <span className="eyebrow text-muted">Out of stock</span>
+            <span className="text-[10px] uppercase tracking-[0.1em] text-muted">
+              Out of stock
+            </span>
           ) : (
             <button
               type="button"
               onClick={handleQuickAdd}
-              className="eyebrow shrink-0 cursor-pointer text-ink underline-offset-4 hover:underline"
+              className="text-[10px] uppercase tracking-[0.1em] text-ink underline-offset-4 hover:underline"
               aria-label={`Add ${product.name} to cart`}
             >
               Add
