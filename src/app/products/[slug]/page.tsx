@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { PageContainer } from "@/components/layout/page-container";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { TrustBadges } from "@/components/layout/trust-badges";
 import { AddToCartSection } from "@/components/product/add-to-cart-section";
-import { FrequentlyBoughtTogether } from "@/components/product/frequently-bought-together";
 import { ProductAccordions } from "@/components/product/product-accordions";
 import { ProductGallery } from "@/components/product/product-gallery";
 import { RelatedProducts } from "@/components/product/related-products";
@@ -84,20 +84,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <div className="min-w-0">
             <ProductGallery images={product.images} productName={product.name} />
           </div>
-          <div className="min-w-0">
-            <AddToCartSection product={product} />
-            {fbtBundle && (
-              <FrequentlyBoughtTogether
-                bundle={fbtBundle}
-                surface="pdp"
-                className="mt-10 border-t border-border pt-10"
-              />
-            )}
-          </div>
+          <AddToCartSection product={product} fbtBundle={fbtBundle} />
         </div>
         <ProductAccordions product={product} />
         <RelatedProducts products={related} />
       </PageContainer>
+      <TrustBadges compact />
       <StickyBuyBar product={product} />
     </>
   );

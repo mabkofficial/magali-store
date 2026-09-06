@@ -1,7 +1,12 @@
 import type { CollectionSlug } from "@/types/product";
+import productsData from "@/data/products.json";
+
+type ProductSlugRow = { slug: string; category: string };
 
 export const FROZEN_CHECKOUT_ENABLED =
   process.env.FROZEN_CHECKOUT_ENABLED === "true";
+
+/** Set `FROZEN_CHECKOUT_ENABLED=true` in env to allow Stripe checkout for frozen items. */
 
 export const siteConfig = {
   name: "Magali",
@@ -58,3 +63,12 @@ export const categoryToCollection: Record<string, CollectionSlug> = {
   Wellness: "wellness",
   Food: "food",
 };
+
+/** Static slug → collection map for client-side nav active states */
+export const productSlugToCollection: Record<string, CollectionSlug> =
+  Object.fromEntries(
+    (productsData as ProductSlugRow[]).map((product) => [
+      product.slug,
+      categoryToCollection[product.category],
+    ]),
+  ) as Record<string, CollectionSlug>;

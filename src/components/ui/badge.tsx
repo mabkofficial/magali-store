@@ -1,19 +1,24 @@
 import { cn } from "@/lib/utils";
+import type { ProductCategory } from "@/types/product";
 
 interface BadgeProps {
   children: React.ReactNode;
-  variant?: "default" | "food" | "wellness";
+  category?: ProductCategory;
   className?: string;
 }
 
-export function Badge({
-  children,
-  className,
-}: BadgeProps) {
+const categoryStyles: Record<ProductCategory, string> = {
+  "Hair Care": "bg-botanical/8 text-botanical",
+  Wellness: "bg-clay/12 text-clay",
+  Food: "bg-gold-touch/10 text-gold-touch",
+};
+
+export function Badge({ children, category, className }: BadgeProps) {
   return (
     <span
       className={cn(
-        "eyebrow inline-flex items-center text-muted",
+        "eyebrow inline-flex items-center rounded-sm px-2 py-0.5",
+        category ? categoryStyles[category] : "text-muted",
         className,
       )}
     >

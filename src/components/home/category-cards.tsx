@@ -14,12 +14,9 @@ export function CategoryCards() {
     <section className="border-b border-border bg-surface-muted">
       <PageContainer className="py-12 sm:py-16 lg:py-20">
         <div className="mb-8 flex items-end justify-between gap-4 border-b border-border pb-6">
-          <div>
-            <p className="eyebrow text-muted">Browse</p>
-            <h2 className="mt-2 font-display text-3xl text-ink lg:text-4xl">
-              Shop by category
-            </h2>
-          </div>
+          <h2 className="font-display text-3xl text-ink lg:text-4xl">
+            Shop by category
+          </h2>
           <Link
             href="/shop"
             className="eyebrow shrink-0 text-muted transition-opacity hover:text-ink"
@@ -42,7 +39,7 @@ export function CategoryCards() {
                 padding="md"
               />
               <div className="border border-t-0 border-border px-4 py-4">
-                <p className="eyebrow text-ink">{collection.name}</p>
+                <p className="text-sm font-medium text-ink">{collection.name}</p>
                 <p className="mt-2 line-clamp-2 text-sm text-muted">
                   {collection.description}
                 </p>

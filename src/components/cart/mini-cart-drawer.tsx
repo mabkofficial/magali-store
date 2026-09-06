@@ -54,6 +54,7 @@ export function MiniCartDrawer() {
           items: items.map((item) => ({
             productId: item.productId,
             quantity: item.quantity,
+            fbtDiscountEligible: item.fbtDiscountEligible,
           })),
         }),
       });
@@ -97,8 +98,18 @@ export function MiniCartDrawer() {
         {items.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
             <p className="text-sm text-muted">Your cart is empty.</p>
-            <Link href="/shop" onClick={closeCart} className="mt-8">
-              <Button>Shop Collection</Button>
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
+              Try our hair care duo — oil and grease for a complete routine.
+            </p>
+            <Link href="/collections/hair-care" onClick={closeCart} className="mt-8">
+              <Button>Shop Hair Care</Button>
+            </Link>
+            <Link
+              href="/shop"
+              onClick={closeCart}
+              className="mt-4 text-xs uppercase tracking-[0.1em] text-muted hover:text-ink"
+            >
+              Browse all products
             </Link>
           </div>
         ) : (
@@ -124,7 +135,7 @@ export function MiniCartDrawer() {
                       <button
                         type="button"
                         onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                        className="pressable border border-border p-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
+                        className="qty-btn pressable border border-border focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
                         aria-label="Decrease quantity"
                       >
                         <Minus className="h-3.5 w-3.5" strokeWidth={1.5} />
@@ -133,7 +144,7 @@ export function MiniCartDrawer() {
                       <button
                         type="button"
                         onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                        className="pressable border border-border p-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
+                        className="qty-btn pressable border border-border focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
                         aria-label="Increase quantity"
                       >
                         <Plus className="h-3.5 w-3.5" strokeWidth={1.5} />
@@ -141,7 +152,7 @@ export function MiniCartDrawer() {
                       <button
                         type="button"
                         onClick={() => removeItem(item.productId)}
-                        className="pressable ml-auto p-1.5 text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
+                        className="qty-btn pressable ml-auto text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
                         aria-label={`Remove ${item.name}`}
                       >
                         <Trash2 className="h-4 w-4" strokeWidth={1.5} />
@@ -156,6 +167,7 @@ export function MiniCartDrawer() {
               <CartFbtSuggestions
                 cartProductIds={items.map((item) => item.productId)}
                 surface="mini_cart"
+                compact
               />
             </div>
 

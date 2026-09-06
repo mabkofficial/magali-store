@@ -58,6 +58,7 @@ export interface CartItem {
   quantity: number;
   image: string;
   shippingClass: ShippingClass;
+  fbtDiscountEligible?: boolean;
 }
 
 export interface FbtBundle {
@@ -74,6 +75,10 @@ export interface Collection {
   name: string;
   description: string;
   categories: ProductCategory[];
+  heroHeadline?: string;
+  heroMood?: string;
+  heroImage?: string;
+  heroTint?: "botanical" | "clay" | "gold";
 }
 
 export interface StoreSettings {

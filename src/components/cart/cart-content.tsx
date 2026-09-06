@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ProductGridSkeleton } from "@/components/ui/skeleton";
 import { FROZEN_CHECKOUT_ENABLED } from "@/config/site";
+import { getCartFbtDiscountPreview } from "@/lib/fbt-config";
 import { formatUSD } from "@/lib/currency";
 import { isStripeConfigured } from "@/lib/stripe";
 import { useCartStore } from "@/store/cart-store";
@@ -19,6 +20,10 @@ export function CartContent() {
   const subtotal = getSubtotal();
   const frozenBlocked = hasFrozenItems() && !FROZEN_CHECKOUT_ENABLED;
   const stripeReady = isStripeConfigured();
+  const fbtPreview = getCartFbtDiscountPreview(items);
+  const checkoutSubtotal = fbtPreview
+    ? subtotal - fbtPreview.discount
+    : subtotal;
 
   const handleCheckout = async () => {
     if (items.length === 0) return;
@@ -34,6 +39,7 @@ export function CartContent() {
           items: items.map((item) => ({
             productId: item.productId,
             quantity: item.quantity,
+            fbtDiscountEligible: item.fbtDiscountEligible,
           })),
         }),
       });
@@ -56,9 +62,18 @@ export function CartContent() {
     return (
       <div className="py-20 text-center">
         <p className="text-sm text-muted">Your cart is empty.</p>
-        <Link href="/shop" className="mt-8 inline-block">
-          <Button>Continue Shopping</Button>
-        </Link>
+        <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-muted">
+          Start with our hair care routine — botanical oil and herbal grease work
+          beautifully together.
+        </p>
+        <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+          <Link href="/collections/hair-care">
+            <Button>Shop Hair Care</Button>
+          </Link>
+          <Link href="/shop">
+            <Button variant="outline">Browse All Products</Button>
+          </Link>
+        </div>
       </div>
     );
   }
@@ -93,7 +108,7 @@ export function CartContent() {
                   <button
                     type="button"
                     onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                    className="pressable border border-border p-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
+                    className="qty-btn pressable border border-border focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
                     aria-label="Decrease quantity"
                   >
                     <Minus className="h-4 w-4" strokeWidth={1.5} />
@@ -104,7 +119,7 @@ export function CartContent() {
                   <button
                     type="button"
                     onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                    className="pressable border border-border p-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
+                    className="qty-btn pressable border border-border focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
                     aria-label="Increase quantity"
                   >
                     <Plus className="h-4 w-4" strokeWidth={1.5} />
@@ -112,7 +127,7 @@ export function CartContent() {
                   <button
                     type="button"
                     onClick={() => removeItem(item.productId)}
-                    className="pressable ml-auto p-1.5 text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
+                    className="qty-btn pressable ml-auto text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
                     aria-label={`Remove ${item.name}`}
                   >
                     <Trash2 className="h-4 w-4" strokeWidth={1.5} />
@@ -141,8 +156,13 @@ export function CartContent() {
         <h2 className="eyebrow text-ink">Summary</h2>
         <div className="mt-6 flex justify-between text-sm">
           <span className="text-muted">Subtotal</span>
-          <span className="font-medium text-ink">{formatUSD(subtotal)}</span>
+          <span className="font-medium text-ink">{formatUSD(checkoutSubtotal)}</span>
         </div>
+        {fbtPreview && (
+          <p className="mt-2 text-xs text-gold-touch">
+            Includes {formatUSD(fbtPreview.discount)} routine bundle savings
+          </p>
+        )}
         <p className="mt-4 text-xs leading-relaxed text-muted">
           Shipping and taxes calculated at checkout. Secure payment via Stripe.
         </p>

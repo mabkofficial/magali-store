@@ -23,6 +23,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | `CONTACT_TO_EMAIL` | Email address for contact form submissions |
 | `RESEND_API_KEY` | Resend API key for contact emails |
 | `NEXT_PUBLIC_GA_ID` | Optional Google Analytics ID |
+| `FROZEN_CHECKOUT_ENABLED` | Set to `true` to enable online checkout for frozen beef pies (requires shipping setup) |
 
 ## Product Data
 
@@ -35,7 +36,7 @@ Products are defined in `src/data/products.json`. To update:
 ## Stripe Checkout
 
 - Checkout re-reads prices server-side from product data (never trusts client prices)
-- Frozen beef pies are gated until `FROZEN_CHECKOUT_ENABLED` is set to `true` in `src/config/site.ts`
+- Frozen beef pies are gated until `FROZEN_CHECKOUT_ENABLED=true` is set in environment variables (see `src/config/site.ts`)
 - Without Stripe keys, cart works but checkout shows a contact fallback
 
 ## Deployment

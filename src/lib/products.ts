@@ -26,6 +26,10 @@ export const collections: Collection[] = [
     description:
       "Botanical hair oils and herbal formulas rooted in nature for everyday scalp and strand care.",
     categories: ["Hair Care"],
+    heroHeadline: "Root to tip, every day",
+    heroMood: "Botanical scalp and strand care",
+    heroImage: "/images/products/hair-oil/03-botanical-lifestyle.png",
+    heroTint: "botanical",
   },
   {
     slug: "wellness",
@@ -33,6 +37,10 @@ export const collections: Collection[] = [
     description:
       "Targeted botanical blends designed for external comfort and everyday wellness support.",
     categories: ["Wellness"],
+    heroHeadline: "Targeted botanical support",
+    heroMood: "Precise, external wellness blends",
+    heroImage: "/images/products/pureheal-oil/02-botanical-still-life.png",
+    heroTint: "clay",
   },
   {
     slug: "food",
@@ -40,6 +48,10 @@ export const collections: Collection[] = [
     description:
       "Bold Caribbean flavors for family meals. Convenient frozen favorites ready to cook at home.",
     categories: ["Food"],
+    heroHeadline: "A taste of the Caribbean",
+    heroMood: "Family-size frozen favorites",
+    heroImage: "/images/products/beef-pies/01-package-white.png",
+    heroTint: "gold",
   },
 ];
 

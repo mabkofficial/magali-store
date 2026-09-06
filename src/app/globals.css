@@ -1,12 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #000000;
-  --muted: #6b6b6b;
-  --muted-light: #999999;
-  --border: #e5e5e5;
-  --surface: #ffffff;
-  --surface-muted: #f7f7f7;
+  --ink: #1a1a18;
+  --muted: #6b6860;
+  --muted-light: #8a877f;
+  --border: #e3e0da;
+  --surface: #fafaf8;
+  --surface-muted: #f3f2ef;
+  --botanical: #3d5a45;
+  --clay: #9a8470;
+  --gold-touch: #a67c3a;
   --background: var(--surface);
   --foreground: var(--ink);
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
@@ -14,12 +17,12 @@
   --duration-ui: 200ms;
   --duration-drawer: 250ms;
 
-  /* Legacy aliases → monochrome */
+  /* Legacy aliases → warm palette */
   --magali-green-950: var(--ink);
-  --magali-green-900: var(--ink);
-  --magali-green-800: #333333;
-  --magali-gold-600: var(--ink);
-  --magali-gold-500: #333333;
+  --magali-green-900: var(--botanical);
+  --magali-green-800: var(--botanical);
+  --magali-gold-600: var(--gold-touch);
+  --magali-gold-500: var(--gold-touch);
   --magali-cream-50: var(--surface);
   --magali-cream-100: var(--surface-muted);
   --magali-red-700: var(--ink);
@@ -37,6 +40,9 @@
   --color-border: var(--border);
   --color-surface: var(--surface);
   --color-surface-muted: var(--surface-muted);
+  --color-botanical: var(--botanical);
+  --color-clay: var(--clay);
+  --color-gold-touch: var(--gold-touch);
   --color-magali-green-950: var(--magali-green-950);
   --color-magali-green-900: var(--magali-green-900);
   --color-magali-green-800: var(--magali-green-800);
@@ -71,8 +77,8 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-plex), system-ui, sans-serif;
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
@@ -101,6 +107,14 @@ body {
 
 .pressable:active {
   transform: scale(0.98);
+}
+
+.qty-btn {
+  display: inline-flex;
+  min-height: 44px;
+  min-width: 44px;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Hover-gated image crossfade (desktop only) */
@@ -181,7 +195,7 @@ body {
   background: linear-gradient(
     90deg,
     var(--surface-muted) 25%,
-    #ececec 50%,
+    #ebe8e2 50%,
     var(--surface-muted) 75%
   );
   background-size: 200% 100%;
@@ -197,12 +211,28 @@ body {
   }
 }
 
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-fade-up {
+  animation: hero-fade-up 600ms var(--ease-out-strong) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .drawer-overlay,
   .drawer-panel-right,
   .drawer-panel-left,
   .cart-bump,
-  .skeleton {
+  .skeleton,
+  .hero-fade-up {
     animation: none !important;
   }
 }

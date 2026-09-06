@@ -54,9 +54,11 @@ function renderIngredients(ingredients: Product["ingredients"]) {
 }
 
 export function ProductAccordions({ product }: ProductAccordionsProps) {
+  const isHairProduct = product.category === "Hair Care";
+
   return (
     <div className="mt-12">
-      <AccordionItem title="Overview" defaultOpen>
+      <AccordionItem title="Overview" defaultOpen={!isHairProduct}>
         <p>{product.overview}</p>
       </AccordionItem>
       <AccordionItem title="Benefits">
@@ -66,7 +68,7 @@ export function ProductAccordions({ product }: ProductAccordionsProps) {
           ))}
         </ul>
       </AccordionItem>
-      <AccordionItem title="Ingredients">
+      <AccordionItem title="Ingredients" defaultOpen={isHairProduct}>
         {renderIngredients(product.ingredients)}
       </AccordionItem>
       {product.nutritionHighlights && (

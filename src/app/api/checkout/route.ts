@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { FROZEN_CHECKOUT_ENABLED, siteConfig } from "@/config/site";
 import { toCents } from "@/lib/currency";
+import {
+  applyFbtUnitDiscount,
+  isValidFbtDiscountSet,
+} from "@/lib/fbt-config";
 import { getProductById } from "@/lib/products";
 import { getPrimaryImageUrl } from "@/lib/products/images";
 import {
@@ -16,6 +20,7 @@ const checkoutSchema = z.object({
       z.object({
         productId: z.string(),
         quantity: z.number().int().min(1).max(99),
+        fbtDiscountEligible: z.boolean().optional(),
       }),
     )
     .min(1),
@@ -44,6 +49,15 @@ export async function POST(request: Request) {
       );
     }
 
+    const fbtEligibleIds = [
+      ...new Set(
+        parsed.data.items
+          .filter((item) => item.fbtDiscountEligible)
+          .map((item) => item.productId),
+      ),
+    ];
+    const bundleDiscountActive = isValidFbtDiscountSet(fbtEligibleIds);
+
     const lineItems: {
       price_data: {
         currency: string;
@@ -54,6 +68,7 @@ export async function POST(request: Request) {
     }[] = [];
     let hasFrozen = false;
     const metadataItems: string[] = [];
+    let fbtDiscountCents = 0;
 
     for (const item of parsed.data.items) {
       const product = await getProductById(item.productId);
@@ -92,12 +107,28 @@ export async function POST(request: Request) {
         hasFrozen = true;
       }
 
+      const receivesDiscount =
+        bundleDiscountActive &&
+        Boolean(item.fbtDiscountEligible) &&
+        fbtEligibleIds.includes(product.id);
+
+      const unitPrice = receivesDiscount
+        ? applyFbtUnitDiscount(product.price)
+        : product.price;
+
+      if (receivesDiscount) {
+        fbtDiscountCents +=
+          (toCents(product.price) - toCents(unitPrice)) * item.quantity;
+      }
+
       metadataItems.push(`${product.id}:${item.quantity}`);
       lineItems.push({
         price_data: {
           currency: product.currency.toLowerCase(),
           product_data: {
-            name: product.name,
+            name: receivesDiscount
+              ? `${product.name} (Routine bundle)`
+              : product.name,
             images: [
               (() => {
                 const image = getPrimaryImageUrl(product.images);
@@ -107,7 +138,7 @@ export async function POST(request: Request) {
               })(),
             ],
           },
-          unit_amount: toCents(product.price),
+          unit_amount: toCents(unitPrice),
         },
         quantity: item.quantity,
       });
@@ -156,6 +187,8 @@ export async function POST(request: Request) {
         cart_items: metadataItems.join(","),
         has_frozen: hasFrozen ? "true" : "false",
         shipping_rate_cents: String(shippingRate),
+        fbt_discount_applied: bundleDiscountActive ? "true" : "false",
+        fbt_discount_cents: String(fbtDiscountCents),
       },
       success_url: `${siteConfig.url}/cart?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteConfig.url}/cart?checkout=cancelled`,

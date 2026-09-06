@@ -39,8 +39,8 @@ export function EmailSignup() {
     <section className="bg-ink text-surface">
       <PageContainer className="py-12 sm:py-16 lg:py-20">
         <div className="mx-auto max-w-lg text-center">
-          <p className="eyebrow text-surface/60">Newsletter</p>
-          <h2 className="mt-3 font-display text-3xl lg:text-4xl">Stay connected</h2>
+          <p className="eyebrow text-surface/60">Stay connected</p>
+          <h2 className="mt-3 font-display text-3xl lg:text-4xl">Newsletter</h2>
           <p className="mt-4 text-sm text-surface/70">
             Product news and updates, sent occasionally. Unsubscribe anytime.
           </p>

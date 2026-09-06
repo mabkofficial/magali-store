@@ -18,12 +18,19 @@ export function useAddToCart() {
 export function useAddMultipleToCart(surface: FbtSurface = "pdp") {
   const addItems = useCartStore((state) => state.addItems);
 
-  return (products: Product[], quantities?: number[]) => {
+  return (
+    products: Product[],
+    quantities?: number[],
+    options?: { applyFbtDiscount?: boolean },
+  ) => {
     if (products.length === 0) return;
+
+    const applyDiscount = options?.applyFbtDiscount ?? false;
 
     const entries = products.map((product, index) => ({
       product,
       quantity: quantities?.[index] ?? 1,
+      fbtDiscountEligible: applyDiscount,
     }));
 
     addItems(entries);
@@ -44,7 +51,11 @@ export function useAddMultipleToCart(surface: FbtSurface = "pdp") {
       return;
     }
 
-    toast.success(`${products.length} items added to cart`);
+    toast.success(
+      applyDiscount
+        ? `${products.length} items added — routine bundle savings apply at checkout`
+        : `${products.length} items added to cart`,
+    );
   };
 }
 

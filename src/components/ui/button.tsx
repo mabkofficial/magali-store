@@ -13,8 +13,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         className={cn(
           "pressable inline-flex cursor-pointer items-center justify-center font-medium uppercase tracking-[0.1em] transition-[transform,background-color,border-color,color] duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink focus-visible:ring-offset-2 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40",
-          variant === "primary" && "bg-ink text-surface hover:bg-ink/85",
-          variant === "secondary" && "bg-ink text-surface hover:bg-ink/85",
+          variant === "primary" && "bg-ink text-surface hover:bg-botanical",
+          variant === "secondary" && "bg-ink text-surface hover:bg-botanical",
           variant === "outline" &&
             "border border-ink bg-transparent text-ink hover:bg-surface-muted",
           variant === "ghost" &&

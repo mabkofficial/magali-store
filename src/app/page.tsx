@@ -2,10 +2,8 @@ import { CategoryCards } from "@/components/home/category-cards";
 import { EmailSignup } from "@/components/home/email-signup";
 import { FeaturedProducts } from "@/components/home/featured-products";
 import { HeroSection } from "@/components/home/hero-section";
-import {
-  BrandStorySection,
-  ProductHighlightsSection,
-} from "@/components/home/sections";
+import { StorySection } from "@/components/home/sections";
+import { TrustBadges } from "@/components/layout/trust-badges";
 
 export default function HomePage() {
   return (
@@ -13,8 +11,8 @@ export default function HomePage() {
       <HeroSection />
       <FeaturedProducts />
       <CategoryCards />
-      <BrandStorySection />
-      <ProductHighlightsSection />
+      <StorySection />
+      <TrustBadges />
       <EmailSignup />
     </>
   );

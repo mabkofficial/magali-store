@@ -10,7 +10,13 @@ interface CartState {
   isOpen: boolean;
   bumpKey: number;
   addItem: (product: Product, quantity?: number) => void;
-  addItems: (entries: { product: Product; quantity: number }[]) => void;
+  addItems: (
+    entries: {
+      product: Product;
+      quantity: number;
+      fbtDiscountEligible?: boolean;
+    }[],
+  ) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   removeItem: (productId: string) => void;
   clearCart: () => void;
@@ -64,13 +70,18 @@ export const useCartStore = create<CartState>()(
         set((state) => {
           let items = [...state.items];
 
-          for (const { product, quantity } of entries) {
+          for (const { product, quantity, fbtDiscountEligible } of entries) {
             const existing = items.find((item) => item.productId === product.id);
 
             items = existing
               ? items.map((item) =>
                   item.productId === product.id
-                    ? { ...item, quantity: item.quantity + quantity }
+                    ? {
+                        ...item,
+                        quantity: item.quantity + quantity,
+                        fbtDiscountEligible:
+                          fbtDiscountEligible ?? item.fbtDiscountEligible,
+                      }
                     : item,
                 )
               : [
@@ -83,6 +94,7 @@ export const useCartStore = create<CartState>()(
                     quantity,
                     image: getPrimaryImageUrl(product.images),
                     shippingClass: product.shippingClass,
+                    fbtDiscountEligible,
                   },
                 ];
           }

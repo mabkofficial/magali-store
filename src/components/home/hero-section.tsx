@@ -8,9 +8,8 @@ export function HeroSection() {
     <section className="border-b border-border">
       <PageContainer className="py-12 sm:py-16 lg:py-20">
         <div className="grid min-w-0 items-center gap-10 lg:grid-cols-2 lg:gap-16">
-          <div className="min-w-0">
-            <p className="eyebrow text-muted">Magali</p>
-            <h1 className="mt-4 font-display text-4xl leading-[1.08] text-ink sm:text-5xl lg:text-[3.25rem]">
+          <div className="min-w-0 hero-fade-up">
+            <h1 className="font-display text-4xl leading-[1.08] text-ink sm:text-5xl lg:text-[3.25rem]">
               Rooted in nature.
               <br />
               Made for everyday life.

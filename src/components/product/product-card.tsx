@@ -56,7 +56,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
 
       <div className="flex flex-1 flex-col pt-4">
         <Link href={`/collections/${categoryToCollection[product.category]}`} className="cursor-pointer">
-          <Badge>{product.category}</Badge>
+          <Badge category={product.category}>{product.category}</Badge>
         </Link>
         <Link href={`/products/${product.slug}`} className="cursor-pointer">
           <h3 className="mt-2 line-clamp-2 font-display text-base leading-snug text-ink">

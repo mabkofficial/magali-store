@@ -6,6 +6,7 @@ import {
   sendOrderConfirmationEmail,
 } from "@/lib/email";
 import { getProductByIdSync } from "@/lib/products";
+import { toCents } from "@/lib/currency";
 import { getStripe } from "@/lib/stripe";
 
 export async function POST(request: Request) {
@@ -56,17 +57,42 @@ export async function POST(request: Request) {
       unitPrice: number;
     }[] = [];
 
-    for (const entry of cartItemsRaw.split(",").filter(Boolean)) {
-      const [productId, quantityStr] = entry.split(":");
-      const quantity = parseInt(quantityStr, 10);
+    const cartEntries = cartItemsRaw.split(",").filter(Boolean);
+    const stripeLineItems = await stripe.checkout.sessions.listLineItems(
+      session.id,
+      { limit: 100 },
+    );
+
+    stripeLineItems.data.forEach((stripeItem, index) => {
+      const [productId, quantityStr] = cartEntries[index]?.split(":") ?? [];
+      if (!productId) return;
+
+      const quantity =
+        stripeItem.quantity ?? parseInt(quantityStr ?? "1", 10) ?? 1;
       const product = getProductByIdSync(productId);
+      const unitPriceCents = stripeItem.price?.unit_amount ?? toCents(product?.price ?? 0);
 
       lineItems.push({
         productId,
-        name: product?.name ?? productId,
+        name: product?.name ?? stripeItem.description ?? productId,
         quantity,
-        unitPrice: product?.price ?? 0,
+        unitPrice: unitPriceCents / 100,
       });
+    });
+
+    if (lineItems.length === 0) {
+      for (const entry of cartEntries) {
+        const [productId, quantityStr] = entry.split(":");
+        const quantity = parseInt(quantityStr, 10);
+        const product = getProductByIdSync(productId);
+
+        lineItems.push({
+          productId,
+          name: product?.name ?? productId,
+          quantity,
+          unitPrice: product?.price ?? 0,
+        });
+      }
     }
 
     const subtotalCents =

@@ -20,7 +20,7 @@ export function Footer() {
                   href={siteConfig.social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted hover:text-ink"
+                  className="text-muted transition-colors hover:text-botanical"
                 >
                   Instagram
                 </a>
@@ -30,7 +30,7 @@ export function Footer() {
                   href={siteConfig.social.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted hover:text-ink"
+                  className="text-muted transition-colors hover:text-botanical"
                 >
                   Facebook
                 </a>
@@ -46,7 +46,7 @@ export function Footer() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="cursor-pointer text-muted transition-colors hover:text-ink"
+                  className="cursor-pointer text-muted transition-colors hover:text-botanical"
                 >
                   {link.label}
                 </Link>
@@ -62,7 +62,7 @@ export function Footer() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="cursor-pointer text-muted transition-colors hover:text-ink"
+                  className="cursor-pointer text-muted transition-colors hover:text-botanical"
                 >
                   {link.label}
                 </Link>
@@ -82,7 +82,7 @@ export function Footer() {
           </p>
           {siteConfig.contactEmail && (
             <p className="mt-3 text-sm text-muted">
-              <a href={`mailto:${siteConfig.contactEmail}`} className="hover:text-ink">
+              <a href={`mailto:${siteConfig.contactEmail}`} className="transition-colors hover:text-botanical">
                 {siteConfig.contactEmail}
               </a>
             </p>
@@ -101,7 +101,7 @@ export function Footer() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="cursor-pointer uppercase tracking-[0.1em] hover:text-ink"
+                className="cursor-pointer uppercase tracking-[0.1em] transition-colors hover:text-botanical"
               >
                 {link.label}
               </Link>

@@ -32,7 +32,7 @@ export function StickyBuyBar({ product }: StickyBuyBarProps) {
   if (!visible) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-surface lg:hidden">
+    <div className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-surface pb-[env(safe-area-inset-bottom)] lg:hidden">
       <PageContainer className="flex items-center gap-4 py-3">
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm text-ink">{product.shortName}</p>
@@ -45,7 +45,7 @@ export function StickyBuyBar({ product }: StickyBuyBarProps) {
         ) : isFrozenBlocked ? (
           <Link href="/contact">
             <Button size="sm" variant="outline">
-              Contact
+              Request Order
             </Button>
           </Link>
         ) : (

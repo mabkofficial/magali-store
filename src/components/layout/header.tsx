@@ -8,14 +8,28 @@ import { BrandLogo } from "@/components/layout/brand-logo";
 import { PageContainer } from "@/components/layout/page-container";
 import { SearchDialog } from "@/components/shop/search-dialog";
 import { IconButton } from "@/components/ui/icon-button";
-import { navLinks } from "@/config/site";
+import { navLinks, productSlugToCollection } from "@/config/site";
 import { useBodyScrollLock, useCartBump, useFocusTrap } from "@/hooks/use-cart-ui";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/cart-store";
 
-const desktopNav = navLinks.filter((link) =>
-  ["/shop", "/about"].includes(link.href),
-);
+const desktopNav = navLinks.filter((link) => link.href !== "/");
+
+function isNavLinkActive(href: string, pathname: string): boolean {
+  if (href === "/") return pathname === "/";
+  if (href === "/shop") {
+    return pathname === "/shop" || pathname.startsWith("/products/");
+  }
+  if (href.startsWith("/collections/")) {
+    if (pathname === href || pathname.startsWith(`${href}/`)) return true;
+    const productMatch = pathname.match(/^\/products\/([^/]+)/);
+    if (productMatch) {
+      return productSlugToCollection[productMatch[1]] === href.replace("/collections/", "");
+    }
+    return false;
+  }
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export function Header() {
   const pathname = usePathname();
@@ -53,18 +67,24 @@ export function Header() {
               <Menu className="h-5 w-5" strokeWidth={1.5} />
             </IconButton>
             <nav className="hidden items-center gap-6 lg:flex" aria-label="Main">
-              {desktopNav.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "eyebrow cursor-pointer transition-opacity duration-150 hover:opacity-60",
-                    pathname === link.href ? "text-ink" : "text-muted",
-                  )}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {desktopNav.map((link) => {
+                const isActive = isNavLinkActive(link.href, pathname);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={cn(
+                      "eyebrow relative cursor-pointer pb-1 transition-colors duration-150 hover:text-botanical",
+                      isActive
+                        ? "text-ink after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-botanical"
+                        : "text-muted",
+                    )}
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
 
@@ -124,16 +144,25 @@ export function Header() {
               </IconButton>
             </div>
             <nav className="flex flex-col gap-6" aria-label="Mobile">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="eyebrow cursor-pointer text-ink"
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = isNavLinkActive(link.href, pathname);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={cn(
+                      "eyebrow cursor-pointer border-l-2 pl-3 transition-colors hover:text-botanical",
+                      isActive
+                        ? "border-botanical text-ink"
+                        : "border-transparent text-muted",
+                    )}
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
         </div>

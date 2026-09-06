@@ -1,15 +1,11 @@
-import { Leaf, Lock, ShieldCheck, Truck } from "lucide-react";
+import { Leaf, Lock, Truck } from "lucide-react";
+import { PageContainer } from "@/components/layout/page-container";
 
 const badges = [
   {
     icon: Leaf,
-    label: "Botanical ingredients",
-    description: "Rooted in nature",
-  },
-  {
-    icon: ShieldCheck,
-    label: "Quality formulas",
-    description: "Thoughtfully prepared",
+    label: "Botanical formulas",
+    description: "Thoughtfully blended ingredients",
   },
   {
     icon: Lock,
@@ -18,50 +14,74 @@ const badges = [
   },
   {
     icon: Truck,
-    label: "Shipping info",
-    description: "Calculated at checkout",
+    label: "US shipping",
+    description: "Rates calculated at checkout",
   },
 ] as const;
 
-export function TrustBadges({ variant = "light" }: { variant?: "light" | "dark" }) {
+export function TrustBadges({
+  variant = "light",
+  compact = false,
+}: {
+  variant?: "light" | "dark";
+  compact?: boolean;
+}) {
   const isDark = variant === "dark";
 
   return (
-    <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {badges.map(({ icon: Icon, label, description }) => (
-        <li
-          key={label}
-          className="flex flex-col items-center text-center sm:items-start sm:text-left"
+    <section
+      className={
+        compact
+          ? "border-t border-border bg-surface-muted py-10 sm:py-12"
+          : isDark
+            ? "border-b border-border bg-botanical text-surface"
+            : "border-b border-border bg-surface-muted"
+      }
+    >
+      <PageContainer className={compact ? undefined : "py-10 sm:py-12"}>
+        <ul
+          className={
+            compact
+              ? "grid gap-6 sm:grid-cols-3"
+              : "grid gap-8 sm:grid-cols-3"
+          }
         >
-          <div
-            className={
-              isDark
-                ? "mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-magali-green-800 text-magali-gold-500"
-                : "mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-magali-cream-100 text-magali-green-800"
-            }
-          >
-            <Icon className="h-5 w-5" aria-hidden />
-          </div>
-          <p
-            className={
-              isDark
-                ? "text-sm font-medium text-magali-cream-50"
-                : "text-sm font-medium text-magali-green-950"
-            }
-          >
-            {label}
-          </p>
-          <p
-            className={
-              isDark
-                ? "mt-1 text-xs text-magali-cream-50/70"
-                : "mt-1 text-xs text-magali-ink/60"
-            }
-          >
-            {description}
-          </p>
-        </li>
-      ))}
-    </ul>
+          {badges.map(({ icon: Icon, label, description }) => (
+            <li
+              key={label}
+              className="flex flex-col items-center text-center sm:items-start sm:text-left"
+            >
+              <div
+                className={
+                  isDark
+                    ? "mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-surface/10 text-surface"
+                    : "mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-surface text-botanical"
+                }
+              >
+                <Icon className="h-5 w-5" aria-hidden />
+              </div>
+              <p
+                className={
+                  isDark
+                    ? "text-sm font-medium text-surface"
+                    : "text-sm font-medium text-ink"
+                }
+              >
+                {label}
+              </p>
+              <p
+                className={
+                  isDark
+                    ? "mt-1 text-xs text-surface/70"
+                    : "mt-1 text-xs text-muted"
+                }
+              >
+                {description}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </PageContainer>
+    </section>
   );
 }
