@@ -50,7 +50,7 @@ export const collections: Collection[] = [
     categories: ["Food"],
     heroHeadline: "A taste of the Caribbean",
     heroMood: "Family-size frozen favorites",
-    heroImage: "/images/products/beef-pies/01-package-white.png",
+    heroImage: "/images/products/beef-pies/03-plated-cooked-pies.png",
     heroTint: "gold",
   },
 ];

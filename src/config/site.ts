@@ -37,6 +37,7 @@ export const navLinks = [
   { href: "/collections/hair-care", label: "Hair Care" },
   { href: "/collections/wellness", label: "Wellness" },
   { href: "/collections/food", label: "Food" },
+  { href: "/find-your-routine", label: "Find Routine" },
   { href: "/about", label: "About" },
 ] as const;
 

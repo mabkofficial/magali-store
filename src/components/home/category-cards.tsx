@@ -4,9 +4,9 @@ import { SquareImageFrame } from "@/components/ui/square-image-frame";
 import { collections } from "@/lib/products";
 
 const collectionImages: Record<string, string> = {
-  "hair-care": "/images/products/hair-oil/01-hero-white.png",
-  wellness: "/images/products/pureheal-oil/01-hero-white.png",
-  food: "/images/products/beef-pies/01-package-white.png",
+  "hair-care": "/images/products/hair-oil/03-botanical-lifestyle.png",
+  wellness: "/images/products/pureheal-oil/02-botanical-still-life.png",
+  food: "/images/products/beef-pies/03-plated-cooked-pies.png",
 };
 
 export function CategoryCards() {
@@ -36,7 +36,8 @@ export function CategoryCards() {
                 src={collectionImages[collection.slug]}
                 alt={collection.name}
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                padding="md"
+                padding="none"
+                imageClassName="object-cover"
               />
               <div className="border border-t-0 border-border px-4 py-4">
                 <p className="text-sm font-medium text-ink">{collection.name}</p>

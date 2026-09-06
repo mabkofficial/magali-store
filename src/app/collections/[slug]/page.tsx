@@ -79,12 +79,12 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
               </p>
             </div>
             {collection.heroImage && (
-              <div className="relative hidden aspect-[4/3] overflow-hidden border border-border bg-surface lg:block">
+              <div className="relative aspect-[4/3] overflow-hidden border border-border bg-surface sm:max-w-md lg:max-w-none">
                 <Image
                   src={collection.heroImage}
                   alt=""
                   fill
-                  sizes="280px"
+                  sizes="(max-width: 1024px) 100vw, 280px"
                   className="object-cover object-center opacity-90"
                   priority
                 />
