@@ -1,11 +1,12 @@
 import { getAllProducts } from "@/lib/products";
 import type { Product } from "@/types/product";
 
-export function searchProducts(query: string): Product[] {
+export async function searchProducts(query: string): Promise<Product[]> {
+  const products = await getAllProducts();
   const normalized = query.trim().toLowerCase();
-  if (!normalized) return getAllProducts();
+  if (!normalized) return products;
 
-  return getAllProducts().filter((product) => {
+  return products.filter((product) => {
     const haystack = [
       product.name,
       product.shortName,

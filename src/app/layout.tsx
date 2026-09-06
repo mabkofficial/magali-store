@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, Newsreader } from "next/font/google";
-import { AnnouncementBar } from "@/components/layout/announcement-bar";
-import { Footer } from "@/components/layout/footer";
-import { Header } from "@/components/layout/header";
+import { GoogleAnalytics } from "@/components/analytics/google-analytics";
+import { StorefrontShell } from "@/components/layout/storefront-shell";
 import { SkipToContent } from "@/components/layout/skip-to-content";
-import { MiniCartDrawer } from "@/components/cart/mini-cart-drawer";
 import { ToastProvider } from "@/components/ui/toast-provider";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
@@ -45,14 +43,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${plex.variable} ${newsreader.variable} h-full`}>
       <body className="flex min-h-full flex-col antialiased">
+        <GoogleAnalytics />
         <SkipToContent />
-        <AnnouncementBar />
-        <Header />
-        <main id="main-content" className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <MiniCartDrawer />
+        <StorefrontShell>{children}</StorefrontShell>
         <ToastProvider />
       </body>
     </html>

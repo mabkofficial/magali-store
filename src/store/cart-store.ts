@@ -2,6 +2,7 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { getPrimaryImageUrl } from "@/lib/products/images";
 import type { CartItem, Product } from "@/types/product";
 
 interface CartState {
@@ -9,6 +10,7 @@ interface CartState {
   isOpen: boolean;
   bumpKey: number;
   addItem: (product: Product, quantity?: number) => void;
+  addItems: (entries: { product: Product; quantity: number }[]) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   removeItem: (productId: string) => void;
   clearCart: () => void;
@@ -47,10 +49,43 @@ export const useCartStore = create<CartState>()(
                   name: product.name,
                   price: product.price,
                   quantity,
-                  image: product.images[0],
+                  image: getPrimaryImageUrl(product.images),
                   shippingClass: product.shippingClass,
                 },
               ];
+
+          return { items, bumpKey: state.bumpKey + 1, isOpen: true };
+        });
+      },
+
+      addItems: (entries) => {
+        if (entries.length === 0) return;
+
+        set((state) => {
+          let items = [...state.items];
+
+          for (const { product, quantity } of entries) {
+            const existing = items.find((item) => item.productId === product.id);
+
+            items = existing
+              ? items.map((item) =>
+                  item.productId === product.id
+                    ? { ...item, quantity: item.quantity + quantity }
+                    : item,
+                )
+              : [
+                  ...items,
+                  {
+                    productId: product.id,
+                    slug: product.slug,
+                    name: product.name,
+                    price: product.price,
+                    quantity,
+                    image: getPrimaryImageUrl(product.images),
+                    shippingClass: product.shippingClass,
+                  },
+                ];
+          }
 
           return { items, bumpKey: state.bumpKey + 1, isOpen: true };
         });

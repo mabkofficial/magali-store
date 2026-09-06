@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { siteConfig } from "@/config/site";
+import { formatShippingLabel } from "@/lib/shipping";
 
 export const metadata = {
   title: "Shipping and Returns",
@@ -6,6 +8,10 @@ export const metadata = {
 };
 
 export default function ShippingReturnsPage() {
+  const { shipping } = siteConfig;
+  const standardRate = formatShippingLabel(shipping.standardRateCents);
+  const frozenRate = formatShippingLabel(shipping.frozenRateCents);
+
   return (
     <div className="mx-auto max-w-2xl px-4 py-16 lg:px-8 lg:py-24">
       <p className="eyebrow text-muted">Policies</p>
@@ -15,21 +21,32 @@ export default function ShippingReturnsPage() {
         <div>
           <h2 className="font-display text-xl text-ink">Standard shipping</h2>
           <p className="mt-3">
-            Hair care and wellness products ship through our standard fulfillment
-            process. Shipping rates and delivery estimates are calculated at
-            checkout based on your address and order total.
+            Hair care and wellness products ship within the {shipping.regions}.
+            Standard shipping is {standardRate} per order with an estimated
+            delivery of {shipping.standardDelivery}. Rates and timing are
+            confirmed at checkout based on your address.
           </p>
         </div>
 
         <div className="border-t border-border pt-10">
           <h2 className="font-display text-xl text-ink">Frozen products</h2>
           <p className="mt-3">
-            Caribbean Style Beef Pies are sold frozen and may require special
-            shipping. If frozen items are unavailable for online checkout, please{" "}
+            Caribbean Style Beef Pies are sold frozen and ship with insulated
+            packaging. Frozen shipping is {frozenRate} per order with an
+            estimated delivery of {shipping.frozenDelivery}. If frozen items are
+            unavailable for online checkout, please{" "}
             <Link href="/contact" className="text-ink underline underline-offset-4">
               contact us
             </Link>{" "}
             and we will help you complete your order.
+          </p>
+        </div>
+
+        <div className="border-t border-border pt-10">
+          <h2 className="font-display text-xl text-ink">Taxes</h2>
+          <p className="mt-3">
+            Product prices are listed in USD. Applicable sales tax, if any, is
+            calculated at checkout based on your shipping address.
           </p>
         </div>
 

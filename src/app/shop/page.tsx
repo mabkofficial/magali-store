@@ -27,7 +27,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
     | "price-desc"
     | "name";
 
-  let products = query ? searchProducts(query) : searchProducts("");
+  let products = query ? await searchProducts(query) : await searchProducts("");
 
   if (category && category !== "All") {
     products = products.filter(

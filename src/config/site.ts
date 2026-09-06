@@ -1,6 +1,7 @@
 import type { CollectionSlug } from "@/types/product";
 
-export const FROZEN_CHECKOUT_ENABLED = false;
+export const FROZEN_CHECKOUT_ENABLED =
+  process.env.FROZEN_CHECKOUT_ENABLED === "true";
 
 export const siteConfig = {
   name: "Magali",
@@ -11,6 +12,18 @@ export const siteConfig = {
   announcement:
     "Botanical hair care, wellness oils, and Caribbean food favorites.",
   contactEmail: process.env.CONTACT_TO_EMAIL ?? "",
+  contactPhone: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? "",
+  social: {
+    instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL ?? "",
+    facebook: process.env.NEXT_PUBLIC_FACEBOOK_URL ?? "",
+  },
+  shipping: {
+    standardRateCents: parseInt(process.env.STANDARD_SHIPPING_RATE_CENTS ?? "799", 10),
+    frozenRateCents: parseInt(process.env.FROZEN_SHIPPING_RATE_CENTS ?? "2499", 10),
+    regions: "United States (contiguous 48 states)",
+    standardDelivery: "5–7 business days",
+    frozenDelivery: "1–2 business days with insulated packaging",
+  },
 };
 
 export const navLinks = [

@@ -2,52 +2,63 @@ import { notFound } from "next/navigation";
 import { PageContainer } from "@/components/layout/page-container";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { AddToCartSection } from "@/components/product/add-to-cart-section";
+import { FrequentlyBoughtTogether } from "@/components/product/frequently-bought-together";
 import { ProductAccordions } from "@/components/product/product-accordions";
 import { ProductGallery } from "@/components/product/product-gallery";
 import { RelatedProducts } from "@/components/product/related-products";
 import { StickyBuyBar } from "@/components/product/sticky-buy-bar";
 import { categoryToCollection } from "@/config/site";
+import { getFrequentlyBoughtTogether } from "@/lib/product-recommendations";
 import {
   getAllProductSlugs,
   getProductBySlug,
   getRelatedProducts,
 } from "@/lib/products";
-import { getProductJsonLd, getProductMetadata } from "@/lib/seo";
+import { getProductMetadata, getProductJsonLd } from "@/lib/seo";
+import { siteConfig } from "@/config/site";
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export function generateStaticParams() {
-  return getAllProductSlugs().map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  const slugs = await getAllProductSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: ProductPageProps) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) return { title: "Product Not Found" };
 
-  const meta = getProductMetadata(product);
+  const meta = await getProductMetadata(product);
+  const ogImage = meta.ogImage
+    ? meta.ogImage.startsWith("http")
+      ? meta.ogImage
+      : `${siteConfig.url}${meta.ogImage}`
+    : undefined;
+
   return {
     title: meta.title,
     description: meta.description,
     openGraph: {
       title: meta.title,
       description: meta.description,
-      images: product.images.map((image) => ({ url: image })),
+      images: ogImage ? [{ url: ogImage }] : undefined,
     },
   };
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     notFound();
   }
 
-  const related = getRelatedProducts(product);
+  const related = await getRelatedProducts(product);
+  const fbtBundle = await getFrequentlyBoughtTogether(product);
   const jsonLd = getProductJsonLd(product);
   const collectionSlug = categoryToCollection[product.category];
 
@@ -73,7 +84,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <div className="min-w-0">
             <ProductGallery images={product.images} productName={product.name} />
           </div>
-          <AddToCartSection product={product} />
+          <div className="min-w-0">
+            <AddToCartSection product={product} />
+            {fbtBundle && (
+              <FrequentlyBoughtTogether
+                bundle={fbtBundle}
+                surface="pdp"
+                className="mt-10 border-t border-border pt-10"
+              />
+            )}
+          </div>
         </div>
         <ProductAccordions product={product} />
         <RelatedProducts products={related} />

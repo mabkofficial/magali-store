@@ -18,6 +18,7 @@ export function StickyBuyBar({ product }: StickyBuyBarProps) {
   const [visible, setVisible] = useState(false);
   const isFrozenBlocked =
     product.shippingClass === "frozen" && !FROZEN_CHECKOUT_ENABLED;
+  const isOutOfStock = product.inventoryCount <= 0;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,7 +38,11 @@ export function StickyBuyBar({ product }: StickyBuyBarProps) {
           <p className="truncate text-sm text-ink">{product.shortName}</p>
           <p className="text-sm font-medium text-ink">{formatUSD(product.price)}</p>
         </div>
-        {isFrozenBlocked ? (
+        {isOutOfStock ? (
+          <Button size="sm" variant="outline" disabled>
+            Out of Stock
+          </Button>
+        ) : isFrozenBlocked ? (
           <Link href="/contact">
             <Button size="sm" variant="outline">
               Contact

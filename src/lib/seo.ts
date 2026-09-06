@@ -1,33 +1,46 @@
 import type { Product } from "@/types/product";
+import { getPrimaryImageUrl } from "@/lib/products/images";
 import { siteConfig } from "@/config/site";
+import { getStoreSettings } from "@/lib/store-settings";
 
-export function getProductMetadata(product: Product) {
-  const titles: Record<string, string> = {
-    "magali-botanical-hair-oil":
-      "Magali Botanical Hair Oil 8.5 fl oz | Nourish, Strengthen & Shine",
-    "magali-herbal-hair-grease":
-      "Magali Herbal Hair Grease | Botanical Hair & Scalp Care",
-    "magali-pureheal-oil":
-      "Magali PureHeal Oil 60 ml | Castor & Clove Botanical Oil",
-    "magali-caribbean-style-beef-pies-8-pack":
-      "Magali Caribbean Style Beef Pies, 8 Pack | 32 oz",
-  };
+function toAbsoluteUrl(path: string): string {
+  if (path.startsWith("http")) return path;
+  return `${siteConfig.url}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
+export async function getProductMetadata(product: Product) {
+  const settings = await getStoreSettings();
 
   return {
-    title: titles[product.slug] ?? product.name,
-    description: product.shortDescription,
+    title: product.metaTitle ?? product.name,
+    description:
+      product.metaDescription ??
+      product.shortDescription ??
+      settings?.defaultMetaDescription ??
+      siteConfig.description,
+    ogImage:
+      product.ogImage ??
+      getPrimaryImageUrl(product.images) ??
+      settings?.defaultOgImage ??
+      undefined,
   };
 }
 
 export function getProductJsonLd(product: Product) {
+  const imageUrls = product.images.map((image) => toAbsoluteUrl(image.url));
+  const primary = getPrimaryImageUrl(product.images);
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
-    description: product.shortDescription,
-    image: product.images.map(
-      (image) => `${siteConfig.url}${image}`,
-    ),
+    description: product.metaDescription ?? product.shortDescription,
+    image:
+      imageUrls.length > 0
+        ? imageUrls
+        : primary
+          ? [toAbsoluteUrl(primary)]
+          : [],
     brand: {
       "@type": "Brand",
       name: "Magali",
@@ -38,7 +51,10 @@ export function getProductJsonLd(product: Product) {
       price: product.price,
       priceCurrency: product.currency,
       url: `${siteConfig.url}/products/${product.slug}`,
-      availability: "https://schema.org/InStock",
+      availability:
+        product.inventoryCount <= 0
+          ? "https://schema.org/OutOfStock"
+          : "https://schema.org/InStock",
     },
   };
 }

@@ -4,18 +4,29 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { getProductImageUrls } from "@/lib/products/images";
+import type { ProductImage } from "@/types/product";
 
 interface ProductGalleryProps {
-  images: string[];
+  images: ProductImage[] | string[];
   productName: string;
 }
 
 export function ProductGallery({ images, productName }: ProductGalleryProps) {
+  const normalized = Array.isArray(images)
+    ? typeof images[0] === "string"
+      ? (images as string[]).map((url, sort) => ({ url, alt: "", sort }))
+      : (images as ProductImage[])
+    : [];
+
+  const urls = getProductImageUrls(normalized);
   const [selected, setSelected] = useState(0);
   const touchStartX = useRef<number | null>(null);
 
+  if (urls.length === 0) return null;
+
   const goTo = (index: number) => {
-    setSelected((index + images.length) % images.length);
+    setSelected((index + urls.length) % urls.length);
   };
 
   const handleTouchStart = (event: React.TouchEvent) => {
@@ -31,6 +42,10 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
     touchStartX.current = null;
   };
 
+  const currentAlt =
+    normalized[selected]?.alt ||
+    `${productName}, image ${selected + 1}`;
+
   return (
     <div>
       <div
@@ -39,14 +54,14 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
         onTouchEnd={handleTouchEnd}
       >
         <Image
-          src={images[selected]}
-          alt={`${productName}, image ${selected + 1}`}
+          src={urls[selected]}
+          alt={currentAlt}
           fill
           priority
           sizes="(max-width: 1024px) 100vw, 58vw"
           className="object-contain p-8 lg:p-12"
         />
-        {images.length > 1 && (
+        {urls.length > 1 && (
           <>
             <button
               type="button"
@@ -67,11 +82,11 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
           </>
         )}
       </div>
-      {images.length > 1 && (
+      {urls.length > 1 && (
         <div className="mt-4 flex gap-2 overflow-x-auto pb-2">
-          {images.map((image, index) => (
+          {urls.map((image, index) => (
             <button
-              key={image}
+              key={`${image}-${index}`}
               type="button"
               onClick={() => setSelected(index)}
               className={cn(
@@ -83,7 +98,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             >
               <Image
                 src={image}
-                alt={`${productName} thumbnail ${index + 1}`}
+                alt={normalized[index]?.alt || `${productName} thumbnail ${index + 1}`}
                 fill
                 sizes="64px"
                 className="object-contain p-1"

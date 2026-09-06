@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { collections, getAllProductSlugs } from "@/lib/products";
 import { siteConfig } from "@/config/site";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url;
 
   const staticPages = [
@@ -29,7 +29,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const productPages = getAllProductSlugs().map((slug) => ({
+  const slugs = await getAllProductSlugs();
+  const productPages = slugs.map((slug) => ({
     url: `${baseUrl}/products/${slug}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,

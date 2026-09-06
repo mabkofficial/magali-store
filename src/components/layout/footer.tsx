@@ -13,6 +13,30 @@ export function Footer() {
             Botanical hair care, wellness oils, and Caribbean food favorites.
             Crafted for everyday life.
           </p>
+          {(siteConfig.social.instagram || siteConfig.social.facebook) && (
+            <div className="mt-4 flex flex-wrap gap-4 text-xs uppercase tracking-[0.1em]">
+              {siteConfig.social.instagram && (
+                <a
+                  href={siteConfig.social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted hover:text-ink"
+                >
+                  Instagram
+                </a>
+              )}
+              {siteConfig.social.facebook && (
+                <a
+                  href={siteConfig.social.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted hover:text-ink"
+                >
+                  Facebook
+                </a>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="min-w-0">
@@ -57,7 +81,14 @@ export function Footer() {
             .
           </p>
           {siteConfig.contactEmail && (
-            <p className="mt-3 text-sm text-muted">{siteConfig.contactEmail}</p>
+            <p className="mt-3 text-sm text-muted">
+              <a href={`mailto:${siteConfig.contactEmail}`} className="hover:text-ink">
+                {siteConfig.contactEmail}
+              </a>
+            </p>
+          )}
+          {siteConfig.contactPhone && (
+            <p className="mt-2 text-sm text-muted">{siteConfig.contactPhone}</p>
           )}
         </div>
       </PageContainer>

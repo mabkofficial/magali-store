@@ -20,8 +20,10 @@ export function AddToCartSection({ product }: AddToCartSectionProps) {
 
   const isFrozenBlocked =
     product.shippingClass === "frozen" && !FROZEN_CHECKOUT_ENABLED;
+  const isOutOfStock = product.inventoryCount <= 0;
 
   const handleAdd = () => {
+    if (isOutOfStock) return;
     addToCart(product, quantity);
   };
 
@@ -39,7 +41,7 @@ export function AddToCartSection({ product }: AddToCartSectionProps) {
       </p>
 
       <div className="mt-10 flex items-stretch gap-4">
-        {!isFrozenBlocked && (
+        {!isFrozenBlocked && !isOutOfStock && (
           <div className="flex items-center border border-border">
             <button
               type="button"
@@ -62,7 +64,11 @@ export function AddToCartSection({ product }: AddToCartSectionProps) {
             </button>
           </div>
         )}
-        {isFrozenBlocked ? (
+        {isOutOfStock ? (
+          <Button size="lg" variant="outline" className="flex-1" disabled>
+            Out of Stock
+          </Button>
+        ) : isFrozenBlocked ? (
           <Link href="/contact" className="flex-1">
             <Button size="lg" variant="outline" className="w-full">
               Contact to Order

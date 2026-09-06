@@ -10,6 +10,7 @@ import { FROZEN_CHECKOUT_ENABLED } from "@/config/site";
 import { formatUSD } from "@/lib/currency";
 import { isStripeConfigured } from "@/lib/stripe";
 import { useCartStore } from "@/store/cart-store";
+import { CartFbtSuggestions } from "@/components/product/cart-fbt-suggestions";
 
 export function CartContent() {
   const { items, updateQuantity, removeItem, clearCart, getSubtotal, hasFrozenItems, openCart } =
@@ -128,6 +129,12 @@ export function CartContent() {
         >
           Clear cart
         </button>
+
+        <CartFbtSuggestions
+          cartProductIds={items.map((item) => item.productId)}
+          surface="cart"
+          className="mt-12 border-t border-border pt-10"
+        />
       </div>
 
       <div className="border border-border p-6 lg:p-8">

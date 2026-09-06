@@ -4,9 +4,18 @@ import { Search, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { getAllProducts } from "@/lib/products";
 import { useBodyScrollLock, useFocusTrap } from "@/hooks/use-cart-ui";
 import { formatUSD } from "@/lib/currency";
+
+type SearchProduct = {
+  id: string;
+  slug: string;
+  name: string;
+  shortName: string;
+  category: string;
+  tagline: string;
+  price: number;
+};
 
 interface SearchDialogProps {
   open: boolean;
@@ -20,12 +29,20 @@ export function SearchDialog({ open, onClose }: SearchDialogProps) {
 
 function SearchDialogPanel({ onClose }: { onClose: () => void }) {
   const [query, setQuery] = useState("");
+  const [products, setProducts] = useState<SearchProduct[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   useFocusTrap(true, panelRef);
   useBodyScrollLock(true);
+
+  useEffect(() => {
+    fetch("/api/products")
+      .then((response) => response.json())
+      .then((data) => setProducts(data.products ?? []))
+      .catch(() => setProducts([]));
+  }, []);
 
   useEffect(() => {
     const timer = window.setTimeout(() => inputRef.current?.focus(), 50);
@@ -42,7 +59,7 @@ function SearchDialogPanel({ onClose }: { onClose: () => void }) {
 
   const normalized = query.trim().toLowerCase();
   const results = normalized
-    ? getAllProducts().filter((product) =>
+    ? products.filter((product) =>
         [product.name, product.shortName, product.category, product.tagline]
           .join(" ")
           .toLowerCase()

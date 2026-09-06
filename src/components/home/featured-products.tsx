@@ -2,8 +2,8 @@ import { PageContainer } from "@/components/layout/page-container";
 import { ProductGrid } from "@/components/product/product-grid";
 import { getFeaturedProducts } from "@/lib/products";
 
-export function FeaturedProducts() {
-  const products = getFeaturedProducts();
+export async function FeaturedProducts() {
+  const products = await getFeaturedProducts();
 
   return (
     <section className="border-b border-border bg-surface">

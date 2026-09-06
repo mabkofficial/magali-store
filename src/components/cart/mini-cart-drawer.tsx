@@ -10,6 +10,7 @@ import { formatUSD } from "@/lib/currency";
 import { isStripeConfigured } from "@/lib/stripe";
 import { useBodyScrollLock, useFocusTrap } from "@/hooks/use-cart-ui";
 import { useCartStore } from "@/store/cart-store";
+import { CartFbtSuggestions } from "@/components/product/cart-fbt-suggestions";
 
 export function MiniCartDrawer() {
   const {
@@ -150,6 +151,13 @@ export function MiniCartDrawer() {
                 </li>
               ))}
             </ul>
+
+            <div className="border-t border-border px-6 py-4">
+              <CartFbtSuggestions
+                cartProductIds={items.map((item) => item.productId)}
+                surface="mini_cart"
+              />
+            </div>
 
             <div className="border-t border-border px-6 py-5">
               <div className="flex justify-between text-sm">

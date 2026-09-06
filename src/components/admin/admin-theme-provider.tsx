@@ -1,0 +1,16 @@
+"use client";
+
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+
+export function AdminThemeProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="light"
+      enableSystem={false}
+      storageKey="magali-admin-theme"
+    >
+      {children}
+    </NextThemesProvider>
+  );
+}

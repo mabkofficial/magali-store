@@ -36,7 +36,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
     notFound();
   }
 
-  const products = getProductsByCollection(slug as CollectionSlug);
+  const products = await getProductsByCollection(slug as CollectionSlug);
 
   return (
     <PageContainer className="py-10 sm:py-12 lg:py-16">

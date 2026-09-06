@@ -12,6 +12,12 @@ export type ProductDirections =
 
 export type ProductIngredients = Record<string, string[]>;
 
+export interface ProductImage {
+  url: string;
+  alt?: string;
+  sort: number;
+}
+
 export interface Product {
   id: string;
   slug: string;
@@ -30,10 +36,15 @@ export interface Product {
   directions: ProductDirections;
   caution: string;
   storage: string;
-  images: string[];
+  images: ProductImage[];
   featured: boolean;
   shippingClass: ShippingClass;
   status: string;
+  inventoryCount: number;
+  isActive: boolean;
+  metaTitle?: string;
+  metaDescription?: string;
+  ogImage?: string;
   complianceNote?: string;
   verificationNote?: string;
   nutritionHighlights?: string[];
@@ -49,6 +60,13 @@ export interface CartItem {
   shippingClass: ShippingClass;
 }
 
+export interface FbtBundle {
+  anchor: Product;
+  companions: Product[];
+}
+
+export type FbtSurface = "pdp" | "cart" | "mini_cart";
+
 export type CollectionSlug = "hair-care" | "wellness" | "food";
 
 export interface Collection {
@@ -56,4 +74,18 @@ export interface Collection {
   name: string;
   description: string;
   categories: ProductCategory[];
+}
+
+export interface StoreSettings {
+  id: string;
+  storeName: string;
+  contactEmail: string | null;
+  contactPhone: string | null;
+  socialInstagram: string | null;
+  socialFacebook: string | null;
+  defaultMetaDescription: string | null;
+  defaultOgImage: string | null;
+  standardShippingCents: number;
+  frozenShippingCents: number;
+  shippingRegions: string;
 }
