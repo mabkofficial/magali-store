@@ -32,20 +32,14 @@ export function TrustBadges({
     <section
       className={
         compact
-          ? "border-t border-border bg-surface-muted py-10 sm:py-12"
+          ? "border-t border-border bg-surface-muted page-y"
           : isDark
             ? "border-b border-border bg-botanical text-surface"
             : "border-b border-border bg-surface-muted"
       }
     >
-      <PageContainer className={compact ? undefined : "py-10 sm:py-12"}>
-        <ul
-          className={
-            compact
-              ? "grid gap-6 sm:grid-cols-3"
-              : "grid gap-8 sm:grid-cols-3"
-          }
-        >
+      <PageContainer className={compact ? undefined : "page-y"}>
+        <ul className={compact ? "grid grid-gap sm:grid-cols-3" : "grid grid-gap sm:grid-cols-3"}>
           {badges.map(({ icon: Icon, label, description }) => (
             <li
               key={label}

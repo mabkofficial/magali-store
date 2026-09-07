@@ -1,3 +1,5 @@
+import { PageContainer } from "@/components/layout/page-container";
+
 export const metadata = {
   title: "Terms of Service",
   description: "Terms and conditions for using the Magali website and purchasing products.",
@@ -5,12 +7,12 @@ export const metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="mx-auto max-w-2xl px-4 py-16 lg:px-8 lg:py-24">
+    <PageContainer narrow pageY>
       <p className="eyebrow text-muted">Legal</p>
       <h1 className="mt-4 font-display text-4xl text-ink">Terms of Service</h1>
       <p className="mt-4 text-sm text-muted">Last updated: August 2026</p>
 
-      <div className="mt-12 space-y-10 text-sm leading-relaxed text-muted">
+      <div className="mt-8 stack-lg text-sm leading-relaxed text-muted">
         <section>
           <h2 className="font-display text-xl text-ink">Acceptance of terms</h2>
           <p className="mt-3">
@@ -19,7 +21,7 @@ export default function TermsPage() {
           </p>
         </section>
 
-        <section className="border-t border-border pt-10">
+        <section className="border-t border-border pt-8">
           <h2 className="font-display text-xl text-ink">Products and pricing</h2>
           <p className="mt-3">
             Product descriptions, prices, and availability may change without
@@ -28,7 +30,7 @@ export default function TermsPage() {
           </p>
         </section>
 
-        <section className="border-t border-border pt-10">
+        <section className="border-t border-border pt-8">
           <h2 className="font-display text-xl text-ink">Orders and payment</h2>
           <p className="mt-3">
             Orders are processed through Stripe. By placing an order, you confirm
@@ -37,7 +39,7 @@ export default function TermsPage() {
           </p>
         </section>
 
-        <section className="border-t border-border pt-10">
+        <section className="border-t border-border pt-8">
           <h2 className="font-display text-xl text-ink">Product use</h2>
           <p className="mt-3">
             Beauty and wellness products are for external use unless otherwise
@@ -47,7 +49,7 @@ export default function TermsPage() {
           </p>
         </section>
 
-        <section className="border-t border-border pt-10">
+        <section className="border-t border-border pt-8">
           <h2 className="font-display text-xl text-ink">Limitation of liability</h2>
           <p className="mt-3">
             Magali is not liable for indirect, incidental, or consequential
@@ -56,6 +58,6 @@ export default function TermsPage() {
           </p>
         </section>
       </div>
-    </div>
+    </PageContainer>
   );
 }

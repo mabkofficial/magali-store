@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 export function BundlesComingSoon() {
   return (
-    <section className="border-b border-border pb-10" aria-labelledby="bundles-heading">
+    <section className="border-b border-border pb-8" aria-labelledby="bundles-heading">
       <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="eyebrow text-botanical">Coming soon</p>
@@ -20,7 +20,7 @@ export function BundlesComingSoon() {
         </div>
       </div>
 
-      <ul className="grid min-w-0 grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+      <ul className="grid min-w-0 grid-cols-2 grid-gap sm:grid-cols-3 lg:grid-cols-5">
         {featuredDraftBundles.map((bundle) => (
           <li
             key={bundle.id}

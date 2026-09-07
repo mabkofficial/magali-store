@@ -1,9 +1,10 @@
 "use client";
 
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { QuantitySelector } from "@/components/cart/quantity-selector";
 import { Button } from "@/components/ui/button";
 import { ProductGridSkeleton } from "@/components/ui/skeleton";
 import { FROZEN_CHECKOUT_ENABLED } from "@/config/site";
@@ -60,7 +61,7 @@ export function CartContent() {
 
   if (items.length === 0) {
     return (
-      <div className="py-20 text-center">
+      <div className="py-16 text-center">
         <p className="text-sm text-muted">Your cart is empty.</p>
         <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-muted">
           Start with our hair care routine — botanical oil and herbal grease work
@@ -79,7 +80,7 @@ export function CartContent() {
   }
 
   return (
-    <div className="grid gap-12 lg:grid-cols-3">
+    <div className="grid grid-gap lg:grid-cols-3">
       <div className="lg:col-span-2">
         <ul className="divide-y divide-border">
           {items.map((item) => (
@@ -100,34 +101,20 @@ export function CartContent() {
                 >
                   {item.name}
                 </Link>
-                <p className="mt-1 text-xs text-muted">
+                <p className="mt-2 text-xs text-muted">
                   {formatUSD(item.price)} each
                   {item.shippingClass === "frozen" && " · Frozen"}
                 </p>
-                <div className="mt-auto flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                    className="qty-btn pressable border border-border focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
-                    aria-label="Decrease quantity"
-                  >
-                    <Minus className="h-4 w-4" strokeWidth={1.5} />
-                  </button>
-                  <span className="w-8 text-center text-sm" aria-live="polite">
-                    {item.quantity}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                    className="qty-btn pressable border border-border focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
-                    aria-label="Increase quantity"
-                  >
-                    <Plus className="h-4 w-4" strokeWidth={1.5} />
-                  </button>
+                <div className="mt-4 flex items-center justify-between gap-4">
+                  <QuantitySelector
+                    quantity={item.quantity}
+                    onDecrease={() => updateQuantity(item.productId, item.quantity - 1)}
+                    onIncrease={() => updateQuantity(item.productId, item.quantity + 1)}
+                  />
                   <button
                     type="button"
                     onClick={() => removeItem(item.productId)}
-                    className="qty-btn pressable ml-auto text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
+                    className="pressable flex h-10 w-10 shrink-0 items-center justify-center text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink sm:h-11 sm:w-11"
                     aria-label={`Remove ${item.name}`}
                   >
                     <Trash2 className="h-4 w-4" strokeWidth={1.5} />
@@ -148,7 +135,7 @@ export function CartContent() {
         <CartFbtSuggestions
           cartProductIds={items.map((item) => item.productId)}
           surface="cart"
-          className="mt-12 border-t border-border pt-10"
+          className="mt-8 border-t border-border pt-8"
         />
       </div>
 

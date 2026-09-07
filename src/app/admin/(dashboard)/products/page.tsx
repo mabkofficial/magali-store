@@ -13,7 +13,7 @@ export default async function AdminProductsPage() {
     : { data: [] };
 
   return (
-    <div className="space-y-6">
+    <div className="stack-md">
       <div>
         <h2 className="text-2xl font-semibold tracking-tight">Products</h2>
         <p className="text-sm text-muted-foreground">

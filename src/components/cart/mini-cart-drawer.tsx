@@ -1,9 +1,10 @@
 "use client";
 
-import { Minus, Plus, Trash2, X } from "lucide-react";
+import { Trash2, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { QuantitySelector } from "@/components/cart/quantity-selector";
 import { Button } from "@/components/ui/button";
 import { FROZEN_CHECKOUT_ENABLED } from "@/config/site";
 import { formatUSD } from "@/lib/currency";
@@ -83,12 +84,12 @@ export function MiniCartDrawer() {
         aria-label="Shopping cart"
         className="drawer-panel-right absolute right-0 top-0 flex h-full w-full max-w-md flex-col border-l border-border bg-surface"
       >
-        <div className="flex items-center justify-between border-b border-border px-6 py-5">
+        <div className="flex items-center justify-between border-b border-border px-6 py-4">
           <h2 className="eyebrow text-ink">Cart ({items.length})</h2>
           <button
             type="button"
             onClick={closeCart}
-            className="pressable p-2 hover:bg-surface-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
+            className="pressable flex h-10 w-10 items-center justify-center hover:bg-surface-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
             aria-label="Close cart drawer"
           >
             <X className="h-5 w-5" strokeWidth={1.5} />
@@ -116,43 +117,45 @@ export function MiniCartDrawer() {
           <>
             <ul className="flex-1 overflow-y-auto px-6 py-4">
               {items.map((item) => (
-                <li key={item.productId} className="flex gap-4 border-b border-border py-5 last:border-0">
+                <li
+                  key={item.productId}
+                  className="flex gap-4 border-b border-border py-6 last:border-0"
+                >
                   <div className="relative h-20 w-20 shrink-0 bg-surface-muted">
-                    <Image src={item.image} alt={item.name} fill sizes="80px" className="object-contain p-2" />
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      fill
+                      sizes="80px"
+                      className="object-contain p-2"
+                    />
                   </div>
-                  <div className="flex flex-1 flex-col">
+                  <div className="flex min-w-0 flex-1 flex-col">
                     <Link
                       href={`/products/${item.slug}`}
                       onClick={closeCart}
-                      className="text-sm text-ink hover:underline"
+                      className="line-clamp-2 text-sm leading-snug text-ink hover:underline"
                     >
                       {item.name}
                     </Link>
-                    <p className="mt-1 text-xs text-muted">
+                    <p className="mt-2 text-xs text-muted">
                       {formatUSD(item.price)} each
                     </p>
-                    <div className="mt-auto flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                        className="qty-btn pressable border border-border focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
-                        aria-label="Decrease quantity"
-                      >
-                        <Minus className="h-3.5 w-3.5" strokeWidth={1.5} />
-                      </button>
-                      <span className="w-6 text-center text-sm">{item.quantity}</span>
-                      <button
-                        type="button"
-                        onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                        className="qty-btn pressable border border-border focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
-                        aria-label="Increase quantity"
-                      >
-                        <Plus className="h-3.5 w-3.5" strokeWidth={1.5} />
-                      </button>
+                    <div className="mt-4 flex items-center justify-between gap-4">
+                      <QuantitySelector
+                        size="sm"
+                        quantity={item.quantity}
+                        onDecrease={() =>
+                          updateQuantity(item.productId, item.quantity - 1)
+                        }
+                        onIncrease={() =>
+                          updateQuantity(item.productId, item.quantity + 1)
+                        }
+                      />
                       <button
                         type="button"
                         onClick={() => removeItem(item.productId)}
-                        className="qty-btn pressable ml-auto text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
+                        className="pressable flex h-10 w-10 shrink-0 items-center justify-center text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
                         aria-label={`Remove ${item.name}`}
                       >
                         <Trash2 className="h-4 w-4" strokeWidth={1.5} />
@@ -163,7 +166,7 @@ export function MiniCartDrawer() {
               ))}
             </ul>
 
-            <div className="border-t border-border px-6 py-4">
+            <div className="border-t border-border px-6 py-6">
               <CartFbtSuggestions
                 cartProductIds={items.map((item) => item.productId)}
                 surface="mini_cart"
@@ -171,7 +174,7 @@ export function MiniCartDrawer() {
               />
             </div>
 
-            <div className="border-t border-border px-6 py-5">
+            <div className="border-t border-border px-6 py-6">
               <div className="flex justify-between text-sm">
                 <span className="text-muted">Subtotal</span>
                 <span className="font-medium text-ink">{formatUSD(subtotal)}</span>
@@ -186,7 +189,7 @@ export function MiniCartDrawer() {
                 </p>
               )}
               <Button
-                className="mt-5 w-full"
+                className="mt-6 w-full"
                 onClick={handleCheckout}
                 disabled={loading || frozenBlocked || !stripeReady}
               >

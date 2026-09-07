@@ -8,7 +8,7 @@ import {
 
 export default function NotificationsSettingsPage() {
   return (
-    <div className="space-y-6">
+    <div className="stack-md">
       <div>
         <h2 className="text-2xl font-semibold tracking-tight">Notifications</h2>
         <p className="text-sm text-muted-foreground">
@@ -24,14 +24,14 @@ export default function NotificationsSettingsPage() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           <p>
-            <code className="rounded bg-muted px-1.5 py-0.5">CONTACT_TO_EMAIL</code> — inbox for contact form and order notifications
+            <code className="rounded bg-muted px-2 py-1">CONTACT_TO_EMAIL</code> — inbox for contact form and order notifications
           </p>
           <p>
-            <code className="rounded bg-muted px-1.5 py-0.5">RESEND_FROM_EMAIL</code> — verified Resend sender (e.g.{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5">Magali &lt;hello@magali.com&gt;</code>)
+            <code className="rounded bg-muted px-2 py-1">RESEND_FROM_EMAIL</code> — verified Resend sender (e.g.{" "}
+            <code className="rounded bg-muted px-2 py-1">Magali &lt;hello@magali.com&gt;</code>)
           </p>
           <p>
-            <code className="rounded bg-muted px-1.5 py-0.5">RESEND_API_KEY</code> — Resend API key for sending mail
+            <code className="rounded bg-muted px-2 py-1">RESEND_API_KEY</code> — Resend API key for sending mail
           </p>
         </CardContent>
       </Card>

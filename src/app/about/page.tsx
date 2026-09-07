@@ -37,8 +37,8 @@ export default function AboutPage() {
   return (
     <>
       <section className="border-b border-border bg-surface-muted">
-        <PageContainer className="py-16 lg:py-24">
-          <div className="grid min-w-0 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <PageContainer sectionY>
+          <div className="grid min-w-0 items-center grid-gap lg:grid-cols-2">
             <div className="min-w-0">
               <p className="eyebrow text-botanical">About Magali</p>
               <h1 className="mt-4 font-display text-4xl text-ink lg:text-5xl">
@@ -65,8 +65,8 @@ export default function AboutPage() {
         </PageContainer>
       </section>
 
-      <PageContainer className="py-16 lg:py-24">
-        <section className="grid min-w-0 items-center gap-10 border-b border-border pb-16 lg:grid-cols-[1fr,min(360px,42%)] lg:gap-16">
+      <PageContainer sectionY>
+        <section className="grid min-w-0 items-center grid-gap border-b border-border pb-16 lg:grid-cols-[1fr,min(360px,42%)]">
           <div className="min-w-0">
             <h2 className="font-display text-2xl text-ink lg:text-3xl">
               Botanical beauty and wellness
@@ -94,7 +94,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="grid min-w-0 items-center gap-10 border-b border-border py-16 lg:grid-cols-[min(360px,42%),1fr] lg:gap-16">
+        <section className="grid min-w-0 items-center grid-gap border-b border-border py-16 lg:grid-cols-[min(360px,42%),1fr]">
           <div className="relative order-2 aspect-square overflow-hidden border border-border bg-surface-muted lg:order-1">
             <Image
               src="/images/products/beef-pies/03-plated-cooked-pies.png"
@@ -123,7 +123,7 @@ export default function AboutPage() {
 
         <section className="pt-16">
           <h2 className="font-display text-2xl text-ink lg:text-3xl">Our values</h2>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2">
+          <div className="mt-8 grid grid-gap sm:grid-cols-2">
             {values.map(({ icon: Icon, title, description }) => (
               <div
                 key={title}

@@ -102,7 +102,7 @@ export function CartFbtSuggestions({
       </p>
 
       {loading ? (
-        <div className={cn("mt-3 space-y-2", compact && "mt-2")}>
+        <div className={cn("mt-3 space-y-3", compact && "mt-3 space-y-3")}>
           <FbtSuggestionSkeleton compact={compact} />
           {!compact && <FbtSuggestionSkeleton />}
         </div>
@@ -110,7 +110,7 @@ export function CartFbtSuggestions({
         <ul
           className={cn(
             compact
-              ? "mt-2 space-y-2"
+              ? "mt-3 space-y-3"
               : "mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1",
           )}
         >
@@ -119,7 +119,7 @@ export function CartFbtSuggestions({
               key={product.id}
               className={cn(
                 "flex items-center gap-3 border border-border bg-surface p-3",
-                compact && "gap-2.5 p-2.5",
+                compact && "gap-3 p-3",
               )}
             >
               <div

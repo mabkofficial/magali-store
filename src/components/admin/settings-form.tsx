@@ -35,7 +35,7 @@ export function SettingsForm({
           toast.success("Settings saved");
         });
       }}
-      className="space-y-6"
+      className="stack-md"
     >
       {fields === "general" && (
         <Card>

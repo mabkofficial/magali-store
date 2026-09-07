@@ -49,7 +49,7 @@ export function ProductCard({
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           className={cn(
             "product-image-primary object-contain",
-            compact ? "p-2.5 sm:p-3" : "p-4 sm:p-6",
+            compact ? "p-2 sm:p-3" : "p-4 sm:p-6",
           )}
         />
         {secondaryImage && (
@@ -60,13 +60,13 @@ export function ProductCard({
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             className={cn(
               "product-image-secondary hidden object-contain lg:block",
-              compact ? "p-2.5 sm:p-3" : "p-4 sm:p-6",
+              compact ? "p-2 sm:p-3" : "p-4 sm:p-6",
             )}
           />
         )}
       </Link>
 
-      <div className={cn("flex flex-1 flex-col", compact ? "pt-2.5" : "pt-4")}>
+      <div className={cn("flex flex-1 flex-col", compact ? "pt-2" : "pt-4")}>
         <Link href={`/collections/${categoryToCollection[product.category]}`} className="cursor-pointer">
           <Badge category={product.category} className="text-[10px]">
             {product.category}
@@ -84,7 +84,7 @@ export function ProductCard({
             {product.name}
           </h3>
         </Link>
-        <p className="mt-0.5 text-[11px] text-muted">{product.size}</p>
+        <p className="mt-1 text-[11px] text-muted">{product.size}</p>
         <div
           className={cn(
             "mt-auto flex items-baseline justify-between gap-2",

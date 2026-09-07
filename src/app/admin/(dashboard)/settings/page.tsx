@@ -48,7 +48,7 @@ const settingsCards = [
 
 export default function AdminSettingsPage() {
   return (
-    <div className="space-y-6">
+    <div className="stack-md">
       <div>
         <h2 className="text-2xl font-semibold tracking-tight">Settings</h2>
         <p className="text-sm text-muted-foreground">

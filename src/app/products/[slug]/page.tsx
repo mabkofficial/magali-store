@@ -68,7 +68,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <PageContainer className="py-10 pb-24 sm:py-12 lg:pb-12 lg:py-16">
+      <PageContainer pageY className="pb-24 lg:pb-12">
         <Breadcrumbs
           items={[
             { label: "Home", href: "/" },
@@ -80,7 +80,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             { label: product.shortName },
           ]}
         />
-        <div className="grid min-w-0 gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="grid min-w-0 grid-gap lg:grid-cols-2">
           <div className="min-w-0">
             <ProductGallery images={product.images} productName={product.name} />
           </div>

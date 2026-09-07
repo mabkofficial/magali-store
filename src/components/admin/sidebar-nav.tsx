@@ -31,7 +31,7 @@ function NavBadge({ count }: { count: number }) {
   return (
     <Badge
       variant="secondary"
-      className="ml-auto h-5 min-w-5 justify-center rounded-full px-1.5 text-[10px] tabular-nums group-data-[collapsible=icon]:hidden"
+      className="ml-auto h-5 min-w-5 justify-center rounded-full px-2 text-[10px] tabular-nums group-data-[collapsible=icon]:hidden"
     >
       {count > 99 ? "99+" : count}
     </Badge>

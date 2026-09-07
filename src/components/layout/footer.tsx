@@ -6,7 +6,7 @@ import { footerLinks, siteConfig } from "@/config/site";
 export function Footer() {
   return (
     <footer className="mt-auto border-t border-border bg-surface">
-      <PageContainer className="grid gap-10 py-12 sm:grid-cols-2 sm:py-16 lg:grid-cols-4 lg:gap-12 lg:py-20">
+      <PageContainer sectionY className="grid grid-gap sm:grid-cols-2 lg:grid-cols-4">
         <div className="min-w-0 sm:col-span-2 lg:col-span-1">
           <BrandLogo variant="lockup" href="/" className="hover:opacity-100" />
           <p className="mt-6 max-w-xs text-sm leading-relaxed text-muted">
@@ -41,7 +41,7 @@ export function Footer() {
 
         <div className="min-w-0">
           <h3 className="eyebrow mb-4 text-ink">Shop</h3>
-          <ul className="space-y-2.5 text-sm">
+          <ul className="stack-sm text-sm">
             {footerLinks.shop.map((link) => (
               <li key={link.href}>
                 <Link
@@ -57,7 +57,7 @@ export function Footer() {
 
         <div className="min-w-0">
           <h3 className="eyebrow mb-4 text-ink">Customer Care</h3>
-          <ul className="space-y-2.5 text-sm">
+          <ul className="stack-sm text-sm">
             {footerLinks.care.map((link) => (
               <li key={link.href}>
                 <Link

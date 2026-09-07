@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function CartPage() {
   return (
-    <PageContainer className="py-10 sm:py-12 lg:py-16">
+    <PageContainer pageY>
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },
@@ -19,7 +19,7 @@ export default function CartPage() {
           { label: "Cart" },
         ]}
       />
-      <h1 className="mb-10 font-display text-4xl text-ink lg:text-5xl">Cart</h1>
+      <h1 className="mb-8 font-display text-3xl text-ink sm:text-4xl">Cart</h1>
       <Suspense fallback={null}>
         <CheckoutStatus />
       </Suspense>

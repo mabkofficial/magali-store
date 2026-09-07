@@ -39,7 +39,7 @@ export function DashboardStats({ stats }: { stats: StatCard[] }) {
               </Badge>
             </CardAction>
           </CardHeader>
-          <CardFooter className="flex-col items-start gap-1.5 text-sm">
+          <CardFooter className="flex-col items-start gap-2 text-sm">
             <div className="line-clamp-1 flex gap-2 font-medium">{stat.description}</div>
             <div className="flex w-full items-center justify-between gap-2">
               <span className="text-muted-foreground">{stat.footer}</span>

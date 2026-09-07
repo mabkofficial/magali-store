@@ -63,7 +63,7 @@ export function AddToCartSection({ product, fbtBundle }: AddToCartSectionProps) 
         </ul>
       )}
 
-      <div className="mt-10 flex items-stretch gap-4">
+      <div className="mt-8 flex items-stretch gap-4">
         {!isFrozenBlocked && !isOutOfStock && (
           <div className="flex items-center border border-border">
             <button

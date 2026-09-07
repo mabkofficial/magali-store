@@ -117,7 +117,7 @@ export function FbtProductPicker({
                   <div className="flex gap-1">
                     <button
                       type="button"
-                      className="rounded border px-2 py-0.5 text-xs hover:bg-muted"
+                      className="rounded border px-2 py-1 text-xs hover:bg-muted"
                       onClick={() => move(index, -1)}
                       disabled={index === 0}
                     >
@@ -125,7 +125,7 @@ export function FbtProductPicker({
                     </button>
                     <button
                       type="button"
-                      className="rounded border px-2 py-0.5 text-xs hover:bg-muted"
+                      className="rounded border px-2 py-1 text-xs hover:bg-muted"
                       onClick={() => move(index, 1)}
                       disabled={index === selectedIds.length - 1}
                     >

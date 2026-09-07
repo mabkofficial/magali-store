@@ -11,7 +11,7 @@ export default async function AdminSubscribersPage() {
     : { data: [] };
 
   return (
-    <div className="space-y-6">
+    <div className="stack-md">
       <div>
         <h2 className="text-2xl font-semibold tracking-tight">Newsletter</h2>
         <p className="text-sm text-muted-foreground">

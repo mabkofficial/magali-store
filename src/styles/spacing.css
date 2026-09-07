@@ -1,0 +1,95 @@
+/*
+ * Magali spacing scale — 4px base, 8px macro rhythm
+ *
+ * Primitive steps (Tailwind default):
+ *   1=4px  2=8px  3=12px  4=16px  6=24px  8=32px  12=48px  16=64px  20=80px
+ *
+ * Semantic usage:
+ *   page-y      — shop, cart, collection pages (48/64)
+ *   section-y   — homepage sections, footer (48/64/80)
+ *   page-header — title block below breadcrumbs (32 bottom margin + padding)
+ *   stack-*     — vertical content stacks (16/24/32)
+ *   grid-gap    — product/category grids (16/24/32)
+ */
+
+:root {
+  --space-page-y: 3rem; /* 48px */
+  --space-page-y-md: 4rem; /* 64px */
+  --space-section-y-lg: 5rem; /* 80px */
+  --space-header: 2rem; /* 32px */
+  --space-stack-sm: 1rem; /* 16px */
+  --space-stack-md: 1.5rem; /* 24px */
+  --space-stack-lg: 2rem; /* 32px */
+  --space-grid: 1rem; /* 16px */
+  --space-grid-md: 1.5rem; /* 24px */
+  --space-grid-lg: 2rem; /* 32px */
+}
+
+@layer components {
+  .page-y {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  @media (min-width: 640px) {
+    .page-y {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+  }
+
+  .section-y {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  @media (min-width: 640px) {
+    .section-y {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-y {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--border, #e3e0da);
+  }
+
+  .stack-sm > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1rem;
+  }
+
+  .stack-md > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1.5rem;
+  }
+
+  .stack-lg > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 2rem;
+  }
+
+  .grid-gap {
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .grid-gap {
+      gap: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .grid-gap {
+      gap: 2rem;
+    }
+  }
+}

@@ -20,7 +20,7 @@ export function ProductGrid({ products, compact = true }: ProductGridProps) {
   return (
     <div
       className={cn(
-        "grid min-w-0 grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-3 sm:gap-x-4 sm:gap-y-8 lg:grid-cols-4",
+        "grid min-w-0 grid-cols-2 grid-gap sm:grid-cols-3 lg:grid-cols-4",
         !compact && "lg:grid-cols-3",
       )}
     >

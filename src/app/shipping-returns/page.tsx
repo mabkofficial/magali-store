@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PageContainer } from "@/components/layout/page-container";
 import { siteConfig } from "@/config/site";
 import { formatShippingLabel } from "@/lib/shipping";
 
@@ -13,11 +14,11 @@ export default function ShippingReturnsPage() {
   const frozenRate = formatShippingLabel(shipping.frozenRateCents);
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-16 lg:px-8 lg:py-24">
+    <PageContainer narrow pageY>
       <p className="eyebrow text-muted">Policies</p>
       <h1 className="mt-4 font-display text-4xl text-ink">Shipping and Returns</h1>
 
-      <section className="mt-12 space-y-10 text-sm leading-relaxed text-muted">
+      <section className="mt-8 stack-lg text-sm leading-relaxed text-muted">
         <div>
           <h2 className="font-display text-xl text-ink">Standard shipping</h2>
           <p className="mt-3">
@@ -28,7 +29,7 @@ export default function ShippingReturnsPage() {
           </p>
         </div>
 
-        <div className="border-t border-border pt-10">
+        <div className="border-t border-border pt-8">
           <h2 className="font-display text-xl text-ink">Frozen products</h2>
           <p className="mt-3">
             Caribbean Style Beef Pies are sold frozen and ship with insulated
@@ -42,7 +43,7 @@ export default function ShippingReturnsPage() {
           </p>
         </div>
 
-        <div className="border-t border-border pt-10">
+        <div className="border-t border-border pt-8">
           <h2 className="font-display text-xl text-ink">Taxes</h2>
           <p className="mt-3">
             Product prices are listed in USD. Applicable sales tax, if any, is
@@ -50,7 +51,7 @@ export default function ShippingReturnsPage() {
           </p>
         </div>
 
-        <div className="border-t border-border pt-10">
+        <div className="border-t border-border pt-8">
           <h2 className="font-display text-xl text-ink">Returns and refunds</h2>
           <p className="mt-3">
             We want you to be satisfied with your purchase. If something is wrong
@@ -66,6 +67,6 @@ export default function ShippingReturnsPage() {
           </p>
         </div>
       </section>
-    </div>
+    </PageContainer>
   );
 }

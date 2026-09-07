@@ -1,3 +1,5 @@
+import { PageContainer } from "@/components/layout/page-container";
+
 export const metadata = {
   title: "Privacy Policy",
   description: "How Magali collects, uses, and protects your personal information.",
@@ -5,12 +7,12 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="mx-auto max-w-2xl px-4 py-16 lg:px-8 lg:py-24">
+    <PageContainer narrow pageY>
       <p className="eyebrow text-muted">Legal</p>
       <h1 className="mt-4 font-display text-4xl text-ink">Privacy Policy</h1>
       <p className="mt-4 text-sm text-muted">Last updated: August 2026</p>
 
-      <div className="mt-12 space-y-10 text-sm leading-relaxed text-muted">
+      <div className="mt-8 stack-lg text-sm leading-relaxed text-muted">
         <section>
           <h2 className="font-display text-xl text-ink">Information we collect</h2>
           <p className="mt-3">
@@ -24,7 +26,7 @@ export default function PrivacyPage() {
           </p>
         </section>
 
-        <section className="border-t border-border pt-10">
+        <section className="border-t border-border pt-8">
           <h2 className="font-display text-xl text-ink">How we use information</h2>
           <p className="mt-3">
             We use your information to respond to inquiries, process orders,
@@ -32,7 +34,7 @@ export default function PrivacyPage() {
           </p>
         </section>
 
-        <section className="border-t border-border pt-10">
+        <section className="border-t border-border pt-8">
           <h2 className="font-display text-xl text-ink">Third-party services</h2>
           <ul className="mt-3 list-disc space-y-2 pl-5">
             <li>Stripe for secure payment processing</li>
@@ -40,7 +42,7 @@ export default function PrivacyPage() {
           </ul>
         </section>
 
-        <section className="border-t border-border pt-10">
+        <section className="border-t border-border pt-8">
           <h2 className="font-display text-xl text-ink">Cookies</h2>
           <p className="mt-3">
             We use cookies and similar technologies for essential site
@@ -49,7 +51,7 @@ export default function PrivacyPage() {
           </p>
         </section>
 
-        <section className="border-t border-border pt-10">
+        <section className="border-t border-border pt-8">
           <h2 className="font-display text-xl text-ink">Contact</h2>
           <p className="mt-3">
             For privacy questions, reach us through the contact form on this
@@ -57,6 +59,6 @@ export default function PrivacyPage() {
           </p>
         </section>
       </div>
-    </div>
+    </PageContainer>
   );
 }

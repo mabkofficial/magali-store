@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Select, Textarea } from "@/components/ui/input";
 
@@ -40,15 +41,15 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="mx-auto max-w-xl px-4 py-16 lg:px-8 lg:py-24">
+    <PageContainer narrow pageY>
       <p className="eyebrow text-muted">Contact</p>
       <h1 className="mt-4 font-display text-4xl text-ink">Contact us</h1>
-      <p className="mt-6 text-sm text-muted">
+      <p className="mt-4 text-sm text-muted">
         Have a question about our products or your order? Send us a message and
         we will respond within one to two business days.
       </p>
 
-      <form onSubmit={handleSubmit} className="mt-10 space-y-6">
+      <form onSubmit={handleSubmit} className="mt-8 stack-md">
         <input type="text" name="website" className="hidden" tabIndex={-1} autoComplete="off" />
 
         <div>
@@ -88,6 +89,6 @@ export default function ContactPage() {
           {loading ? "Sending..." : "Send Message"}
         </Button>
       </form>
-    </div>
+    </PageContainer>
   );
 }

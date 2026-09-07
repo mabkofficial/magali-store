@@ -136,7 +136,7 @@ export function EmailSignup({
 
   return (
     <section className="bg-ink text-surface">
-      <PageContainer className="py-12 sm:py-16 lg:py-20">{content}</PageContainer>
+      <PageContainer sectionY>{content}</PageContainer>
     </section>
   );
 }

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { PageContainer } from "@/components/layout/page-container";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { PageHeader } from "@/components/layout/page-header";
 import { ProductGrid } from "@/components/product/product-grid";
 import {
   collections,
@@ -47,7 +48,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
   const tint = collection.heroTint ?? "botanical";
 
   return (
-    <PageContainer className="py-10 sm:py-12 lg:py-16">
+    <PageContainer pageY>
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },
@@ -56,22 +57,15 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
         ]}
       />
 
-      <header className="mt-8 border-b border-border pb-8">
-        {collection.heroMood && (
-          <p className={cn("eyebrow", heroTintText[tint])}>{collection.heroMood}</p>
-        )}
-        <h1 className="mt-2 font-display text-3xl text-ink sm:text-4xl">
-          {collection.heroHeadline ?? collection.name}
-        </h1>
-        <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted">
-          {collection.description}
-        </p>
-        <p className="mt-3 text-xs text-muted">
-          {products.length} {products.length === 1 ? "product" : "products"}
-        </p>
-      </header>
+      <PageHeader
+        eyebrow={collection.heroMood}
+        eyebrowClassName={cn(heroTintText[tint])}
+        title={collection.heroHeadline ?? collection.name}
+        description={collection.description}
+        meta={`${products.length} ${products.length === 1 ? "product" : "products"}`}
+      />
 
-      <div className="mt-10">
+      <div className="mt-8">
         <ProductGrid products={products} />
       </div>
     </PageContainer>

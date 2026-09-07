@@ -1,4 +1,5 @@
 import { AccordionItem } from "@/components/ui/accordion";
+import { PageContainer } from "@/components/layout/page-container";
 
 export const metadata = {
   title: "FAQ",
@@ -95,18 +96,18 @@ const faqSections = [
 
 export default function FAQPage() {
   return (
-    <div className="mx-auto max-w-2xl px-4 py-16 lg:px-8 lg:py-24">
+    <PageContainer narrow pageY>
       <p className="eyebrow text-muted">FAQ</p>
       <h1 className="mt-4 font-display text-4xl text-ink lg:text-5xl">
         Frequently asked questions
       </h1>
-      <p className="mt-6 text-sm text-muted">
+      <p className="mt-4 text-sm text-muted">
         Quick answers about our products, orders, and shipping.
       </p>
 
       {faqSections.map((section) => (
-        <section key={section.title} className="mt-16 border-t border-border pt-12">
-          <h2 className="eyebrow mb-6 text-ink">{section.title}</h2>
+        <section key={section.title} className="mt-8 border-t border-border pt-8">
+          <h2 className="eyebrow mb-4 text-ink">{section.title}</h2>
           {section.items.map((item) => (
             <AccordionItem key={item.q} title={item.q}>
               <p>{item.a}</p>
@@ -114,6 +115,6 @@ export default function FAQPage() {
           ))}
         </section>
       ))}
-    </div>
+    </PageContainer>
   );
 }

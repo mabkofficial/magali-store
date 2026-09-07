@@ -256,7 +256,7 @@ export function ProductEditor({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="stack-md">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <Link
@@ -278,7 +278,7 @@ export function ProductEditor({
               <Link
                 href={`/products/${form.slug}`}
                 target="_blank"
-                className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-border bg-background px-2.5 text-sm font-medium hover:bg-muted"
+                className="inline-flex h-8 items-center gap-2 rounded-lg border border-border bg-background px-3 text-sm font-medium hover:bg-muted"
               >
                 <ExternalLink className="size-4" />
                 View live
@@ -378,7 +378,7 @@ export function ProductEditor({
                 <Label htmlFor="category">Category</Label>
                 <select
                   id="category"
-                  className="flex h-8 w-full rounded-lg border border-input bg-background px-2.5 text-sm"
+                  className="flex h-8 w-full rounded-lg border border-input bg-background px-3 text-sm"
                   value={form.category}
                   onChange={(event) =>
                     setField("category", event.target.value as ProductEditorState["category"])
@@ -424,7 +424,7 @@ export function ProductEditor({
                 <Label htmlFor="shipping_class">Shipping class</Label>
                 <select
                   id="shipping_class"
-                  className="flex h-8 w-full rounded-lg border border-input bg-background px-2.5 text-sm"
+                  className="flex h-8 w-full rounded-lg border border-input bg-background px-3 text-sm"
                   value={form.shipping_class}
                   onChange={(event) =>
                     setField(

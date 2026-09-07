@@ -8,7 +8,7 @@ export default async function SeoSettingsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="stack-md">
       <div>
         <h2 className="text-2xl font-semibold tracking-tight">SEO defaults</h2>
         <p className="text-sm text-muted-foreground">

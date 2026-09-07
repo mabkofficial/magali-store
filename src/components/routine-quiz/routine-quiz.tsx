@@ -96,7 +96,7 @@ export function RoutineQuiz({ products }: RoutineQuizProps) {
 
   if (showResults && recommendation) {
     return (
-      <div className="space-y-10">
+      <div className="stack-lg">
         <div className="border border-border bg-surface-muted p-6 sm:p-8">
           <p className="eyebrow text-botanical">Your results</p>
           <h2 className="mt-2 font-display text-2xl text-ink sm:text-3xl">
@@ -113,7 +113,7 @@ export function RoutineQuiz({ products }: RoutineQuizProps) {
           )}
         </div>
 
-        <ul className="grid gap-6 sm:grid-cols-2">
+        <ul className="grid grid-gap sm:grid-cols-2">
           {recommendedProducts.map((product) => (
             <li
               key={product.id}
@@ -155,7 +155,7 @@ export function RoutineQuiz({ products }: RoutineQuizProps) {
           </Button>
         </div>
 
-        <div className="border-t border-border pt-10">
+        <div className="border-t border-border pt-8">
           <EmailSignup
             source="routine-quiz"
             showIncentive
@@ -268,7 +268,7 @@ export function RoutineQuiz({ products }: RoutineQuizProps) {
 
 export function RoutineQuizShell({ children }: { children: React.ReactNode }) {
   return (
-    <PageContainer className="py-10 sm:py-12 lg:py-16">
+    <PageContainer pageY>
       <div className="mx-auto max-w-2xl">
         <p className="eyebrow text-botanical">Find your routine</p>
         <h1 className="mt-3 font-display text-4xl text-ink lg:text-5xl">
@@ -278,7 +278,7 @@ export function RoutineQuizShell({ children }: { children: React.ReactNode }) {
           Answer a few quick questions and we&apos;ll recommend Magali products
           tailored to your hair type, concerns, and preferences.
         </p>
-        <div className="mt-10">{children}</div>
+        <div className="mt-8">{children}</div>
       </div>
     </PageContainer>
   );

@@ -39,7 +39,7 @@ function isProductUnavailable(product: Product): boolean {
 function BundleSeparator() {
   return (
     <div
-      className="flex shrink-0 items-center self-center px-0.5 sm:px-1"
+      className="flex shrink-0 items-center self-center px-1"
       aria-hidden
     >
       <Plus className="h-3.5 w-3.5 text-muted" strokeWidth={1.5} />
@@ -135,7 +135,7 @@ export function FrequentlyBoughtTogether({
       <p className="eyebrow text-muted">{meta.title}</p>
       <p className="mt-2 text-sm leading-relaxed text-muted">{meta.description}</p>
 
-      <fieldset className="mt-5 min-w-0 border-0 p-0">
+      <fieldset className="mt-4 min-w-0 border-0 p-0">
         <legend className="sr-only">{meta.legend}</legend>
 
         <div className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-center md:gap-x-4 md:gap-y-3">
@@ -187,7 +187,7 @@ export function FrequentlyBoughtTogether({
                         alt=""
                         fill
                         sizes="56px"
-                        className="object-contain p-1.5"
+                        className="object-contain p-2"
                       />
                     </Link>
 
