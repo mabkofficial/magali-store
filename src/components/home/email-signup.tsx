@@ -87,7 +87,7 @@ export function EmailSignup({
             anytime.
           </>
         ) : (
-          "Product news and updates, sent occasionally. Unsubscribe anytime."
+          "Subscribe for Magali product news and updates. Unsubscribe anytime."
         )}
       </p>
       <form

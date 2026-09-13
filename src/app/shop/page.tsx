@@ -4,7 +4,7 @@ import { PageContainer } from "@/components/layout/page-container";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
-import { BundlesComingSoon } from "@/components/shop/bundles-coming-soon";
+import { BundlesSection } from "@/components/shop/bundles-section";
 import { ProductGrid } from "@/components/product/product-grid";
 import { CategoryChips, SortDropdown } from "@/components/shop/shop-filters";
 import { searchProducts } from "@/lib/search-products";
@@ -59,11 +59,12 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
         }
       />
 
-      {!query && (!category || category === "All") && (
-        <div className="mb-8">
-          <BundlesComingSoon />
-        </div>
-      )}
+      {!query &&
+        (!category || category === "All" || category === "Hair Care") && (
+          <div className="mb-8">
+            <BundlesSection />
+          </div>
+        )}
 
       <div className="page-header mb-8 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <Suspense fallback={<div className="skeleton h-4 w-48" />}>

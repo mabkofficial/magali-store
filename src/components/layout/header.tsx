@@ -8,7 +8,11 @@ import { BrandLogo } from "@/components/layout/brand-logo";
 import { PageContainer } from "@/components/layout/page-container";
 import { SearchDialog } from "@/components/shop/search-dialog";
 import { IconButton } from "@/components/ui/icon-button";
-import { primaryNavLinks, productSlugToCollection } from "@/config/site";
+import {
+  bundleProductSlugs,
+  primaryNavLinks,
+  productSlugToCollection,
+} from "@/config/site";
 import { useBodyScrollLock, useCartBump, useFocusTrap } from "@/hooks/use-cart-ui";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/cart-store";
@@ -18,9 +22,17 @@ function isNavLinkActive(href: string, pathname: string): boolean {
   if (href === "/shop") {
     return (
       pathname === "/shop" ||
-      pathname.startsWith("/products/") ||
+      (pathname.startsWith("/products/") &&
+        !bundleProductSlugs.some((slug) => pathname === `/products/${slug}`)) ||
       pathname.startsWith("/collections/")
     );
+  }
+  if (href === "/bundles") {
+    if (pathname === "/bundles") return true;
+    const productMatch = pathname.match(/^\/products\/([^/]+)/);
+    return productMatch
+      ? bundleProductSlugs.includes(productMatch[1])
+      : false;
   }
   if (href.startsWith("/collections/")) {
     if (pathname === href || pathname.startsWith(`${href}/`)) return true;

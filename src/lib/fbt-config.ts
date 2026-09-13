@@ -116,10 +116,17 @@ export function applyFbtUnitDiscount(unitPrice: number): number {
 
 /** Preview savings for cart items flagged from an FBT add. */
 export function getCartFbtDiscountPreview(
-  items: { productId: string; price: number; quantity: number; fbtDiscountEligible?: boolean }[],
+  items: {
+    productId?: string;
+    price: number;
+    quantity: number;
+    fbtDiscountEligible?: boolean;
+  }[],
 ) {
-  const eligible = items.filter((item) => item.fbtDiscountEligible);
-  const eligibleIds = eligible.map((item) => item.productId);
+  const eligible = items.filter(
+    (item) => item.fbtDiscountEligible && item.productId,
+  );
+  const eligibleIds = eligible.map((item) => item.productId!);
 
   if (!isValidFbtDiscountSet(eligibleIds)) return null;
 
@@ -141,8 +148,6 @@ export function isValidFbtDiscountSet(productIds: string[]): boolean {
   if (unique.some((id) => !FBT_DISCOUNT_ELIGIBLE_IDS.has(id))) return false;
 
   const set = new Set(unique);
-
-  if (set.has("hair-oil") && set.has("hair-grease")) return true;
 
   if (
     set.has("pureheal-oil") &&

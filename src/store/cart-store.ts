@@ -2,7 +2,9 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { getCartLineKey } from "@/lib/bundles/catalog";
 import { getPrimaryImageUrl } from "@/lib/products/images";
+import type { Bundle } from "@/types/bundle";
 import type { CartItem, Product } from "@/types/product";
 
 interface CartState {
@@ -10,6 +12,7 @@ interface CartState {
   isOpen: boolean;
   bumpKey: number;
   addItem: (product: Product, quantity?: number) => void;
+  addBundle: (bundle: Bundle, quantity?: number) => void;
   addItems: (
     entries: {
       product: Product;
@@ -17,8 +20,8 @@ interface CartState {
       fbtDiscountEligible?: boolean;
     }[],
   ) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
-  removeItem: (productId: string) => void;
+  updateQuantity: (lineKey: string, quantity: number) => void;
+  removeItem: (lineKey: string) => void;
   clearCart: () => void;
   openCart: () => void;
   closeCart: () => void;
@@ -26,6 +29,10 @@ interface CartState {
   getItemCount: () => number;
   getSubtotal: () => number;
   hasFrozenItems: () => boolean;
+}
+
+function bundleUnitPrice(bundle: Bundle): number {
+  return bundle.priceCents / 100;
 }
 
 export const useCartStore = create<CartState>()(
@@ -37,13 +44,14 @@ export const useCartStore = create<CartState>()(
 
       addItem: (product, quantity = 1) => {
         set((state) => {
+          const lineKey = product.id;
           const existing = state.items.find(
-            (item) => item.productId === product.id,
+            (item) => getCartLineKey(item) === lineKey,
           );
 
           const items = existing
             ? state.items.map((item) =>
-                item.productId === product.id
+                getCartLineKey(item) === lineKey
                   ? { ...item, quantity: item.quantity + quantity }
                   : item,
               )
@@ -64,6 +72,37 @@ export const useCartStore = create<CartState>()(
         });
       },
 
+      addBundle: (bundle, quantity = 1) => {
+        set((state) => {
+          const lineKey = bundle.id;
+          const existing = state.items.find(
+            (item) => getCartLineKey(item) === lineKey,
+          );
+
+          const items = existing
+            ? state.items.map((item) =>
+                getCartLineKey(item) === lineKey
+                  ? { ...item, quantity: item.quantity + quantity }
+                  : item,
+              )
+            : [
+                ...state.items,
+                {
+                  bundleId: bundle.id,
+                  slug: bundle.slug,
+                  name: bundle.name,
+                  price: bundleUnitPrice(bundle),
+                  quantity,
+                  image: getPrimaryImageUrl(bundle.images),
+                  shippingClass: "standard" as const,
+                  includedText: bundle.includedText,
+                },
+              ];
+
+          return { items, bumpKey: state.bumpKey + 1, isOpen: true };
+        });
+      },
+
       addItems: (entries) => {
         if (entries.length === 0) return;
 
@@ -71,11 +110,14 @@ export const useCartStore = create<CartState>()(
           let items = [...state.items];
 
           for (const { product, quantity, fbtDiscountEligible } of entries) {
-            const existing = items.find((item) => item.productId === product.id);
+            const lineKey = product.id;
+            const existing = items.find(
+              (item) => getCartLineKey(item) === lineKey,
+            );
 
             items = existing
               ? items.map((item) =>
-                  item.productId === product.id
+                  getCartLineKey(item) === lineKey
                     ? {
                         ...item,
                         quantity: item.quantity + quantity,
@@ -103,22 +145,22 @@ export const useCartStore = create<CartState>()(
         });
       },
 
-      updateQuantity: (productId, quantity) => {
+      updateQuantity: (lineKey, quantity) => {
         if (quantity <= 0) {
-          get().removeItem(productId);
+          get().removeItem(lineKey);
           return;
         }
 
         set((state) => ({
           items: state.items.map((item) =>
-            item.productId === productId ? { ...item, quantity } : item,
+            getCartLineKey(item) === lineKey ? { ...item, quantity } : item,
           ),
         }));
       },
 
-      removeItem: (productId) => {
+      removeItem: (lineKey) => {
         set((state) => ({
-          items: state.items.filter((item) => item.productId !== productId),
+          items: state.items.filter((item) => getCartLineKey(item) !== lineKey),
         }));
       },
 

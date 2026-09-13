@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { BundleRecommendations } from "@/components/bundle/bundle-recommendations";
 import { FrequentlyBoughtTogether } from "@/components/product/frequently-bought-together";
 import { FROZEN_CHECKOUT_ENABLED } from "@/config/site";
 import { useAddToCart } from "@/hooks/use-cart-ui";
@@ -104,12 +105,16 @@ export function AddToCartSection({ product, fbtBundle }: AddToCartSectionProps) 
         )}
       </div>
 
-      {fbtBundle && (
-        <FrequentlyBoughtTogether
-          bundle={fbtBundle}
-          surface="pdp"
-          className="mt-8"
-        />
+      {isHairProduct ? (
+        <BundleRecommendations product={product} className="mt-8" />
+      ) : (
+        fbtBundle && (
+          <FrequentlyBoughtTogether
+            bundle={fbtBundle}
+            surface="pdp"
+            className="mt-8"
+          />
+        )
       )}
 
       <p className="mt-6 border-t border-border pt-6 text-xs leading-relaxed text-muted">

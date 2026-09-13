@@ -51,7 +51,8 @@ export interface Product {
 }
 
 export interface CartItem {
-  productId: string;
+  productId?: string;
+  bundleId?: string;
   slug: string;
   name: string;
   price: number;
@@ -59,6 +60,8 @@ export interface CartItem {
   image: string;
   shippingClass: ShippingClass;
   fbtDiscountEligible?: boolean;
+  /** Component summary for bundle lines */
+  includedText?: string;
 }
 
 export interface FbtBundle {

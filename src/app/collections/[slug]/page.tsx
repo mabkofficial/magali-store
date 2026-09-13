@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { PageContainer } from "@/components/layout/page-container";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { PageHeader } from "@/components/layout/page-header";
+import { BundlesSection } from "@/components/shop/bundles-section";
 import { ProductGrid } from "@/components/product/product-grid";
 import {
   collections,
@@ -64,6 +65,12 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
         description={collection.description}
         meta={`${products.length} ${products.length === 1 ? "product" : "products"}`}
       />
+
+      {slug === "hair-care" && (
+        <div className="mt-8">
+          <BundlesSection />
+        </div>
+      )}
 
       <div className="mt-8">
         <ProductGrid products={products} />

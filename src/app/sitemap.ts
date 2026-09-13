@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getAllBundleSlugs } from "@/lib/bundles";
 import { collections, getAllProductSlugs } from "@/lib/products";
 import { siteConfig } from "@/config/site";
 
@@ -8,6 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages = [
     "",
     "/shop",
+    "/bundles",
     "/about",
     "/faq",
     "/contact",
@@ -29,8 +31,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  const slugs = await getAllProductSlugs();
-  const productPages = slugs.map((slug) => ({
+  const [productSlugs, bundleSlugs] = await Promise.all([
+    getAllProductSlugs(),
+    Promise.resolve(getAllBundleSlugs()),
+  ]);
+  const productPages = [...productSlugs, ...bundleSlugs].map((slug) => ({
     url: `${baseUrl}/products/${slug}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,

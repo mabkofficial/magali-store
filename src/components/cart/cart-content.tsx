@@ -8,6 +8,10 @@ import { QuantitySelector } from "@/components/cart/quantity-selector";
 import { Button } from "@/components/ui/button";
 import { ProductGridSkeleton } from "@/components/ui/skeleton";
 import { FROZEN_CHECKOUT_ENABLED } from "@/config/site";
+import {
+  getCartLineKey,
+  getExpandedProductIdsFromCart,
+} from "@/lib/bundles/catalog";
 import { getCartFbtDiscountPreview } from "@/lib/fbt-config";
 import { formatUSD } from "@/lib/currency";
 import { isStripeConfigured } from "@/lib/stripe";
@@ -21,7 +25,8 @@ export function CartContent() {
   const subtotal = getSubtotal();
   const frozenBlocked = hasFrozenItems() && !FROZEN_CHECKOUT_ENABLED;
   const stripeReady = isStripeConfigured();
-  const fbtPreview = getCartFbtDiscountPreview(items);
+  const productItems = items.filter((item) => item.productId);
+  const fbtPreview = getCartFbtDiscountPreview(productItems);
   const checkoutSubtotal = fbtPreview
     ? subtotal - fbtPreview.discount
     : subtotal;
@@ -39,6 +44,7 @@ export function CartContent() {
         body: JSON.stringify({
           items: items.map((item) => ({
             productId: item.productId,
+            bundleId: item.bundleId,
             quantity: item.quantity,
             fbtDiscountEligible: item.fbtDiscountEligible,
           })),
@@ -64,12 +70,11 @@ export function CartContent() {
       <div className="py-16 text-center">
         <p className="text-sm text-muted">Your cart is empty.</p>
         <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-muted">
-          Start with our hair care routine — botanical oil and herbal grease work
-          beautifully together.
+          Explore our hair care bundles or shop individual products.
         </p>
         <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-          <Link href="/collections/hair-care">
-            <Button>Shop Hair Care</Button>
+          <Link href="/bundles">
+            <Button>View Bundles</Button>
           </Link>
           <Link href="/shop">
             <Button variant="outline">Browse All Products</Button>
@@ -83,46 +88,53 @@ export function CartContent() {
     <div className="grid grid-gap lg:grid-cols-3">
       <div className="lg:col-span-2">
         <ul className="divide-y divide-border">
-          {items.map((item) => (
-            <li key={item.productId} className="flex gap-4 py-6">
-              <div className="relative h-24 w-24 shrink-0 bg-surface-muted">
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  fill
-                  sizes="96px"
-                  className="object-contain p-2"
-                />
-              </div>
-              <div className="flex flex-1 flex-col">
-                <Link
-                  href={`/products/${item.slug}`}
-                  className="text-sm text-ink hover:underline"
-                >
-                  {item.name}
-                </Link>
-                <p className="mt-2 text-xs text-muted">
-                  {formatUSD(item.price)} each
-                  {item.shippingClass === "frozen" && " · Frozen"}
-                </p>
-                <div className="mt-4 flex items-center justify-between gap-4">
-                  <QuantitySelector
-                    quantity={item.quantity}
-                    onDecrease={() => updateQuantity(item.productId, item.quantity - 1)}
-                    onIncrease={() => updateQuantity(item.productId, item.quantity + 1)}
+          {items.map((item) => {
+            const lineKey = getCartLineKey(item);
+
+            return (
+              <li key={lineKey} className="flex gap-4 py-6">
+                <div className="relative h-24 w-24 shrink-0 bg-surface-muted">
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    sizes="96px"
+                    className="object-contain p-2"
                   />
-                  <button
-                    type="button"
-                    onClick={() => removeItem(item.productId)}
-                    className="pressable flex h-10 w-10 shrink-0 items-center justify-center text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink sm:h-11 sm:w-11"
-                    aria-label={`Remove ${item.name}`}
-                  >
-                    <Trash2 className="h-4 w-4" strokeWidth={1.5} />
-                  </button>
                 </div>
-              </div>
-            </li>
-          ))}
+                <div className="flex flex-1 flex-col">
+                  <Link
+                    href={`/products/${item.slug}`}
+                    className="text-sm text-ink hover:underline"
+                  >
+                    {item.name}
+                  </Link>
+                  {item.includedText && (
+                    <p className="mt-1 text-xs text-muted">{item.includedText}</p>
+                  )}
+                  <p className="mt-2 text-xs text-muted">
+                    {formatUSD(item.price)} each
+                    {item.shippingClass === "frozen" && " · Frozen"}
+                  </p>
+                  <div className="mt-4 flex items-center justify-between gap-4">
+                    <QuantitySelector
+                      quantity={item.quantity}
+                      onDecrease={() => updateQuantity(lineKey, item.quantity - 1)}
+                      onIncrease={() => updateQuantity(lineKey, item.quantity + 1)}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeItem(lineKey)}
+                      className="pressable flex h-10 w-10 shrink-0 items-center justify-center text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink sm:h-11 sm:w-11"
+                      aria-label={`Remove ${item.name}`}
+                    >
+                      <Trash2 className="h-4 w-4" strokeWidth={1.5} />
+                    </button>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
         </ul>
         <button
           type="button"
@@ -133,7 +145,7 @@ export function CartContent() {
         </button>
 
         <CartFbtSuggestions
-          cartProductIds={items.map((item) => item.productId)}
+          cartProductIds={getExpandedProductIdsFromCart(items)}
           surface="cart"
           className="mt-8 border-t border-border pt-8"
         />

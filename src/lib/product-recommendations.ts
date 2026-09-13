@@ -18,8 +18,6 @@ type ScoredProductId = {
 
 /** Fallback curated pairs when Supabase is unavailable */
 const FALLBACK_FBT_MAP: Record<string, string[]> = {
-  "hair-oil": ["hair-grease"],
-  "hair-grease": ["hair-oil"],
   "pureheal-oil": ["hair-oil", "hair-grease"],
 };
 

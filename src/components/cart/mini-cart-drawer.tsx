@@ -7,6 +7,10 @@ import { useEffect, useRef, useState } from "react";
 import { QuantitySelector } from "@/components/cart/quantity-selector";
 import { Button } from "@/components/ui/button";
 import { FROZEN_CHECKOUT_ENABLED } from "@/config/site";
+import {
+  getCartLineKey,
+  getExpandedProductIdsFromCart,
+} from "@/lib/bundles/catalog";
 import { formatUSD } from "@/lib/currency";
 import { isStripeConfigured } from "@/lib/stripe";
 import { useBodyScrollLock, useFocusTrap } from "@/hooks/use-cart-ui";
@@ -54,6 +58,7 @@ export function MiniCartDrawer() {
         body: JSON.stringify({
           items: items.map((item) => ({
             productId: item.productId,
+            bundleId: item.bundleId,
             quantity: item.quantity,
             fbtDiscountEligible: item.fbtDiscountEligible,
           })),
@@ -100,10 +105,10 @@ export function MiniCartDrawer() {
           <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
             <p className="text-sm text-muted">Your cart is empty.</p>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
-              Try our hair care duo — oil and grease for a complete routine.
+              Explore hair care bundles or shop individual products.
             </p>
-            <Link href="/collections/hair-care" onClick={closeCart} className="mt-8">
-              <Button>Shop Hair Care</Button>
+            <Link href="/bundles" onClick={closeCart} className="mt-8">
+              <Button>View Bundles</Button>
             </Link>
             <Link
               href="/shop"
@@ -116,59 +121,68 @@ export function MiniCartDrawer() {
         ) : (
           <>
             <ul className="flex-1 overflow-y-auto px-6 py-4">
-              {items.map((item) => (
-                <li
-                  key={item.productId}
-                  className="flex gap-4 border-b border-border py-6 last:border-0"
-                >
-                  <div className="relative h-20 w-20 shrink-0 bg-surface-muted">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      fill
-                      sizes="80px"
-                      className="object-contain p-2"
-                    />
-                  </div>
-                  <div className="flex min-w-0 flex-1 flex-col">
-                    <Link
-                      href={`/products/${item.slug}`}
-                      onClick={closeCart}
-                      className="line-clamp-2 text-sm leading-snug text-ink hover:underline"
-                    >
-                      {item.name}
-                    </Link>
-                    <p className="mt-2 text-xs text-muted">
-                      {formatUSD(item.price)} each
-                    </p>
-                    <div className="mt-4 flex items-center justify-between gap-4">
-                      <QuantitySelector
-                        size="sm"
-                        quantity={item.quantity}
-                        onDecrease={() =>
-                          updateQuantity(item.productId, item.quantity - 1)
-                        }
-                        onIncrease={() =>
-                          updateQuantity(item.productId, item.quantity + 1)
-                        }
+              {items.map((item) => {
+                const lineKey = getCartLineKey(item);
+
+                return (
+                  <li
+                    key={lineKey}
+                    className="flex gap-4 border-b border-border py-6 last:border-0"
+                  >
+                    <div className="relative h-20 w-20 shrink-0 bg-surface-muted">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        sizes="80px"
+                        className="object-contain p-2"
                       />
-                      <button
-                        type="button"
-                        onClick={() => removeItem(item.productId)}
-                        className="pressable flex h-10 w-10 shrink-0 items-center justify-center text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
-                        aria-label={`Remove ${item.name}`}
-                      >
-                        <Trash2 className="h-4 w-4" strokeWidth={1.5} />
-                      </button>
                     </div>
-                  </div>
-                </li>
-              ))}
+                    <div className="flex min-w-0 flex-1 flex-col">
+                      <Link
+                        href={`/products/${item.slug}`}
+                        onClick={closeCart}
+                        className="line-clamp-2 text-sm leading-snug text-ink hover:underline"
+                      >
+                        {item.name}
+                      </Link>
+                      {item.includedText && (
+                        <p className="mt-1 line-clamp-2 text-[11px] text-muted">
+                          {item.includedText}
+                        </p>
+                      )}
+                      <p className="mt-2 text-xs text-muted">
+                        {formatUSD(item.price)} each
+                      </p>
+                      <div className="mt-4 flex items-center justify-between gap-4">
+                        <QuantitySelector
+                          size="sm"
+                          quantity={item.quantity}
+                          onDecrease={() =>
+                            updateQuantity(lineKey, item.quantity - 1)
+                          }
+                          onIncrease={() =>
+                            updateQuantity(lineKey, item.quantity + 1)
+                          }
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeItem(lineKey)}
+                          className="pressable flex h-10 w-10 shrink-0 items-center justify-center text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink"
+                          aria-label={`Remove ${item.name}`}
+                        >
+                          <Trash2 className="h-4 w-4" strokeWidth={1.5} />
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
 
             <div className="border-t border-border px-6 py-6">
               <CartFbtSuggestions
-                cartProductIds={items.map((item) => item.productId)}
+                cartProductIds={getExpandedProductIdsFromCart(items)}
                 surface="mini_cart"
                 compact
               />

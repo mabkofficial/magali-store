@@ -1,4 +1,5 @@
 import type { CollectionSlug } from "@/types/product";
+import bundlesData from "@/data/bundles.json";
 import productsData from "@/data/products.json";
 
 type ProductSlugRow = { slug: string; category: string };
@@ -41,8 +42,11 @@ export const shopNavLinks = [
 /** Minimal top navigation — categories live on Shop via filters and footer. */
 export const primaryNavLinks = [
   { href: "/shop", label: "Shop" },
+  { href: "/bundles", label: "Bundles" },
   { href: "/about", label: "About" },
 ] as const;
+
+export const bundleProductSlugs = bundlesData.bundles.map((bundle) => bundle.slug);
 
 /** Flat list for surfaces that need the full link set (footer, sitemap, etc.). */
 export const navLinks = [
@@ -51,7 +55,7 @@ export const navLinks = [
 ] as const;
 
 export const footerLinks = {
-  shop: [...shopNavLinks],
+  shop: [{ href: "/bundles", label: "Hair Care Bundles" }, ...shopNavLinks],
   care: [
     { href: "/find-your-routine", label: "Find Your Routine" },
     { href: "/faq", label: "FAQ" },

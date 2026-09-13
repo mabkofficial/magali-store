@@ -1,3 +1,4 @@
+import { BundleRoutineSection } from "@/components/home/bundle-routine-section";
 import { CategoryCards } from "@/components/home/category-cards";
 import { EmailSignup } from "@/components/home/email-signup";
 import { FeaturedProducts } from "@/components/home/featured-products";
@@ -11,11 +12,12 @@ export default function HomePage() {
     <>
       <HeroSection />
       <FeaturedProducts />
+      <BundleRoutineSection />
       <CategoryCards />
       <StorySection />
       <TrustBadges />
       <TestimonialsSection />
-      <EmailSignup />
+      <EmailSignup showIncentive={false} />
     </>
   );
 }

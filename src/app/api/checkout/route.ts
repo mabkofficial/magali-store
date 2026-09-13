@@ -3,6 +3,12 @@ import { z } from "zod";
 import { FROZEN_CHECKOUT_ENABLED, siteConfig } from "@/config/site";
 import { toCents } from "@/lib/currency";
 import {
+  computeComponentDemand,
+  getBundleById,
+  getBundleMetadataEntry,
+  validateComponentDemand,
+} from "@/lib/bundles";
+import {
   applyFbtUnitDiscount,
   isValidFbtDiscountSet,
 } from "@/lib/fbt-config";
@@ -17,11 +23,17 @@ import { getStripe } from "@/lib/stripe";
 const checkoutSchema = z.object({
   items: z
     .array(
-      z.object({
-        productId: z.string(),
-        quantity: z.number().int().min(1).max(99),
-        fbtDiscountEligible: z.boolean().optional(),
-      }),
+      z
+        .object({
+          productId: z.string().optional(),
+          bundleId: z.string().optional(),
+          quantity: z.number().int().min(1).max(99),
+          fbtDiscountEligible: z.boolean().optional(),
+        })
+        .refine(
+          (item) => Boolean(item.productId) !== Boolean(item.bundleId),
+          "Each line must be either a product or a bundle",
+        ),
     )
     .min(1),
 });
@@ -49,11 +61,24 @@ export async function POST(request: Request) {
       );
     }
 
+    const demand = computeComponentDemand(
+      parsed.data.items.map((item) =>
+        item.bundleId
+          ? { bundleId: item.bundleId, quantity: item.quantity }
+          : { productId: item.productId, quantity: item.quantity },
+      ),
+    );
+
+    const inventoryCheck = await validateComponentDemand(demand);
+    if (!inventoryCheck.ok) {
+      return NextResponse.json({ error: inventoryCheck.error }, { status: 400 });
+    }
+
     const fbtEligibleIds = [
       ...new Set(
         parsed.data.items
-          .filter((item) => item.fbtDiscountEligible)
-          .map((item) => item.productId),
+          .filter((item) => item.fbtDiscountEligible && item.productId)
+          .map((item) => item.productId!),
       ),
     ];
     const bundleDiscountActive = isValidFbtDiscountSet(fbtEligibleIds);
@@ -71,7 +96,39 @@ export async function POST(request: Request) {
     let fbtDiscountCents = 0;
 
     for (const item of parsed.data.items) {
-      const product = await getProductById(item.productId);
+      if (item.bundleId) {
+        const bundle = getBundleById(item.bundleId);
+
+        if (!bundle) {
+          return NextResponse.json(
+            { error: `Bundle not found: ${item.bundleId}` },
+            { status: 400 },
+          );
+        }
+
+        metadataItems.push(getBundleMetadataEntry(bundle.id, item.quantity));
+        lineItems.push({
+          price_data: {
+            currency: bundle.currency.toLowerCase(),
+            product_data: {
+              name: bundle.name,
+              images: [
+                (() => {
+                  const image = getPrimaryImageUrl(bundle.images);
+                  return image.startsWith("http")
+                    ? image
+                    : `${siteConfig.url}${image}`;
+                })(),
+              ],
+            },
+            unit_amount: bundle.priceCents,
+          },
+          quantity: item.quantity,
+        });
+        continue;
+      }
+
+      const product = await getProductById(item.productId!);
 
       if (!product) {
         return NextResponse.json(
@@ -83,22 +140,6 @@ export async function POST(request: Request) {
       if (!product.isActive) {
         return NextResponse.json(
           { error: `${product.name} is no longer available.` },
-          { status: 400 },
-        );
-      }
-
-      if (product.inventoryCount <= 0) {
-        return NextResponse.json(
-          { error: `${product.name} is out of stock.` },
-          { status: 400 },
-        );
-      }
-
-      if (item.quantity > product.inventoryCount) {
-        return NextResponse.json(
-          {
-            error: `Only ${product.inventoryCount} of ${product.name} available.`,
-          },
           { status: 400 },
         );
       }

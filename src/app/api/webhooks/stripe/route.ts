@@ -5,6 +5,7 @@ import {
   sendFulfillmentEmail,
   sendOrderConfirmationEmail,
 } from "@/lib/email";
+import { getBundleById, parseCartMetadataEntry } from "@/lib/bundles";
 import { getProductByIdSync } from "@/lib/products";
 import { toCents } from "@/lib/currency";
 import { getStripe } from "@/lib/stripe";
@@ -56,6 +57,7 @@ export async function POST(request: Request) {
       quantity: number;
       unitPrice: number;
     }[] = [];
+    const inventoryAdjustments = new Map<string, number>();
 
     const cartEntries = cartItemsRaw.split(",").filter(Boolean);
     const stripeLineItems = await stripe.checkout.sessions.listLineItems(
@@ -63,40 +65,56 @@ export async function POST(request: Request) {
       { limit: 100 },
     );
 
-    stripeLineItems.data.forEach((stripeItem, index) => {
-      const [productId, quantityStr] = cartEntries[index]?.split(":") ?? [];
-      if (!productId) return;
+    cartEntries.forEach((entry, index) => {
+      const parsed = parseCartMetadataEntry(entry);
+      if (!parsed) return;
 
-      const quantity =
-        stripeItem.quantity ?? parseInt(quantityStr ?? "1", 10) ?? 1;
-      const product = getProductByIdSync(productId);
-      const unitPriceCents = stripeItem.price?.unit_amount ?? toCents(product?.price ?? 0);
+      const stripeItem = stripeLineItems.data[index];
+      const quantity = stripeItem?.quantity ?? parsed.quantity;
+      const unitPriceCents =
+        stripeItem?.price?.unit_amount ??
+        (parsed.type === "bundle"
+          ? (getBundleById(parsed.id)?.priceCents ?? 0)
+          : toCents(getProductByIdSync(parsed.id)?.price ?? 0));
+
+      if (parsed.type === "bundle") {
+        const bundle = getBundleById(parsed.id);
+
+        lineItems.push({
+          productId: parsed.id,
+          name: bundle?.name ?? stripeItem?.description ?? parsed.id,
+          quantity,
+          unitPrice: unitPriceCents / 100,
+        });
+
+        for (const component of bundle?.components ?? []) {
+          inventoryAdjustments.set(
+            component.productId,
+            (inventoryAdjustments.get(component.productId) ?? 0) +
+              component.quantity * quantity,
+          );
+        }
+        return;
+      }
+
+      const product = getProductByIdSync(parsed.id);
 
       lineItems.push({
-        productId,
-        name: product?.name ?? stripeItem.description ?? productId,
+        productId: parsed.id,
+        name: product?.name ?? stripeItem?.description ?? parsed.id,
         quantity,
         unitPrice: unitPriceCents / 100,
       });
+
+      inventoryAdjustments.set(
+        parsed.id,
+        (inventoryAdjustments.get(parsed.id) ?? 0) + quantity,
+      );
     });
 
-    if (lineItems.length === 0) {
-      for (const entry of cartEntries) {
-        const [productId, quantityStr] = entry.split(":");
-        const quantity = parseInt(quantityStr, 10);
-        const product = getProductByIdSync(productId);
-
-        lineItems.push({
-          productId,
-          name: product?.name ?? productId,
-          quantity,
-          unitPrice: product?.price ?? 0,
-        });
-      }
-    }
-
     const subtotalCents =
-      session.amount_subtotal ?? lineItems.reduce(
+      session.amount_subtotal ??
+      lineItems.reduce(
         (sum, item) => sum + Math.round(item.unitPrice * 100) * item.quantity,
         0,
       );
@@ -142,11 +160,11 @@ export async function POST(request: Request) {
         } else if (order) {
           orderId = order.id;
 
-          for (const item of lineItems) {
+          for (const [productId, quantity] of inventoryAdjustments.entries()) {
             const { data: productRow } = await admin
               .from("products")
               .select("inventory_count")
-              .eq("id", item.productId)
+              .eq("id", productId)
               .maybeSingle();
 
             if (productRow) {
@@ -155,11 +173,11 @@ export async function POST(request: Request) {
                 .update({
                   inventory_count: Math.max(
                     0,
-                    productRow.inventory_count - item.quantity,
+                    productRow.inventory_count - quantity,
                   ),
                   updated_at: new Date().toISOString(),
                 })
-                .eq("id", item.productId);
+                .eq("id", productId);
             }
           }
         }

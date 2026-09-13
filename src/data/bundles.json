@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "notes": "Canonical bundle catalog. Map SKUs to repository product IDs. Prices proposed pending margin confirmation.",
+  "bundles": [
+    {
+      "id": "MAG-BUNDLE-DUO",
+      "slug": "nourish-shine-duo",
+      "name": "Nourish & Shine Duo",
+      "route": "/products/nourish-shine-duo",
+      "currency": "USD",
+      "priceCents": 7108,
+      "referenceSeparateTotalCents": 7898,
+      "referenceSavingsCents": 790,
+      "pricingStatus": "proposed_pending_margin_confirmation",
+      "components": [
+        { "sku": "MAG-HAIR-OIL-250", "productId": "hair-oil", "quantity": 1 },
+        { "sku": "MAG-HAIR-GREASE-185", "productId": "hair-grease", "quantity": 1 }
+      ],
+      "badge": "Essential Duo",
+      "shortDescription": "Two botanical essentials for your hair-care routine. Pair Magali Botanical Hair Oil with Herbal Hair Grease for everyday softness, shine, and manageability.",
+      "description": "Bring two complementary hair-care formats into one routine. Botanical Hair Oil combines 14 botanicals with olive, castor, and coconut oils. Herbal Hair Grease brings together herbs, natural oils, and shea butter in a richer format. This duo is a convenient way to try both Magali hair-care essentials together.",
+      "includedText": "1 × Botanical Hair Oil — 250 ml; 1 × Herbal Hair Grease — 185 g.",
+      "bestFor": "Customers trying both hair-care products together.",
+      "highlights": [
+        "Two complementary hair-care products",
+        "full-size oil and grease",
+        "save $7.90 compared with buying separately"
+      ],
+      "cardCta": "Shop the Duo",
+      "detailCta": "Add Bundle to Cart",
+      "seoTitle": "Nourish & Shine Duo | Hair Oil & Hair Grease | Magali",
+      "seoDescription": "Shop Magali's Nourish & Shine Duo with one 250 ml Botanical Hair Oil and one 185 g Herbal Hair Grease. Two full-size hair-care essentials in one set.",
+      "images": [
+        {
+          "url": "/images/bundles/nourish-shine-duo/01-hero-white.png",
+          "alt": "Magali Nourish & Shine Duo: 1 hair oil bottle and 1 hair grease jar on a white background",
+          "sort": 0
+        },
+        {
+          "url": "/images/bundles/nourish-shine-duo/02-botanical.png",
+          "alt": "Magali Nourish & Shine Duo: 1 hair oil bottle and 1 hair grease jar with a botanical arrangement",
+          "sort": 1
+        },
+        {
+          "url": "/images/bundles/nourish-shine-duo/03-lifestyle.png",
+          "alt": "Magali Nourish & Shine Duo: 1 hair oil bottle and 1 hair grease jar on a warm stone bathroom counter",
+          "sort": 2
+        }
+      ]
+    },
+    {
+      "id": "MAG-BUNDLE-OIL-2",
+      "slug": "hair-oil-double-pack",
+      "name": "Hair Oil Double Pack",
+      "route": "/products/hair-oil-double-pack",
+      "currency": "USD",
+      "priceCents": 7196,
+      "referenceSeparateTotalCents": 7996,
+      "referenceSavingsCents": 800,
+      "pricingStatus": "proposed_pending_margin_confirmation",
+      "components": [
+        { "sku": "MAG-HAIR-OIL-250", "productId": "hair-oil", "quantity": 2 }
+      ],
+      "badge": "Double Pack",
+      "shortDescription": "Keep your favourite botanical hair oil on hand. Two full-size bottles of Magali Botanical Hair Oil, formulated with 14 botanicals and three natural oils.",
+      "description": "Restock your hair-care routine with two 250 ml bottles of Magali Botanical Hair Oil. Each bottle features the same blend of 14 botanicals with olive, castor, and coconut oils. A straightforward choice for returning customers who already enjoy the oil.",
+      "includedText": "2 × Botanical Hair Oil — 250 ml each; 500 ml total.",
+      "bestFor": "Returning customers who regularly use the oil.",
+      "highlights": [
+        "Two full-size bottles",
+        "500 ml total",
+        "save $8.00 compared with buying separately"
+      ],
+      "cardCta": "Shop the Double Pack",
+      "detailCta": "Add Bundle to Cart",
+      "seoTitle": "Hair Oil Double Pack | Two 250 ml Bottles | Magali",
+      "seoDescription": "Stock up with two 250 ml bottles of Magali Botanical Hair Oil. The Hair Oil Double Pack brings your botanical hair-care essential together in one set.",
+      "images": [
+        {
+          "url": "/images/bundles/hair-oil-double-pack/01-hero-white.png",
+          "alt": "Magali Hair Oil Double Pack: 2 hair oil bottles on a white background",
+          "sort": 0
+        },
+        {
+          "url": "/images/bundles/hair-oil-double-pack/02-botanical.png",
+          "alt": "Magali Hair Oil Double Pack: 2 hair oil bottles with a botanical arrangement",
+          "sort": 1
+        },
+        {
+          "url": "/images/bundles/hair-oil-double-pack/03-lifestyle.png",
+          "alt": "Magali Hair Oil Double Pack: 2 hair oil bottles on a warm stone bathroom counter",
+          "sort": 2
+        }
+      ]
+    },
+    {
+      "id": "MAG-BUNDLE-STOCK-UP",
+      "slug": "hair-care-stock-up-set",
+      "name": "Hair Care Stock-Up Set",
+      "route": "/products/hair-care-stock-up-set",
+      "currency": "USD",
+      "priceCents": 14216,
+      "referenceSeparateTotalCents": 15796,
+      "referenceSavingsCents": 1580,
+      "pricingStatus": "proposed_pending_margin_confirmation",
+      "components": [
+        { "sku": "MAG-HAIR-OIL-250", "productId": "hair-oil", "quantity": 2 },
+        { "sku": "MAG-HAIR-GREASE-185", "productId": "hair-grease", "quantity": 2 }
+      ],
+      "badge": "Stock-Up Set",
+      "shortDescription": "Stock up on your two hair-care essentials. Enjoy two full-size Botanical Hair Oils and two Herbal Hair Greases in one convenient set.",
+      "description": "Keep both Magali hair-care essentials on hand with a four-product set. You receive two 250 ml Botanical Hair Oils and two 185 g Herbal Hair Greases, making this a convenient replenishment option for customers who already use both products.",
+      "includedText": "2 × Botanical Hair Oil — 250 ml each; 2 × Herbal Hair Grease — 185 g each. Four products total.",
+      "bestFor": "Customers who already use both products.",
+      "highlights": [
+        "Four full-size products",
+        "two oils and two greases",
+        "save $15.80 compared with buying separately"
+      ],
+      "cardCta": "Shop the Set",
+      "detailCta": "Add Bundle to Cart",
+      "seoTitle": "Hair Care Stock-Up Set | Hair Oil & Grease Bundle | Magali",
+      "seoDescription": "Replenish your routine with two 250 ml Botanical Hair Oils and two 185 g Herbal Hair Greases in Magali's four-product Hair Care Stock-Up Set.",
+      "images": [
+        {
+          "url": "/images/bundles/hair-care-stock-up-set/01-hero-white.png",
+          "alt": "Magali Hair Care Stock-Up Set: 2 hair oil bottles and 2 hair grease jars on a white background",
+          "sort": 0
+        },
+        {
+          "url": "/images/bundles/hair-care-stock-up-set/02-botanical.png",
+          "alt": "Magali Hair Care Stock-Up Set: 2 hair oil bottles and 2 hair grease jars with a botanical arrangement",
+          "sort": 1
+        },
+        {
+          "url": "/images/bundles/hair-care-stock-up-set/03-lifestyle.png",
+          "alt": "Magali Hair Care Stock-Up Set: 2 hair oil bottles and 2 hair grease jars on a warm stone bathroom counter",
+          "sort": 2
+        }
+      ]
+    }
+  ]
+}
