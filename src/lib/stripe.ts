@@ -13,6 +13,10 @@ export function getStripe(): Stripe | null {
   return stripeInstance;
 }
 
+/** Server: secret key. Client cart UI: publishable key (secret is never bundled). */
 export function isStripeConfigured(): boolean {
-  return Boolean(process.env.STRIPE_SECRET_KEY);
+  if (typeof window === "undefined") {
+    return Boolean(process.env.STRIPE_SECRET_KEY);
+  }
+  return Boolean(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 }

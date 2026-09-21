@@ -4,6 +4,7 @@ import { Trash2, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 import { QuantitySelector } from "@/components/cart/quantity-selector";
 import { Button } from "@/components/ui/button";
 import { FROZEN_CHECKOUT_ENABLED } from "@/config/site";
@@ -67,6 +68,10 @@ export function MiniCartDrawer() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error ?? "Checkout failed");
       window.location.href = data.url;
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Checkout failed. Please try again.",
+      );
     } finally {
       setLoading(false);
     }

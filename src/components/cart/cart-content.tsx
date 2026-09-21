@@ -4,6 +4,7 @@ import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "sonner";
 import { QuantitySelector } from "@/components/cart/quantity-selector";
 import { Button } from "@/components/ui/button";
 import { ProductGridSkeleton } from "@/components/ui/skeleton";
@@ -58,7 +59,10 @@ export function CartContent() {
       }
 
       window.location.href = data.url;
-    } catch {
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Checkout failed. Please try again.",
+      );
       openCart();
     } finally {
       setLoading(false);
