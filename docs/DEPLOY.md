@@ -28,9 +28,11 @@ Project: `oqelvlqbpngqfioipcbg` (`https://oqelvlqbpngqfioipcbg.supabase.co`)
 
 ## 4. Resend (Free tier)
 
-1. Create account at [resend.com](https://resend.com)
-2. Add `RESEND_API_KEY` and set `CONTACT_TO_EMAIL` to your fulfillment inbox
-3. Verify your sending domain and update `RESEND_FROM_EMAIL` for production
+1. Create or join the Resend account at [resend.com](https://resend.com)
+2. Add **`RESEND_API_KEY`** and **`CONTACT_TO_EMAIL`** to Vercel (Production + redeploy)
+3. Verify **magali.store** in Resend and set **`RESEND_FROM_EMAIL`** (e.g. `Magali <hello@magali.store>`)
+4. Full DNS + testing steps: **`docs/RESEND_PRODUCTION.md`**
+5. Verify config: `https://magali.store/api/health` or Admin → Settings → Notifications → Send test email
 
 ## 5. Custom domain
 

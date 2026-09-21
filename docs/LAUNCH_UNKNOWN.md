@@ -20,8 +20,10 @@ Items intentionally deferred until client confirmation. Update this file as valu
 - [x] **Shipping regions and rates:** Defaults configured via env (`STANDARD_SHIPPING_RATE_CENTS=799`, `FROZEN_SHIPPING_RATE_CENTS=2499`, US-only). Confirm with client before live launch.
 - [x] **Tax rules:** Sales tax calculated at checkout when Stripe Tax is enabled; otherwise prices are tax-exclusive and documented on Shipping & Returns page.
 - [x] **Return/refund policies:** Draft policy live on `/shipping-returns` — pending legal review.
-- [ ] **Business contact info and social links:** Set via `CONTACT_TO_EMAIL`, `NEXT_PUBLIC_CONTACT_PHONE`, `NEXT_PUBLIC_INSTAGRAM_URL`, `NEXT_PUBLIC_FACEBOOK_URL`
+- [x] **Transactional email:** Resend on `shop.magali.store`; `RESEND_FROM_EMAIL` = `hello@shop.magali.store`; inbox = `CONTACT_TO_EMAIL`
+- [ ] **Business contact info and social links:** Footer email via `NEXT_PUBLIC_CONTACT_EMAIL`; optional phone/social via `NEXT_PUBLIC_CONTACT_PHONE`, `NEXT_PUBLIC_INSTAGRAM_URL`, `NEXT_PUBLIC_FACEBOOK_URL`
 - [x] **Inventory counts:** Managed in Supabase; editable at `/admin/products`
+- [x] **Stripe test keys + webhook:** Configured on Vercel (test mode until go-live)
 - [ ] **Stripe live payment keys:** Use test mode until go-live checklist complete
 - [x] **Newsletter provider:** Subscribers stored in Supabase `newsletter_subscribers` table
 

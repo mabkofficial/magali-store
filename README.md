@@ -20,8 +20,11 @@ Open [http://localhost:3000](http://localhost:3000).
 | `STRIPE_SECRET_KEY` | Stripe secret key for checkout |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key |
 | `STRIPE_WEBHOOK_SECRET` | Optional webhook secret |
-| `CONTACT_TO_EMAIL` | Email address for contact form submissions |
-| `RESEND_API_KEY` | Resend API key for contact emails |
+| `CONTACT_TO_EMAIL` | Inbox for contact form + order fulfillment alerts |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | Public email shown in footer (e.g. hello@shop.magali.store) |
+| `RESEND_API_KEY` | Resend API key for transactional email |
+| `RESEND_FROM_EMAIL` | Verified sender (e.g. Magali \<hello@shop.magali.store\>) |
+| `STRIPE_WEBHOOK_SECRET` | Stripe webhook signing secret (orders + inventory) |
 | `NEXT_PUBLIC_GA_ID` | Optional Google Analytics ID |
 | `FROZEN_CHECKOUT_ENABLED` | Set to `true` to enable online checkout for frozen beef pies (requires shipping setup) |
 
@@ -48,7 +51,10 @@ Products are defined in `src/data/products.json`. To update:
 
 ## Documentation
 
-- `docs/CURSOR_BUILD_PLAN.md` — full build specification
+- `docs/TESTING.md` — Stripe test + email verification checklist
+- `docs/DEPLOY.md` — Vercel, Supabase, Stripe, Resend
+- `docs/RESEND_PRODUCTION.md` — Resend domain (shop.magali.store)
+- `docs/GO_LIVE_CHECKLIST.md` — switch to Stripe live mode
 - `docs/LAUNCH_UNKNOWN.md` — items pending client confirmation
 
 ## Trademark Launch Checklist

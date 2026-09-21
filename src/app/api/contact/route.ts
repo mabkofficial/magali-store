@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { sendEmail } from "@/lib/email";
 
 const contactSchema = z.object({
   name: z.string().min(1).max(100),
@@ -29,24 +30,24 @@ export async function POST(request: Request) {
     }
 
     const contactEmail = process.env.CONTACT_TO_EMAIL;
-    const resendKey = process.env.RESEND_API_KEY;
 
-    if (resendKey && contactEmail) {
-      await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${resendKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: "Magali Contact <onboarding@resend.dev>",
-          to: contactEmail,
-          subject: `[Magali Contact] ${data.subject} | ${data.name}`,
-          text: `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone ?? "N/A"}\nSubject: ${data.subject}\n\nMessage:\n${data.message}`,
-        }),
-      });
-    } else {
+    if (!process.env.RESEND_API_KEY || !contactEmail) {
       console.log("Contact form submission (email not configured):", data);
+      return NextResponse.json({ success: true });
+    }
+
+    const sent = await sendEmail({
+      to: contactEmail,
+      replyTo: data.email,
+      subject: `[Magali Contact] ${data.subject} | ${data.name}`,
+      text: `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone ?? "N/A"}\nSubject: ${data.subject}\n\nMessage:\n${data.message}`,
+    });
+
+    if (!sent) {
+      return NextResponse.json(
+        { error: "Unable to send message. Please try again." },
+        { status: 503 },
+      );
     }
 
     return NextResponse.json({ success: true });

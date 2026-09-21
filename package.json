@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed:products": "tsx scripts/seed-products.ts"
+    "seed:products": "tsx scripts/seed-products.ts",
+    "check:env": "node scripts/check-production-env.mjs",
+    "test:email": "tsx scripts/send-test-email.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

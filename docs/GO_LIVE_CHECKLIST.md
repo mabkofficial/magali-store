@@ -2,6 +2,8 @@
 
 Use this checklist before switching Stripe to live mode and announcing the store.
 
+**Pre-launch test run:** follow `docs/TESTING.md` (Stripe test mode + Resend on `shop.magali.store`).
+
 ## Storefront
 
 - [ ] All 4 product images load on shop and PDP pages

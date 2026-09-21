@@ -17,7 +17,11 @@ export const siteConfig = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   announcement:
     "Botanical hair care, wellness oils, and Caribbean food favorites.",
-  contactEmail: process.env.CONTACT_TO_EMAIL ?? "",
+  /** Public footer / display; internal mail still uses CONTACT_TO_EMAIL */
+  contactEmail:
+    process.env.NEXT_PUBLIC_CONTACT_EMAIL ??
+    process.env.CONTACT_TO_EMAIL ??
+    "",
   contactPhone: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? "",
   social: {
     instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL ?? "",
