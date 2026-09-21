@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 import { RegisterForm } from "./register-form";
+import { AuthOAuthAlert } from "@/components/account/auth-oauth-alert";
 import { AccountAuthShell } from "@/components/account/auth-shell";
 import { GoogleSignInButton } from "@/components/account/google-sign-in-button";
 import { safeCustomerRedirectPath } from "@/lib/customer/redirect";
@@ -24,6 +26,9 @@ export default async function AccountRegisterPage({
       title="Create account"
       description="Save your wishlist and view order history in one place."
     >
+      <Suspense fallback={null}>
+        <AuthOAuthAlert />
+      </Suspense>
       <RegisterForm next={next} />
       <div className="relative my-6">
         <div className="absolute inset-0 flex items-center">

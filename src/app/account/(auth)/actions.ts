@@ -79,30 +79,6 @@ export async function customerSignUp(formData: FormData) {
   redirect(next);
 }
 
-export async function customerSignInWithGoogle(formData: FormData) {
-  const next = safeCustomerRedirectPath(String(formData.get("next") ?? ""));
-  const origin = await siteOrigin();
-  const callbackUrl = `${origin}/api/auth/callback?next=${encodeURIComponent(next)}`;
-
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      redirectTo: callbackUrl,
-    },
-  });
-
-  if (error) {
-    return { error: error.message };
-  }
-
-  if (data.url) {
-    redirect(data.url);
-  }
-
-  return { error: "Could not start Google sign-in." };
-}
-
 export async function customerSignOut() {
   const supabase = await createClient();
   await supabase.auth.signOut();

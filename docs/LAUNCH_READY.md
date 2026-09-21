@@ -45,7 +45,7 @@ Missed webhook order: `SESSION_ID=cs_... npm run replay:checkout`
 | Routes | `/account/*` (orders, wishlist, profile, addresses) |
 | Auth | Email/password + **Google OAuth** |
 | Google Cloud | OAuth Web client; authorized origin `https://www.magali.store`; redirect `https://<project-ref>.supabase.co/auth/v1/callback` |
-| Supabase | Auth → Google provider (Client ID/Secret); redirect URLs allow `https://www.magali.store/api/auth/callback**` |
+| Supabase | Auth → Google provider (Client ID/Secret); **Redirect URLs** must include exact app callback (no query string): `https://www.magali.store/api/auth/callback` and `http://localhost:3000/api/auth/callback` for local testing |
 | Orders | `orders.user_id` set at checkout when signed in; guest orders link when email matches on register/OAuth |
 | Admin | Separate `/admin` allowlist (`ADMIN_EMAILS`) — same Supabase project, different routes |
 

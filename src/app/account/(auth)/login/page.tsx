@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 import { LoginForm } from "./login-form";
+import { AuthOAuthAlert } from "@/components/account/auth-oauth-alert";
 import { AccountAuthShell } from "@/components/account/auth-shell";
 import { GoogleSignInButton } from "@/components/account/google-sign-in-button";
 import { safeCustomerRedirectPath } from "@/lib/customer/redirect";
@@ -24,6 +26,9 @@ export default async function AccountLoginPage({
       title="Sign in"
       description="Track orders, wishlists, and saved addresses."
     >
+      <Suspense fallback={null}>
+        <AuthOAuthAlert />
+      </Suspense>
       <LoginForm next={next} />
       <div className="relative my-6">
         <div className="absolute inset-0 flex items-center">

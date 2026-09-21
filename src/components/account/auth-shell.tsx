@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { PageContainer } from "@/components/layout/page-container";
 
 export function AccountAuthShell({
@@ -11,20 +10,17 @@ export function AccountAuthShell({
   children: React.ReactNode;
 }) {
   return (
-    <PageContainer sectionY className="mx-auto max-w-md">
+    <PageContainer sectionY className="mx-auto w-full max-w-md flex-1 pb-12">
       <div className="mb-8 text-center">
-        <Link
-          href="/"
-          className="eyebrow text-muted transition-colors hover:text-botanical"
-        >
-          Magali
-        </Link>
-        <h1 className="mt-4 font-display text-3xl text-ink">{title}</h1>
+        <p className="eyebrow text-botanical">Account</p>
+        <h1 className="mt-3 font-display text-3xl text-ink">{title}</h1>
         {description && (
-          <p className="mt-2 text-sm text-muted">{description}</p>
+          <p className="mt-3 text-sm leading-relaxed text-muted">{description}</p>
         )}
       </div>
-      <div className="border border-border bg-surface p-6 sm:p-8">{children}</div>
+      <div className="border border-border bg-surface p-6 shadow-sm sm:p-8">
+        {children}
+      </div>
     </PageContainer>
   );
 }

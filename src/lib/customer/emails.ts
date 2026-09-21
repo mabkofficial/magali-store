@@ -1,17 +1,22 @@
+import {
+  emailKeyValueTable,
+  emailPanel,
+  emailParagraph,
+} from "@/lib/email/brand-blocks";
 import { wrapBrandEmail } from "@/lib/email/brand-layout";
 import { sendEmail } from "@/lib/email";
 import { siteConfig } from "@/config/site";
 
 export async function sendWelcomeEmail(email: string, name?: string | null) {
   const greeting = name?.trim() ? `Hi ${name.trim()},` : "Hi there,";
-  const bodyHtml = `
-<p style="margin:0 0 16px;font-size:15px">${greeting}</p>
-<p style="margin:0 0 16px;font-size:15px">Your Magali account is ready. Track orders, save favorites to your wishlist, and reorder in a tap.</p>`;
 
   const html = wrapBrandEmail({
     preheader: "Welcome to Magali",
+    eyebrow: "Your account",
     headline: "Welcome to Magali",
-    bodyHtml,
+    bodyHtml: `${emailParagraph(greeting)}${emailParagraph(
+      "Your account is ready. Track orders, save favorites to your wishlist, and reorder in a tap.",
+    )}`,
     cta: { label: "Go to my account", href: `${siteConfig.url}/account` },
   });
 
@@ -30,20 +35,28 @@ export async function sendOrderShippedEmail(input: {
   trackingNumber?: string | null;
 }) {
   const ref = input.orderId.slice(0, 8).toUpperCase();
-  const trackingLine =
+  const trackingRows =
     input.trackingNumber?.trim()
-      ? `<p style="margin:16px 0 0;font-size:14px"><strong>Tracking:</strong> ${input.carrier?.trim() ? `${input.carrier} — ` : ""}${input.trackingNumber}</p>`
+      ? emailPanel(
+          emailKeyValueTable([
+            {
+              label: "Carrier",
+              value: input.carrier?.trim() || "—",
+            },
+            { label: "Tracking", value: input.trackingNumber.trim() },
+          ]),
+        )
       : "";
-
-  const bodyHtml = `
-<p style="margin:0 0 16px;font-size:15px">Your order <strong>${ref}</strong> is on its way.</p>
-${trackingLine}`;
 
   const html = wrapBrandEmail({
     preheader: `Order ${ref} has shipped`,
+    eyebrow: "Shipping update",
     headline: "Your order is on the way",
-    bodyHtml,
-    cta: { label: "View order", href: `${siteConfig.url}/account/orders/${input.orderId}` },
+    bodyHtml: `${emailParagraph(`Your order <strong>${ref}</strong> has shipped.`)}${trackingRows}`,
+    cta: {
+      label: "View order",
+      href: `${siteConfig.url}/account/orders/${input.orderId}`,
+    },
   });
 
   const textTracking = input.trackingNumber
