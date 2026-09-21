@@ -28,7 +28,7 @@ export const collections: Collection[] = [
     categories: ["Hair Care"],
     heroHeadline: "Root to tip, every day",
     heroMood: "Botanical scalp and strand care",
-    heroImage: "/images/products/hair-oil/01-hero-white.png",
+    heroImage: "/images/products/hair-oil/02-angled-white.png",
     heroTint: "botanical",
   },
   {

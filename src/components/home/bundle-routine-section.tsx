@@ -12,7 +12,7 @@ export function BundleRoutineSection() {
       <PageContainer>
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="eyebrow text-botanical">Bundles</p>
+            <p className="eyebrow text-muted">Bundles</p>
             <h2
               id="bundle-routine-heading"
               className="mt-2 font-display text-3xl text-ink lg:text-4xl"

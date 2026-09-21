@@ -4,22 +4,24 @@ import { Button } from "@/components/ui/button";
 
 export function StorySection() {
   return (
-    <SectionShell>
-      <div className="mx-auto max-w-2xl text-center">
-        <h2 className="font-display text-3xl text-ink lg:text-4xl">
-          Botanical care, everyday rituals
-        </h2>
-        <p className="mt-4 text-sm leading-relaxed text-muted">
-          Magali brings together herbal hair care, targeted wellness oils, and
-          Caribbean food favorites — all rooted in thoughtfully selected
-          ingredients and traditions you can trust for daily use.
-        </p>
-        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+    <SectionShell muted>
+      <div className="grid min-w-0 grid-gap lg:grid-cols-12">
+        <div className="lg:col-span-7">
+          <h2 className="font-display text-3xl text-ink lg:text-4xl">
+            Botanical care, everyday rituals
+          </h2>
+          <p className="mt-4 max-w-lg text-sm leading-relaxed text-muted">
+            Magali is hair care you keep on the shelf, wellness oils within
+            reach, and Caribbean food ready when you are — same standard of
+            ingredients whether it is wash day or dinner.
+          </p>
+        </div>
+        <div className="flex flex-col justify-end gap-3 lg:col-span-5 lg:items-end">
           <Link href="/about">
-            <Button variant="outline">Read our story</Button>
+            <Button variant="outline">About Magali</Button>
           </Link>
-          <Link href="/find-your-routine">
-            <Button variant="ghost">Not sure where to start?</Button>
+          <Link href="/contact">
+            <Button variant="ghost">Contact us</Button>
           </Link>
         </div>
       </div>

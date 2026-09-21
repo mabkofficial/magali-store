@@ -23,37 +23,54 @@ export function TrustBadges({
   variant = "light",
   compact = false,
 }: {
-  variant?: "light" | "dark";
+  variant?: "light" | "dark" | "minimal";
   compact?: boolean;
 }) {
   const isDark = variant === "dark";
+  const isMinimal = variant === "minimal";
 
   return (
     <section
       className={
         compact
           ? "border-t border-border bg-surface-muted page-y"
-          : isDark
-            ? "border-b border-border bg-botanical text-surface"
-            : "border-b border-border bg-surface-muted"
+          : isMinimal
+            ? "border-b border-border bg-surface"
+            : isDark
+              ? "border-b border-border bg-botanical text-surface"
+              : "border-b border-border bg-surface-muted"
       }
     >
       <PageContainer className={compact ? undefined : "page-y"}>
-        <ul className={compact ? "grid grid-gap sm:grid-cols-3" : "grid grid-gap sm:grid-cols-3"}>
+        <ul
+          className={
+            isMinimal
+              ? "divide-y divide-border border-y border-border sm:grid sm:grid-cols-3 sm:divide-x sm:divide-y-0"
+              : compact
+                ? "grid grid-gap sm:grid-cols-3"
+                : "grid grid-gap sm:grid-cols-3"
+          }
+        >
           {badges.map(({ icon: Icon, label, description }) => (
             <li
               key={label}
-              className="flex flex-col items-center text-center sm:items-start sm:text-left"
+              className={
+                isMinimal
+                  ? "px-0 py-5 sm:px-6 sm:py-6"
+                  : "flex flex-col items-center text-center sm:items-start sm:text-left"
+              }
             >
-              <div
-                className={
-                  isDark
-                    ? "mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-surface/10 text-surface"
-                    : "mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-surface text-botanical"
-                }
-              >
-                <Icon className="h-5 w-5" aria-hidden />
-              </div>
+              {!isMinimal && (
+                <div
+                  className={
+                    isDark
+                      ? "mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-surface/10 text-surface"
+                      : "mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-surface text-botanical"
+                  }
+                >
+                  <Icon className="h-5 w-5" aria-hidden />
+                </div>
+              )}
               <p
                 className={
                   isDark

@@ -7,7 +7,7 @@ export function TestimonialsSection() {
   return (
     <SectionShell muted>
       <div className="mx-auto max-w-3xl text-center">
-        <p className="eyebrow text-botanical">From our community</p>
+        <p className="eyebrow text-muted">From our community</p>
         <h2 className="mt-3 font-display text-3xl text-ink lg:text-4xl">
           Real routines, real results
         </h2>

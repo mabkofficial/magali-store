@@ -19,11 +19,11 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <CategoryCards />
       <FeaturedProducts />
       <BundleRoutineSection />
-      <CategoryCards />
       <StorySection />
-      <TrustBadges />
+      <TrustBadges variant="minimal" />
       <TestimonialsSection />
       <EmailSignup showIncentive={false} />
     </>
