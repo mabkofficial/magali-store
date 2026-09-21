@@ -9,7 +9,7 @@ export function AuthOAuthAlert() {
 
   return (
     <p
-      className="mb-4 border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive"
+      className="mb-6 border border-border bg-surface-muted px-3 py-2 text-sm text-ink"
       role="alert"
     >
       {error}

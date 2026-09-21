@@ -22,21 +22,30 @@ export function CategoryChips() {
   };
 
   return (
-    <div className="flex flex-wrap gap-6" role="group" aria-label="Filter by category">
-      {categories.map((category) => (
-        <button
-          key={category}
-          type="button"
-          onClick={() => setCategory(category)}
-          aria-pressed={active === category}
-          className={cn(
-            "eyebrow cursor-pointer transition-opacity duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink",
-            active === category ? "text-ink" : "text-muted hover:text-ink",
-          )}
-        >
-          {category}
-        </button>
-      ))}
+    <div
+      className="flex flex-wrap gap-x-1 gap-y-2"
+      role="group"
+      aria-label="Filter by category"
+    >
+      {categories.map((category) => {
+        const isActive = active === category;
+        return (
+          <button
+            key={category}
+            type="button"
+            onClick={() => setCategory(category)}
+            aria-pressed={isActive}
+            className={cn(
+              "pressable eyebrow inline-flex min-h-11 cursor-pointer items-center border-b-2 px-3 transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink focus-visible:ring-offset-2",
+              isActive
+                ? "border-ink text-ink"
+                : "border-transparent text-muted hover:border-border hover:text-ink",
+            )}
+          >
+            {category}
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -57,7 +66,7 @@ export function SortDropdown() {
       value={sort}
       onChange={handleChange}
       aria-label="Sort products"
-      className="w-auto min-w-[160px] border-0 border-b border-border px-0 py-1"
+      className="min-h-11 w-full min-w-[180px] border border-border sm:w-auto"
     >
       <option value="featured">Featured</option>
       <option value="price-asc">Price: Low to High</option>

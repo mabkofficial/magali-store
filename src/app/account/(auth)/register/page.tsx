@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { RegisterForm } from "./register-form";
 import { AuthOAuthAlert } from "@/components/account/auth-oauth-alert";
 import { AccountAuthShell } from "@/components/account/auth-shell";
+import { AuthDivider } from "@/components/account/auth-divider";
 import { GoogleSignInButton } from "@/components/account/google-sign-in-button";
 import { safeCustomerRedirectPath } from "@/lib/customer/redirect";
 import { buildNoIndexMetadata } from "@/lib/seo/metadata";
@@ -30,16 +31,9 @@ export default async function AccountRegisterPage({
         <AuthOAuthAlert />
       </Suspense>
       <RegisterForm next={next} />
-      <div className="relative my-6">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-border" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase tracking-[0.1em]">
-          <span className="bg-surface px-2 text-muted">Or</span>
-        </div>
-      </div>
+      <AuthDivider />
       <GoogleSignInButton next={next} />
-      <p className="mt-6 text-center text-sm text-muted">
+      <p className="mt-8 text-center text-sm text-muted">
         Already have an account?{" "}
         <Link
           href={`/account/login${next !== "/account" ? `?next=${encodeURIComponent(next)}` : ""}`}

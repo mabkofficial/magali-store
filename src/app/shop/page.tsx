@@ -44,6 +44,13 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
 
   products = sortProducts(products, sort);
 
+  const showBundles =
+    !query &&
+    (!category || category === "All" || category === "Hair Care");
+
+  const resultLabel =
+    products.length === 1 ? "1 product" : `${products.length} products`;
+
   return (
     <PageContainer pageY>
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Shop" }]} />
@@ -52,54 +59,59 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
         title={query ? `“${query}”` : "Shop"}
         description={
           !query
-            ? "Individual products and curated sets. Filter by category or sort below."
+            ? "Browse by category, sort the grid, and add to cart in one place."
             : undefined
         }
         meta={
           query
             ? `${products.length} ${products.length === 1 ? "result" : "results"}`
-            : undefined
+            : resultLabel
         }
+        eyebrow={query ? undefined : "Catalog"}
+        eyebrowClassName="text-muted"
       />
 
-      {!query &&
-        (!category || category === "All" || category === "Hair Care") && (
-          <div className="mb-8">
-            <BundlesSection />
-          </div>
-        )}
-
-      <div className="page-header mb-8 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-        <Suspense fallback={<div className="skeleton h-4 w-48" />}>
-          <CategoryChips />
-        </Suspense>
-        <Suspense fallback={<div className="skeleton h-4 w-32" />}>
-          <SortDropdown />
-        </Suspense>
-      </div>
-
-      <div className="mb-8 flex flex-col items-start justify-between gap-4 border border-border bg-surface-muted p-6 sm:flex-row sm:items-center">
-        <div>
-          <p className="eyebrow text-botanical">Need guidance?</p>
-          <p className="mt-2 font-display text-xl text-ink">
-            Not sure where to start?
-          </p>
-          <p className="mt-2 max-w-md text-sm text-muted">
-            Take our quick routine quiz to find the Magali products best suited
-            to your hair type and concerns.
-          </p>
+      <div className="-mx-4 mb-10 border-y border-border bg-surface px-4 py-4 sm:mx-0 sm:px-0">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <Suspense fallback={<div className="skeleton h-11 w-48" />}>
+            <CategoryChips />
+          </Suspense>
+          <Suspense fallback={<div className="skeleton h-11 w-40" />}>
+            <SortDropdown />
+          </Suspense>
         </div>
-        <Link href="/find-your-routine" className="shrink-0">
-          <Button variant="outline">Find your routine</Button>
-        </Link>
       </div>
 
       {products.length === 0 ? (
         <p className="py-16 text-center text-sm text-muted">
-          No products match your search.
+          No products match your filters.
         </p>
       ) : (
         <ProductGrid products={products} />
+      )}
+
+      {!query && (
+        <aside className="mt-16 flex flex-col gap-4 border border-border p-6 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="eyebrow text-muted">Routine quiz</p>
+            <p className="mt-2 font-display text-xl text-ink">
+              Not sure where to start?
+            </p>
+            <p className="mt-2 max-w-md text-sm leading-relaxed text-muted">
+              Answer a few questions and we&apos;ll suggest Magali products for
+              your hair type and goals.
+            </p>
+          </div>
+          <Link href="/find-your-routine" className="shrink-0">
+            <Button variant="outline">Find your routine</Button>
+          </Link>
+        </aside>
+      )}
+
+      {showBundles && (
+        <div className="mt-16 border-t border-border pt-16">
+          <BundlesSection />
+        </div>
       )}
     </PageContainer>
   );

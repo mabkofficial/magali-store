@@ -3,6 +3,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import { customerSignIn } from "@/app/account/(auth)/actions";
+import {
+  AuthFormField,
+  AuthInput,
+} from "@/components/account/auth-form-field";
 import { Button } from "@/components/ui/button";
 
 export function LoginForm({ next }: { next: string }) {
@@ -11,7 +15,7 @@ export function LoginForm({ next }: { next: string }) {
 
   return (
     <form
-      className="space-y-4"
+      className="space-y-5"
       action={async (formData) => {
         setPending(true);
         setError(null);
@@ -23,42 +27,45 @@ export function LoginForm({ next }: { next: string }) {
         }
       }}
     >
-      <div className="space-y-2">
-        <label htmlFor="email" className="text-sm text-ink">
-          Email
-        </label>
-        <input
+      <AuthFormField id="email" label="Email">
+        <AuthInput
           id="email"
           name="email"
           type="email"
           required
           autoComplete="email"
-          className="w-full border border-border bg-surface px-3 py-2 text-sm"
+          spellCheck={false}
         />
-      </div>
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <label htmlFor="password" className="text-sm text-ink">
-            Password
-          </label>
+      </AuthFormField>
+
+      <AuthFormField
+        id="password"
+        label="Password"
+        labelExtra={
           <Link
             href="/account/forgot-password"
-            className="text-xs text-muted underline-offset-4 hover:underline"
+            className="text-xs text-muted underline-offset-4 transition-colors duration-150 hover:text-ink hover:underline"
           >
             Forgot password?
           </Link>
-        </div>
-        <input
+        }
+      >
+        <AuthInput
           id="password"
           name="password"
           type="password"
           required
           autoComplete="current-password"
-          className="w-full border border-border bg-surface px-3 py-2 text-sm"
         />
-      </div>
-      {error && <p className="text-sm text-destructive">{error}</p>}
-      <Button type="submit" className="w-full" disabled={pending}>
+      </AuthFormField>
+
+      {error && (
+        <p className="border border-border bg-surface-muted px-3 py-2 text-sm text-ink" role="alert">
+          {error}
+        </p>
+      )}
+
+      <Button type="submit" className="w-full" size="lg" disabled={pending}>
         {pending ? "Signing in…" : "Sign in"}
       </Button>
     </form>

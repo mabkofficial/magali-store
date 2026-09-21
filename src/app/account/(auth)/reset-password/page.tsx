@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import { customerUpdatePassword } from "@/app/account/(auth)/actions";
+import {
+  AuthFormField,
+  AuthInput,
+} from "@/components/account/auth-form-field";
 import { AccountAuthShell } from "@/components/account/auth-shell";
 import { Button } from "@/components/ui/button";
 
@@ -10,9 +14,12 @@ export default function ResetPasswordPage() {
   const [pending, setPending] = useState(false);
 
   return (
-    <AccountAuthShell title="Choose a new password">
+    <AccountAuthShell
+      title="Choose a new password"
+      description="Use at least 8 characters."
+    >
       <form
-        className="space-y-4"
+        className="space-y-5"
         action={async (formData) => {
           setPending(true);
           setError(null);
@@ -23,22 +30,25 @@ export default function ResetPasswordPage() {
           }
         }}
       >
-        <div className="space-y-2">
-          <label htmlFor="password" className="text-sm text-ink">
-            New password
-          </label>
-          <input
+        <AuthFormField id="password" label="New password">
+          <AuthInput
             id="password"
             name="password"
             type="password"
             required
             minLength={8}
             autoComplete="new-password"
-            className="w-full border border-border bg-surface px-3 py-2 text-sm"
           />
-        </div>
-        {error && <p className="text-sm text-destructive">{error}</p>}
-        <Button type="submit" className="w-full" disabled={pending}>
+        </AuthFormField>
+        {error && (
+          <p
+            className="border border-border bg-surface-muted px-3 py-2 text-sm text-ink"
+            role="alert"
+          >
+            {error}
+          </p>
+        )}
+        <Button type="submit" className="w-full" size="lg" disabled={pending}>
           {pending ? "Updating…" : "Update password"}
         </Button>
       </form>

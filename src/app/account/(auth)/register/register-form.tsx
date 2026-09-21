@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import { customerSignUp } from "@/app/account/(auth)/actions";
+import {
+  AuthFormField,
+  AuthInput,
+} from "@/components/account/auth-form-field";
 import { Button } from "@/components/ui/button";
 
 export function RegisterForm({ next }: { next: string }) {
@@ -10,7 +14,7 @@ export function RegisterForm({ next }: { next: string }) {
 
   return (
     <form
-      className="space-y-4"
+      className="space-y-5"
       action={async (formData) => {
         setPending(true);
         setError(null);
@@ -22,48 +26,48 @@ export function RegisterForm({ next }: { next: string }) {
         }
       }}
     >
-      <div className="space-y-2">
-        <label htmlFor="fullName" className="text-sm text-ink">
-          Full name
-        </label>
-        <input
+      <AuthFormField id="fullName" label="Full name">
+        <AuthInput
           id="fullName"
           name="fullName"
           type="text"
           autoComplete="name"
-          className="w-full border border-border bg-surface px-3 py-2 text-sm"
         />
-      </div>
-      <div className="space-y-2">
-        <label htmlFor="email" className="text-sm text-ink">
-          Email
-        </label>
-        <input
+      </AuthFormField>
+
+      <AuthFormField id="email" label="Email">
+        <AuthInput
           id="email"
           name="email"
           type="email"
           required
           autoComplete="email"
-          className="w-full border border-border bg-surface px-3 py-2 text-sm"
+          spellCheck={false}
         />
-      </div>
-      <div className="space-y-2">
-        <label htmlFor="password" className="text-sm text-ink">
-          Password
-        </label>
-        <input
+      </AuthFormField>
+
+      <AuthFormField
+        id="password"
+        label="Password"
+        hint="At least 8 characters."
+      >
+        <AuthInput
           id="password"
           name="password"
           type="password"
           required
           minLength={8}
           autoComplete="new-password"
-          className="w-full border border-border bg-surface px-3 py-2 text-sm"
         />
-        <p className="text-xs text-muted">At least 8 characters.</p>
-      </div>
-      {error && <p className="text-sm text-destructive">{error}</p>}
-      <Button type="submit" className="w-full" disabled={pending}>
+      </AuthFormField>
+
+      {error && (
+        <p className="border border-border bg-surface-muted px-3 py-2 text-sm text-ink" role="alert">
+          {error}
+        </p>
+      )}
+
+      <Button type="submit" className="w-full" size="lg" disabled={pending}>
         {pending ? "Creating account…" : "Create account"}
       </Button>
     </form>
