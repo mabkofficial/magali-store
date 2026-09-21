@@ -30,12 +30,10 @@ export function HeroSection() {
         </div>
 
         <SquareImageFrame
-          src="/images/products/hair-oil/03-botanical-lifestyle.png"
-          alt="Magali Botanical Hair Oil with botanical ingredients"
+          src="/images/products/hair-oil/01-hero-white.png"
+          alt="Magali Botanical Hair Oil"
           priority
           sizes="(max-width: 1024px) 100vw, 50vw"
-          padding="none"
-          imageClassName="object-cover"
         />
       </div>
     </SectionShell>

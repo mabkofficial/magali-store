@@ -33,8 +33,7 @@
     "storage": "Store in a cool, dry place away from direct sunlight.",
     "images": [
       "/images/products/hair-oil/01-hero-white.png",
-      "/images/products/hair-oil/02-angled-white.png",
-      "/images/products/hair-oil/03-botanical-lifestyle.png"
+      "/images/products/hair-oil/02-angled-white.png"
     ],
     "featured": true,
     "shippingClass": "standard",

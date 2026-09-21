@@ -4,7 +4,7 @@ import { SquareImageFrame } from "@/components/ui/square-image-frame";
 import { collections } from "@/lib/products";
 
 const collectionImages: Record<string, string> = {
-  "hair-care": "/images/products/hair-oil/03-botanical-lifestyle.png",
+  "hair-care": "/images/products/hair-oil/01-hero-white.png",
   wellness: "/images/products/pureheal-oil/02-botanical-still-life.png",
   food: "/images/products/beef-pies/03-plated-cooked-pies.png",
 };
