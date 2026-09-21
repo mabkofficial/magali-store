@@ -8,10 +8,10 @@
       "name": "Nourish & Shine Duo",
       "route": "/products/nourish-shine-duo",
       "currency": "USD",
-      "priceCents": 7108,
-      "referenceSeparateTotalCents": 7898,
-      "referenceSavingsCents": 790,
-      "pricingStatus": "proposed_pending_margin_confirmation",
+      "priceCents": 5220,
+      "referenceSeparateTotalCents": 5800,
+      "referenceSavingsCents": 580,
+      "pricingStatus": "confirmed",
       "components": [
         { "sku": "MAG-HAIR-OIL-250", "productId": "hair-oil", "quantity": 1 },
         { "sku": "MAG-HAIR-GREASE-185", "productId": "hair-grease", "quantity": 1 }
@@ -24,7 +24,7 @@
       "highlights": [
         "Two complementary hair-care products",
         "full-size oil and grease",
-        "save $7.90 compared with buying separately"
+        "save $5.80 compared with buying separately"
       ],
       "cardCta": "Shop the Duo",
       "detailCta": "Add Bundle to Cart",
@@ -54,10 +54,10 @@
       "name": "Hair Oil Double Pack",
       "route": "/products/hair-oil-double-pack",
       "currency": "USD",
-      "priceCents": 7196,
-      "referenceSeparateTotalCents": 7996,
-      "referenceSavingsCents": 800,
-      "pricingStatus": "proposed_pending_margin_confirmation",
+      "priceCents": 5220,
+      "referenceSeparateTotalCents": 5800,
+      "referenceSavingsCents": 580,
+      "pricingStatus": "confirmed",
       "components": [
         { "sku": "MAG-HAIR-OIL-250", "productId": "hair-oil", "quantity": 2 }
       ],
@@ -69,7 +69,7 @@
       "highlights": [
         "Two full-size bottles",
         "500 ml total",
-        "save $8.00 compared with buying separately"
+        "save $5.80 compared with buying separately"
       ],
       "cardCta": "Shop the Double Pack",
       "detailCta": "Add Bundle to Cart",
@@ -99,10 +99,10 @@
       "name": "Hair Care Stock-Up Set",
       "route": "/products/hair-care-stock-up-set",
       "currency": "USD",
-      "priceCents": 14216,
-      "referenceSeparateTotalCents": 15796,
-      "referenceSavingsCents": 1580,
-      "pricingStatus": "proposed_pending_margin_confirmation",
+      "priceCents": 10440,
+      "referenceSeparateTotalCents": 11600,
+      "referenceSavingsCents": 1160,
+      "pricingStatus": "confirmed",
       "components": [
         { "sku": "MAG-HAIR-OIL-250", "productId": "hair-oil", "quantity": 2 },
         { "sku": "MAG-HAIR-GREASE-185", "productId": "hair-grease", "quantity": 2 }
@@ -115,7 +115,7 @@
       "highlights": [
         "Four full-size products",
         "two oils and two greases",
-        "save $15.80 compared with buying separately"
+        "save $11.60 compared with buying separately"
       ],
       "cardCta": "Shop the Set",
       "detailCta": "Add Bundle to Cart",

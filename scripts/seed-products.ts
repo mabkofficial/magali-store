@@ -24,6 +24,14 @@ async function seed() {
   const raw = readFileSync(productsPath, "utf-8");
   const products = JSON.parse(raw) as Record<string, unknown>[];
 
+  const { data: existingRows } = await admin
+    .from("products")
+    .select("id, inventory_count");
+
+  const inventoryById = new Map(
+    (existingRows ?? []).map((row) => [row.id as string, row.inventory_count as number]),
+  );
+
   const rows = products.map((product) => ({
     id: product.id,
     slug: product.slug,
@@ -49,7 +57,7 @@ async function seed() {
     compliance_note: product.complianceNote ?? null,
     verification_note: product.verificationNote ?? null,
     nutrition_highlights: product.nutritionHighlights ?? null,
-    inventory_count: 100,
+    inventory_count: inventoryById.get(product.id as string) ?? 100,
     is_active: product.status === "active",
   }));
 
