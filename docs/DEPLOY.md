@@ -21,7 +21,7 @@ Project: `oqelvlqbpngqfioipcbg` (`https://oqelvlqbpngqfioipcbg.supabase.co`)
 
 1. Create a Stripe account and use **test mode** first
 2. Add `STRIPE_SECRET_KEY` and `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` to Vercel
-3. Create a webhook endpoint: `https://yourdomain.com/api/webhooks/stripe`
+3. Create a webhook endpoint using your **canonical** host (no redirect). For Magali: `https://www.magali.store/api/webhooks/stripe` (apex `magali.store` redirects to www and Stripe will not deliver webhooks reliably).
    - Event: `checkout.session.completed`
 4. Copy the webhook signing secret to `STRIPE_WEBHOOK_SECRET`
 5. For local webhook testing: `stripe listen --forward-to localhost:3000/api/webhooks/stripe`

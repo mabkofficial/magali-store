@@ -42,6 +42,8 @@ While `RESEND_FROM_EMAIL` is `Magali <onboarding@resend.dev>`, Resend is for **l
 4. Complete a **Stripe test checkout** and confirm:
    - Customer receives order confirmation
    - `CONTACT_TO_EMAIL` receives fulfillment alert
+5. Stripe webhook URL must be **`https://www.magali.store/api/webhooks/stripe`** (not apex-only — Vercel redirects apex → www and breaks delivery).
+6. Missed order after a fix: `SESSION_ID=cs_test_... npm run replay:checkout` (with `.env.local` from `vercel env pull`).
 
 ## 5. Troubleshooting
 
