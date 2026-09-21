@@ -15,11 +15,14 @@ interface ShopPageProps {
   searchParams: Promise<{ category?: string; sort?: string; q?: string }>;
 }
 
-export const metadata = {
-  title: "Shop",
+import { buildPageMetadata } from "@/lib/seo/metadata";
+
+export const metadata = buildPageMetadata({
+  title: "Shop All Products",
   description:
-    "Browse Magali botanical hair care, wellness oils, and Caribbean food favorites.",
-};
+    "Shop Magali botanical hair oil, herbal hair grease, PureHeal wellness oil, hair care bundles, and Caribbean beef pies.",
+  path: "/shop",
+});
 
 export default async function ShopPage({ searchParams }: ShopPageProps) {
   const params = await searchParams;

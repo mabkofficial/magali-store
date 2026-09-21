@@ -4,10 +4,14 @@ import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { CartContent, CartContentFallback } from "@/components/cart/cart-content";
 import { CheckoutStatus } from "@/components/cart/checkout-status";
 
-export const metadata = {
+import { buildPageMetadata } from "@/lib/seo/metadata";
+
+export const metadata = buildPageMetadata({
   title: "Your Cart",
   description: "Review your Magali cart and proceed to checkout.",
-};
+  path: "/cart",
+  noIndex: true,
+});
 
 export default function CartPage() {
   return (

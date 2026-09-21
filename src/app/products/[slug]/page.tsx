@@ -9,7 +9,7 @@ import { ProductAccordions } from "@/components/product/product-accordions";
 import { ProductGallery } from "@/components/product/product-gallery";
 import { RelatedProducts } from "@/components/product/related-products";
 import { StickyBuyBar } from "@/components/product/sticky-buy-bar";
-import { categoryToCollection, siteConfig } from "@/config/site";
+import { categoryToCollection } from "@/config/site";
 import {
   getAllBundleSlugs,
   getBundleBySlug,
@@ -21,6 +21,9 @@ import {
   getProductBySlug,
   getRelatedProducts,
 } from "@/lib/products";
+import { JsonLd } from "@/components/seo/json-ld";
+import { getBreadcrumbJsonLd } from "@/lib/seo/json-ld";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import {
   getBundleJsonLd,
   getBundleMetadata,
@@ -46,42 +49,26 @@ export async function generateMetadata({ params }: ProductPageProps) {
 
   if (bundle) {
     const meta = await getBundleMetadata(bundle);
-    const ogImage = meta.ogImage
-      ? meta.ogImage.startsWith("http")
-        ? meta.ogImage
-        : `${siteConfig.url}${meta.ogImage}`
-      : undefined;
 
-    return {
+    return buildPageMetadata({
       title: meta.title,
       description: meta.description,
-      openGraph: {
-        title: meta.title,
-        description: meta.description,
-        images: ogImage ? [{ url: ogImage }] : undefined,
-      },
-    };
+      path: `/products/${slug}`,
+      ogImage: meta.ogImage,
+    });
   }
 
   const product = await getProductBySlug(slug);
   if (!product) return { title: "Product Not Found" };
 
   const meta = await getProductMetadata(product);
-  const ogImage = meta.ogImage
-    ? meta.ogImage.startsWith("http")
-      ? meta.ogImage
-      : `${siteConfig.url}${meta.ogImage}`
-    : undefined;
 
-  return {
+  return buildPageMetadata({
     title: meta.title,
     description: meta.description,
-    openGraph: {
-      title: meta.title,
-      description: meta.description,
-      images: ogImage ? [{ url: ogImage }] : undefined,
-    },
-  };
+    path: `/products/${slug}`,
+    ogImage: meta.ogImage,
+  });
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
@@ -90,13 +77,20 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   if (bundle) {
     const componentProducts = await getBundleComponentProducts(bundle);
-    const jsonLd = getBundleJsonLd(bundle);
+    const breadcrumbItems = [
+      { name: "Home", href: "/" },
+      { name: "Shop", href: "/shop" },
+      { name: "Bundles", href: "/bundles" },
+      { name: bundle.name },
+    ];
 
     return (
       <>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        <JsonLd
+          data={[
+            getBundleJsonLd(bundle),
+            getBreadcrumbJsonLd(breadcrumbItems),
+          ]}
         />
         <PageContainer pageY className="pb-24 lg:pb-12">
           <Breadcrumbs
@@ -134,14 +128,18 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const related = await getRelatedProducts(product);
   const fbtBundle = await getFrequentlyBoughtTogether(product);
-  const jsonLd = getProductJsonLd(product);
   const collectionSlug = categoryToCollection[product.category];
+  const breadcrumbItems = [
+    { name: "Home", href: "/" },
+    { name: "Shop", href: "/shop" },
+    { name: product.category, href: `/collections/${collectionSlug}` },
+    { name: product.shortName },
+  ];
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      <JsonLd
+        data={[getProductJsonLd(product), getBreadcrumbJsonLd(breadcrumbItems)]}
       />
       <PageContainer pageY className="pb-24 lg:pb-12">
         <Breadcrumbs

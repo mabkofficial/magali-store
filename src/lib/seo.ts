@@ -67,10 +67,15 @@ export function getProductJsonLd(product: Product) {
       price: product.price,
       priceCurrency: product.currency,
       url: `${siteConfig.url}/products/${product.slug}`,
+      itemCondition: "https://schema.org/NewCondition",
       availability:
         product.inventoryCount <= 0
           ? "https://schema.org/OutOfStock"
           : "https://schema.org/InStock",
+      seller: {
+        "@type": "Organization",
+        name: "Magali",
+      },
     },
   };
 }
@@ -100,7 +105,12 @@ export function getBundleJsonLd(bundle: Bundle) {
       price: bundlePrice(bundle),
       priceCurrency: bundle.currency,
       url: `${siteConfig.url}/products/${bundle.slug}`,
+      itemCondition: "https://schema.org/NewCondition",
       availability: "https://schema.org/InStock",
+      seller: {
+        "@type": "Organization",
+        name: "Magali",
+      },
     },
   };
 }

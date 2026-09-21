@@ -51,6 +51,7 @@ Products are defined in `src/data/products.json`. To update:
 
 ## Documentation
 
+- `docs/LAUNCH_READY.md` — SEO, robots, llms.txt, email flows, launch infra
 - `docs/TESTING.md` — Stripe test + email verification checklist
 - `docs/DEPLOY.md` — Vercel, Supabase, Stripe, Resend
 - `docs/RESEND_PRODUCTION.md` — Resend domain (shop.magali.store)

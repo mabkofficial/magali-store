@@ -1,4 +1,6 @@
+import { wrapBrandEmail } from "@/lib/email/brand-layout";
 import { sendEmail } from "@/lib/email";
+import { siteConfig } from "@/config/site";
 
 export interface OrderEmailLineItem {
   name: string;
@@ -71,44 +73,86 @@ ${formatAddress(data.shippingAddress)}
 Thank you for shopping with Magali.`;
 }
 
-function buildOrderHtml(data: OrderEmailData): string {
+function buildOrderConfirmationHtml(data: OrderEmailData): string {
   const rows = data.lineItems
     .map(
       (item) =>
-        `<tr><td style="padding:8px 0;border-bottom:1px solid #eee">${item.name}</td><td style="padding:8px 0;border-bottom:1px solid #eee;text-align:center">${item.quantity}</td><td style="padding:8px 0;border-bottom:1px solid #eee;text-align:right">${formatUSD(item.unitPrice)}</td></tr>`,
+        `<tr>
+          <td style="padding:12px 0;border-bottom:1px solid #e3e0da;font-size:14px">${item.name}</td>
+          <td style="padding:12px 8px;border-bottom:1px solid #e3e0da;text-align:center;font-size:14px;color:#6b6860">${item.quantity}</td>
+          <td style="padding:12px 0;border-bottom:1px solid #e3e0da;text-align:right;font-size:14px">${formatUSD(item.unitPrice)}</td>
+        </tr>`,
     )
     .join("");
 
-  return `<!DOCTYPE html>
-<html>
-<body style="font-family:Georgia,serif;color:#1c211f;line-height:1.5;max-width:560px;margin:0 auto;padding:24px">
-  <p style="letter-spacing:0.12em;text-transform:uppercase;font-size:12px;color:#214537">Magali</p>
-  <h1 style="font-size:22px;font-weight:normal;margin:16px 0">Thank you for your order</h1>
-  <p style="color:#5c6560;font-size:14px">Order <strong>${data.orderId.slice(0, 8)}</strong></p>
-  <table style="width:100%;border-collapse:collapse;margin:24px 0;font-size:14px">
-    <thead><tr><th style="text-align:left;font-weight:normal;color:#5c6560">Item</th><th style="font-weight:normal;color:#5c6560">Qty</th><th style="text-align:right;font-weight:normal;color:#5c6560">Price</th></tr></thead>
-    <tbody>${rows}</tbody>
-  </table>
-  <p style="font-size:14px">Subtotal: ${formatCents(data.subtotalCents)}<br/>
-  Shipping: ${formatCents(data.shippingCents)}<br/>
-  <strong>Total: ${formatCents(data.totalCents)}</strong></p>
-  <p style="font-size:14px;color:#5c6560;margin-top:24px"><strong>Ship to</strong><br/>${formatAddress(data.shippingAddress).replace(/\n/g, "<br/>")}</p>
-  <p style="font-size:13px;color:#5c6560;margin-top:32px">Questions? Reply to this email or contact us at hello@shop.magali.store.</p>
-</body>
-</html>`;
+  const addressHtml = formatAddress(data.shippingAddress).replace(
+    /\n/g,
+    "<br/>",
+  );
+
+  const bodyHtml = `
+<p style="margin:0 0 8px;font-size:14px;color:#6b6860">Order reference <strong style="color:#1a1a18">${data.orderId.slice(0, 8).toUpperCase()}</strong></p>
+<p style="margin:0 0 24px;font-size:15px">We received your order and will email you when it ships.</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse">
+  <thead>
+    <tr>
+      <th align="left" style="padding:0 0 8px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6b6860;font-weight:400;font-family:Helvetica,Arial,sans-serif">Item</th>
+      <th style="padding:0 8px 8px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6b6860;font-weight:400;font-family:Helvetica,Arial,sans-serif">Qty</th>
+      <th align="right" style="padding:0 0 8px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6b6860;font-weight:400;font-family:Helvetica,Arial,sans-serif">Price</th>
+    </tr>
+  </thead>
+  <tbody>${rows}</tbody>
+</table>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;font-size:14px">
+  <tr><td style="padding:4px 0;color:#6b6860">Subtotal</td><td align="right">${formatCents(data.subtotalCents)}</td></tr>
+  <tr><td style="padding:4px 0;color:#6b6860">Shipping</td><td align="right">${formatCents(data.shippingCents)}</td></tr>
+  <tr><td style="padding:12px 0 0;font-size:16px"><strong>Total</strong></td><td align="right" style="padding:12px 0 0;font-size:16px"><strong>${formatCents(data.totalCents)}</strong></td></tr>
+</table>
+<p style="margin:28px 0 0;font-size:14px"><strong style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#3d5a45;font-family:Helvetica,Arial,sans-serif">Ship to</strong><br/><span style="color:#6b6860;margin-top:8px;display:inline-block">${addressHtml}</span></p>`;
+
+  return wrapBrandEmail({
+    preheader: `Order confirmed — total ${formatCents(data.totalCents)}`,
+    headline: "Thank you for your order",
+    bodyHtml,
+    cta: { label: "Continue shopping", href: siteConfig.url + "/shop" },
+  });
+}
+
+function buildFulfillmentHtml(data: OrderEmailData): string {
+  const itemsList = data.lineItems
+    .map(
+      (item) =>
+        `<li style="margin:0 0 8px">${item.name} × ${item.quantity} — ${formatUSD(item.unitPrice)} each</li>`,
+    )
+    .join("");
+
+  const bodyHtml = `
+<p style="margin:0 0 16px;font-size:15px"><strong>New paid order</strong> — prepare for fulfillment.</p>
+<ul style="margin:0 0 20px;padding-left:20px;font-size:14px;color:#1a1a18">${itemsList}</ul>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;background:#f3f2ef;padding:16px;border:1px solid #e3e0da">
+  <tr><td style="color:#6b6860;padding:4px 0">Customer</td><td align="right">${data.customerEmail || "—"}</td></tr>
+  <tr><td style="color:#6b6860;padding:4px 0">Order ID</td><td align="right">${data.orderId}</td></tr>
+  <tr><td style="color:#6b6860;padding:4px 0">Total</td><td align="right"><strong>${formatCents(data.totalCents)}</strong></td></tr>
+</table>
+<p style="margin:20px 0 0;font-size:13px;color:#6b6860"><strong>Ship to:</strong><br/>${formatAddress(data.shippingAddress).replace(/\n/g, "<br/>")}</p>`;
+
+  return wrapBrandEmail({
+    preheader: `Fulfill order ${data.orderId.slice(0, 8)} — ${formatCents(data.totalCents)}`,
+    eyebrow: "Magali · Fulfillment",
+    headline: "New order to pack",
+    bodyHtml,
+    footerNote: "Manage orders in the Magali admin dashboard.",
+  });
 }
 
 export async function sendOrderConfirmationEmail(
   data: OrderEmailData,
 ): Promise<boolean> {
-  const text = buildOrderText(data);
-  const html = buildOrderHtml(data);
-
   return sendEmail({
     to: data.customerEmail,
-    subject: "Your Magali order confirmation",
-    text,
-    html,
+    subject: `Your Magali order confirmation (${data.orderId.slice(0, 8).toUpperCase()})`,
+    text: buildOrderText(data),
+    html: buildOrderConfirmationHtml(data),
   });
 }
 
@@ -125,8 +169,8 @@ export async function sendFulfillmentEmail(
 
   return sendEmail({
     to: contactEmail,
-    subject: `[Magali] New order ${data.orderId.slice(0, 8)}`,
+    subject: `[Magali] Fulfill order ${data.orderId.slice(0, 8).toUpperCase()} — ${formatCents(data.totalCents)}`,
     text,
-    html: `<pre style="font-family:monospace;font-size:13px">${text.replace(/</g, "&lt;")}</pre>`,
+    html: buildFulfillmentHtml(data),
   });
 }
