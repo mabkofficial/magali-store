@@ -12,6 +12,78 @@ export type Database = {
   }
   public: {
     Tables: {
+      customer_addresses: {
+        Row: {
+          city: string
+          country: string
+          created_at: string
+          id: string
+          is_default: boolean
+          label: string
+          line1: string
+          line2: string | null
+          postal_code: string
+          state: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          city: string
+          country?: string
+          created_at?: string
+          id?: string
+          is_default?: boolean
+          label?: string
+          line1: string
+          line2?: string | null
+          postal_code: string
+          state: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          city?: string
+          country?: string
+          created_at?: string
+          id?: string
+          is_default?: boolean
+          label?: string
+          line1?: string
+          line2?: string | null
+          postal_code?: string
+          state?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      customer_profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          phone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           created_at: string
@@ -49,7 +121,10 @@ export type Database = {
           stripe_session_id: string
           subtotal_cents: number
           total_cents: number
+          tracking_carrier: string | null
+          tracking_number: string | null
           updated_at: string
+          user_id: string | null
         }
         Insert: {
           created_at?: string
@@ -63,7 +138,10 @@ export type Database = {
           stripe_session_id: string
           subtotal_cents: number
           total_cents: number
+          tracking_carrier?: string | null
+          tracking_number?: string | null
           updated_at?: string
+          user_id?: string | null
         }
         Update: {
           created_at?: string
@@ -77,7 +155,10 @@ export type Database = {
           stripe_session_id?: string
           subtotal_cents?: number
           total_cents?: number
+          tracking_carrier?: string | null
+          tracking_number?: string | null
           updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -212,6 +293,38 @@ export type Database = {
           verification_note?: string | null
         }
         Relationships: []
+      }
+      wishlist_items: {
+        Row: {
+          bundle_id: string | null
+          created_at: string
+          id: string
+          product_id: string | null
+          user_id: string
+        }
+        Insert: {
+          bundle_id?: string | null
+          created_at?: string
+          id?: string
+          product_id?: string | null
+          user_id: string
+        }
+        Update: {
+          bundle_id?: string | null
+          created_at?: string
+          id?: string
+          product_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wishlist_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

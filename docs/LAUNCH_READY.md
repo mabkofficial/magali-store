@@ -17,7 +17,7 @@ Use with `docs/GO_LIVE_CHECKLIST.md`, `docs/TESTING.md`, and `docs/RESEND_PRODUC
 | Asset | URL |
 |-------|-----|
 | Sitemap | `/sitemap.xml` |
-| Robots | `/robots.txt` (blocks `/admin`, `/api`, `/cart`) |
+| Robots | `/robots.txt` (blocks `/admin`, `/account`, `/api`, `/cart`) |
 | LLM / agent summary | `/llms.txt` |
 | Web app manifest | `/manifest.webmanifest` |
 | Organization + WebSite JSON-LD | All pages (root layout) |
@@ -33,8 +33,21 @@ Use with `docs/GO_LIVE_CHECKLIST.md`, `docs/TESTING.md`, and `docs/RESEND_PRODUC
 | Contact form | `CONTACT_TO_EMAIL` | Plain + reply-to customer |
 | Contact form | Customer | Auto-receipt (if Resend configured) |
 | Admin test | Admin + inbox | Settings → Notifications |
+| Customer register / Google OAuth | Customer | Welcome email |
+| Admin marks order shipped (optional) | Customer | Shipped + tracking email |
 
 Missed webhook order: `SESSION_ID=cs_... npm run replay:checkout`
+
+## Customer accounts (Supabase Auth)
+
+| Item | Notes |
+|------|--------|
+| Routes | `/account/*` (orders, wishlist, profile, addresses) |
+| Auth | Email/password + **Google OAuth** |
+| Google Cloud | OAuth Web client; authorized origin `https://www.magali.store`; redirect `https://<project-ref>.supabase.co/auth/v1/callback` |
+| Supabase | Auth → Google provider (Client ID/Secret); redirect URLs allow `https://www.magali.store/api/auth/callback**` |
+| Orders | `orders.user_id` set at checkout when signed in; guest orders link when email matches on register/OAuth |
+| Admin | Separate `/admin` allowlist (`ADMIN_EMAILS`) — same Supabase project, different routes |
 
 ## Before announcing launch
 

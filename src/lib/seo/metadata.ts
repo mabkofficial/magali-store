@@ -8,6 +8,13 @@ function absoluteUrl(path: string): string {
   return path.startsWith("http") ? path : `${base}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
+export function buildNoIndexMetadata(options: {
+  title: string;
+  description: string;
+}): Metadata {
+  return buildPageMetadata({ ...options, noIndex: true });
+}
+
 export function buildPageMetadata(options: {
   title: string;
   description: string;

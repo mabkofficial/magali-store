@@ -19,6 +19,7 @@ import {
   getStandardShippingRateCents,
 } from "@/lib/shipping";
 import { getStripe } from "@/lib/stripe";
+import { createClient } from "@/lib/supabase/server";
 
 const checkoutSchema = z.object({
   items: z
@@ -200,10 +201,15 @@ export async function POST(request: Request) {
     const shippingRate = hasFrozen ? frozenRate : standardRate;
     const shippingLabel = hasFrozen ? "Frozen shipping" : "Standard shipping";
 
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: lineItems,
-      customer_email: undefined,
+      customer_email: user?.email ?? undefined,
       billing_address_collection: "auto",
       shipping_address_collection: {
         allowed_countries: ["US"],
@@ -230,8 +236,9 @@ export async function POST(request: Request) {
         shipping_rate_cents: String(shippingRate),
         fbt_discount_applied: bundleDiscountActive ? "true" : "false",
         fbt_discount_cents: String(fbtDiscountCents),
+        magali_user_id: user?.id ?? "",
       },
-      success_url: `${siteConfig.url}/cart?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${siteConfig.url}/order/confirmation?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteConfig.url}/cart?checkout=cancelled`,
     });
 

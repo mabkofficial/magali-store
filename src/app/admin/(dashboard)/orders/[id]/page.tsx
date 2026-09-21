@@ -29,6 +29,9 @@ export default async function AdminOrderDetailPage({
     total_cents: order.total_cents,
     status: order.status,
     created_at: order.created_at,
+    tracking_carrier: order.tracking_carrier,
+    tracking_number: order.tracking_number,
+    user_id: order.user_id,
   };
 
   return <OrderDetail order={detail} />;

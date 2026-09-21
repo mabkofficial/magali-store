@@ -7,6 +7,7 @@ import { categoryToCollection } from "@/config/site";
 import { useAddToCart } from "@/hooks/use-cart-ui";
 import { formatUSD } from "@/lib/currency";
 import { getPrimaryImageUrl } from "@/lib/products/images";
+import { WishlistButton } from "@/components/wishlist/wishlist-button";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/types/product";
 
@@ -37,10 +38,14 @@ export function ProductCard({
 
   return (
     <article className="group flex min-w-0 flex-col">
-      <Link
-        href={`/products/${product.slug}`}
-        className="product-card-hover relative block aspect-square w-full min-w-0 overflow-hidden border border-border bg-surface-muted"
-      >
+      <div className="relative aspect-square w-full min-w-0">
+        <div className="absolute right-2 top-2 z-10">
+          <WishlistButton productId={product.id} compact className="bg-surface/90 p-1.5" />
+        </div>
+        <Link
+          href={`/products/${product.slug}`}
+          className="product-card-hover block h-full overflow-hidden border border-border bg-surface-muted"
+        >
         <Image
           src={primaryImage}
           alt={product.images[0]?.alt || product.name}
@@ -64,7 +69,8 @@ export function ProductCard({
             )}
           />
         )}
-      </Link>
+        </Link>
+      </div>
 
       <div className={cn("flex flex-1 flex-col", compact ? "pt-2" : "pt-4")}>
         <Link href={`/collections/${categoryToCollection[product.category]}`} className="cursor-pointer">

@@ -10,6 +10,7 @@ import {
   bundleSeparateTotal,
 } from "@/lib/bundles/catalog";
 import { formatUSD } from "@/lib/currency";
+import { WishlistButton } from "@/components/wishlist/wishlist-button";
 import { useCartStore } from "@/store/cart-store";
 import { toast } from "sonner";
 import type { Bundle } from "@/types/bundle";
@@ -40,9 +41,12 @@ export function BundleAddToCartSection({
       <h1 className="mt-4 font-display text-3xl leading-tight text-ink lg:text-4xl">
         {bundle.name}
       </h1>
-      <p className="mt-6 text-lg font-medium text-ink">
-        {formatUSD(bundlePrice(bundle))}
-      </p>
+      <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
+        <p className="text-lg font-medium text-ink">
+          {formatUSD(bundlePrice(bundle))}
+        </p>
+        <WishlistButton bundleId={bundle.id} />
+      </div>
       <p className="mt-1 text-xs text-muted">
         Bought separately {formatUSD(bundleSeparateTotal(bundle))}
       </p>

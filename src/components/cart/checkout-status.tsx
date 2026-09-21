@@ -1,23 +1,28 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { useCartStore } from "@/store/cart-store";
 
+/** Handles legacy cart query params and checkout cancellation toasts. */
 export function CheckoutStatus() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const checkout = searchParams.get("checkout");
-  const clearCart = useCartStore((state) => state.clearCart);
+  const sessionId = searchParams.get("session_id");
 
   useEffect(() => {
     if (checkout === "success") {
-      clearCart();
-      toast.success("Thank you for your order. A confirmation email is on its way.");
-    } else if (checkout === "cancelled") {
+      const target = sessionId
+        ? `/order/confirmation?session_id=${encodeURIComponent(sessionId)}`
+        : "/order/confirmation";
+      router.replace(target);
+      return;
+    }
+    if (checkout === "cancelled") {
       toast.info("Checkout was cancelled.");
     }
-  }, [checkout, clearCart]);
+  }, [checkout, sessionId, router]);
 
   return null;
 }

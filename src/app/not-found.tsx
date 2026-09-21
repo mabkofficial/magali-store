@@ -10,9 +10,17 @@ export default function NotFound() {
       <p className="mt-4 text-sm text-muted">
         The page you are looking for does not exist or may have been moved.
       </p>
-      <Link href="/shop" className="mt-8 inline-block">
-        <Button>Shop Collection</Button>
-      </Link>
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <Link href="/shop">
+          <Button>Shop collection</Button>
+        </Link>
+        <Link href="/">
+          <Button variant="outline">Go home</Button>
+        </Link>
+        <Link href="/contact">
+          <Button variant="outline">Contact</Button>
+        </Link>
+      </div>
     </PageContainer>
   );
 }

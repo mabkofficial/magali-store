@@ -1,11 +1,13 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { bootstrapCustomerAccount } from "@/lib/customer/auth";
+import { safeCustomerRedirectPath } from "@/lib/customer/redirect";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? "/admin/products";
+  const next = safeCustomerRedirectPath(searchParams.get("next"));
 
   if (code) {
     const cookieStore = await cookies();
@@ -26,7 +28,11 @@ export async function GET(request: Request) {
       },
     );
 
-    await supabase.auth.exchangeCodeForSession(code);
+    const { data } = await supabase.auth.exchangeCodeForSession(code);
+
+    if (data.user && next.startsWith("/account")) {
+      await bootstrapCustomerAccount(data.user);
+    }
   }
 
   return NextResponse.redirect(`${origin}${next}`);

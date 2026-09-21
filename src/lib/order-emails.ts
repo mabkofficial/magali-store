@@ -6,6 +6,8 @@ export interface OrderEmailLineItem {
   name: string;
   quantity: number;
   unitPrice: number;
+  productId?: string;
+  bundleId?: string;
 }
 
 export interface OrderEmailData {

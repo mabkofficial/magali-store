@@ -267,11 +267,4 @@ export async function getProductSearchList(): Promise<
   }));
 }
 
-/** Sync fallback for build-time or when DB unavailable */
-export function getAllProductsSync(): Product[] {
-  return jsonProducts.filter((product) => product.isActive);
-}
-
-export function getProductByIdSync(id: string): Product | undefined {
-  return jsonProducts.find((product) => product.id === id && product.isActive);
-}
+export { getAllProductsSync, getProductByIdSync } from "@/lib/products/sync";

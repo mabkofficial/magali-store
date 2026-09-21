@@ -4,7 +4,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { Copy, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
-import { updateOrderStatus } from "@/app/admin/(dashboard)/orders/actions";
+import { OrderFulfillmentForm } from "@/components/admin/order-fulfillment-form";
 import { OrderStatusBadge } from "@/components/admin/status-badge";
 import { Button } from "@/components/ui/cms-button";
 import {
@@ -39,6 +39,9 @@ export type AdminOrderDetail = {
   total_cents: number;
   status: string;
   created_at: string;
+  tracking_carrier?: string | null;
+  tracking_number?: string | null;
+  user_id?: string | null;
 };
 
 function formatCents(cents: number): string {
@@ -168,20 +171,17 @@ export function OrderDetail({ order }: { order: AdminOrderDetail }) {
             <CardHeader>
               <CardTitle className="text-base">Fulfillment</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2">
-              {order.status === "paid" && (
-                <form action={updateOrderStatus.bind(null, order.id, "fulfilled")}>
-                  <Button type="submit" className="w-full">
-                    Mark fulfilled
-                  </Button>
-                </form>
-              )}
-              {order.status !== "refunded" && (
-                <form action={updateOrderStatus.bind(null, order.id, "refunded")}>
-                  <Button type="submit" variant="outline" className="w-full">
-                    Mark refunded
-                  </Button>
-                </form>
+            <CardContent>
+              <OrderFulfillmentForm
+                orderId={order.id}
+                status={order.status}
+                trackingCarrier={order.tracking_carrier ?? null}
+                trackingNumber={order.tracking_number ?? null}
+              />
+              {order.user_id && (
+                <p className="mt-4 text-xs text-muted-foreground">
+                  Linked to customer account
+                </p>
               )}
             </CardContent>
           </Card>

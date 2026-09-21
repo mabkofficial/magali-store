@@ -61,6 +61,8 @@ export const navLinks = [
 export const footerLinks = {
   shop: [{ href: "/bundles", label: "Hair Care Bundles" }, ...shopNavLinks],
   care: [
+    { href: "/account", label: "My Account" },
+    { href: "/account/wishlist", label: "Wishlist" },
     { href: "/find-your-routine", label: "Find Your Routine" },
     { href: "/faq", label: "FAQ" },
     { href: "/shipping-returns", label: "Shipping & Returns" },

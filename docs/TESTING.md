@@ -18,7 +18,7 @@ Stripe Dashboard must be in **Test mode**. Test card: **4242 4242 4242 4242**, a
 | Step | Action | Expected |
 |------|--------|----------|
 | 2.1 | Add hair care or wellness product → **Checkout** | Redirect to Stripe Checkout |
-| 2.2 | Complete payment | Return to `/cart?checkout=success`; cart clears; success toast |
+| 2.2 | Complete payment | Return to `/order/confirmation?session_id=…`; order summary; cart cleared |
 | 2.3 | Stripe → **Payments** | Test payment visible |
 | 2.4 | Stripe → **Webhooks** → your endpoint | `checkout.session.completed` → **200** |
 | 2.5 | **Admin → Orders** | New order with line items and address |
@@ -33,14 +33,31 @@ Only if `FROZEN_CHECKOUT_ENABLED=true` on **Production** in Vercel:
 
 If false, checkout should block with a contact message.
 
-## 4. Regression smoke
+## 4. Customer accounts
+
+| Step | Action | Expected |
+|------|--------|----------|
+| 4.1 | **Register** at `/account/register` | Lands on `/account`; welcome email (if Resend configured) |
+| 4.2 | **Sign out** → **Sign in** with same email | Session restored |
+| 4.3 | **Continue with Google** (new user) | Profile created; lands on `/account` |
+| 4.4 | PDP heart (signed in) | Item on `/account/wishlist`; header wishlist count updates |
+| 4.5 | Guest heart | Redirect to login with `?next=` back to PDP |
+| 4.6 | Signed-in checkout | Order in **Account → Orders**; `user_id` on order row |
+| 4.7 | Guest checkout → register with **same email** | Past guest order appears in account |
+| 4.8 | **Reorder** on order detail | Items added to cart |
+| 4.9 | Admin → order → **Mark shipped** (+ tracking, email on) | Customer shipped email; tracking on account order page |
+
+Password reset: `/account/forgot-password` → email link → `/account/reset-password`.
+
+## 5. Regression smoke
 
 - [ ] `/shop` and one PDP load; add to cart works
 - [ ] `/admin/login` with allowlisted email
 - [ ] Newsletter signup (homepage) — row in **Admin → Subscribers**
 - [ ] Mobile cart drawer (375px width)
+- [ ] `/account` returns `noindex` (robots meta)
 
-## 5. After testing passes
+## 6. After testing passes
 
 1. Rotate any API keys shared in chat (Stripe, Resend).
 2. Follow **Switch to live** in `docs/GO_LIVE_CHECKLIST.md` when the client approves real charges.

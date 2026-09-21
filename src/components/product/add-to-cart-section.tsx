@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { BundleRecommendations } from "@/components/bundle/bundle-recommendations";
 import { FrequentlyBoughtTogether } from "@/components/product/frequently-bought-together";
 import { FROZEN_CHECKOUT_ENABLED } from "@/config/site";
+import { WishlistButton } from "@/components/wishlist/wishlist-button";
 import { useAddToCart } from "@/hooks/use-cart-ui";
 import { formatUSD } from "@/lib/currency";
 import type { FbtBundle, Product } from "@/types/product";
@@ -40,7 +41,10 @@ export function AddToCartSection({ product, fbtBundle }: AddToCartSectionProps) 
         {product.name}
       </h1>
       <p className="mt-3 text-sm text-muted">{product.tagline}</p>
-      <p className="mt-6 text-lg font-medium text-ink">{formatUSD(product.price)}</p>
+      <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
+        <p className="text-lg font-medium text-ink">{formatUSD(product.price)}</p>
+        <WishlistButton productId={product.id} />
+      </div>
       <p className="mt-1 text-xs text-muted">{product.size}</p>
       <p className="mt-8 text-sm leading-relaxed text-muted">
         {product.shortDescription}

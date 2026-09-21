@@ -52,6 +52,7 @@ async function buildLineItems(
         name: bundle?.name ?? stripeItem?.description ?? parsed.id,
         quantity,
         unitPrice: unitPriceCents / 100,
+        bundleId: parsed.id,
       });
 
       for (const component of bundle?.components ?? []) {
@@ -69,6 +70,7 @@ async function buildLineItems(
       name: product?.name ?? stripeItem?.description ?? parsed.id,
       quantity,
       unitPrice: unitPriceCents / 100,
+      productId: parsed.id,
     });
 
     inventoryAdjustments.set(
@@ -146,6 +148,7 @@ export async function processPaidCheckoutSession(
     null;
   const customerEmail =
     session.customer_details?.email ?? session.customer_email ?? "";
+  const metadataUserId = session.metadata?.magali_user_id?.trim() || null;
 
   let orderId = session.id;
 
@@ -177,6 +180,7 @@ export async function processPaidCheckoutSession(
       shipping_cents: shippingCents,
       total_cents: totalCents,
       status: "paid",
+      user_id: metadataUserId,
     })
     .select("id")
     .single();

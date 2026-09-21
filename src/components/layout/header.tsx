@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Search, ShoppingBag, X } from "lucide-react";
+import { Menu, Search, ShoppingBag, User, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { BrandLogo } from "@/components/layout/brand-logo";
 import { PageContainer } from "@/components/layout/page-container";
@@ -15,6 +15,7 @@ import {
 } from "@/config/site";
 import { useBodyScrollLock, useCartBump, useFocusTrap } from "@/hooks/use-cart-ui";
 import { cn } from "@/lib/utils";
+import { WishlistHeaderLink } from "@/components/wishlist/wishlist-header-link";
 import { useCartStore } from "@/store/cart-store";
 
 function isNavLinkActive(href: string, pathname: string): boolean {
@@ -114,6 +115,14 @@ export function Header() {
           />
 
           <div className="flex shrink-0 items-center">
+            <Link
+              href="/account"
+              aria-label="My account"
+              className="pressable hidden min-h-11 min-w-11 items-center justify-center text-ink transition-colors hover:bg-surface-muted sm:inline-flex"
+            >
+              <User className="h-5 w-5" strokeWidth={1.5} />
+            </Link>
+            <WishlistHeaderLink />
             <IconButton
               onClick={() => setSearchOpen(true)}
               aria-label="Search products"
