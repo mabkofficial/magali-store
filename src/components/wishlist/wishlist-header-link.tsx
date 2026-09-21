@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
-export function WishlistHeaderLink() {
+import { cn } from "@/lib/utils";
+export function WishlistHeaderLink({ overlay = false }: { overlay?: boolean }) {
   const [count, setCount] = useState(0);
   const [visible, setVisible] = useState(false);
 
@@ -31,7 +32,12 @@ export function WishlistHeaderLink() {
       <Link
         href="/account/wishlist"
         aria-label="Wishlist"
-        className="pressable relative inline-flex min-h-11 min-w-11 items-center justify-center text-ink transition-colors hover:bg-surface-muted"
+        className={cn(
+          "pressable relative inline-flex min-h-11 min-w-11 items-center justify-center transition-colors duration-150",
+          overlay
+            ? "text-surface hover:bg-surface/10"
+            : "text-ink hover:bg-surface-muted",
+        )}
       >
         <Heart className="h-5 w-5" strokeWidth={1.5} />
       </Link>

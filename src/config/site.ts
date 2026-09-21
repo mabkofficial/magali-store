@@ -15,8 +15,8 @@ export const siteConfig = {
   description:
     "Shop Magali botanical hair care, wellness oils, and Caribbean food favorites.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  announcement:
-    "Botanical hair care, wellness oils, and Caribbean food favorites.",
+  /** Non-empty string shows the top announcement bar */
+  announcement: "",
   /** Public footer / display; internal mail still uses CONTACT_TO_EMAIL */
   contactEmail:
     process.env.NEXT_PUBLIC_CONTACT_EMAIL ??

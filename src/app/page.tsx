@@ -3,9 +3,8 @@ import { CategoryCards } from "@/components/home/category-cards";
 import { EmailSignup } from "@/components/home/email-signup";
 import { FeaturedProducts } from "@/components/home/featured-products";
 import { HeroSection } from "@/components/home/hero-section";
-import { StorySection } from "@/components/home/sections";
+import { HomeBrandSection } from "@/components/home/home-brand-section";
 import { TestimonialsSection } from "@/components/home/testimonials-section";
-import { TrustBadges } from "@/components/layout/trust-badges";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = buildPageMetadata({
@@ -22,8 +21,7 @@ export default function HomePage() {
       <CategoryCards />
       <FeaturedProducts />
       <BundleRoutineSection />
-      <StorySection />
-      <TrustBadges variant="minimal" />
+      <HomeBrandSection />
       <TestimonialsSection />
       <EmailSignup showIncentive={false} />
     </>

@@ -1,10 +1,15 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { cn } from "@/lib/utils";
 
 const VIDEO_SRC = "/videos/magali-brand.mp4";
 
-export function HomeHeroVideo() {
+export function HomeHeroVideo({
+  className,
+}: {
+  className?: string;
+}) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -31,19 +36,17 @@ export function HomeHeroVideo() {
   }, []);
 
   return (
-    <div className="relative aspect-[4/5] w-full overflow-hidden border border-border bg-ink sm:aspect-video lg:aspect-[16/10]">
-      <video
-        ref={videoRef}
-        className="h-full w-full object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        aria-label="Magali brand film — botanical hair care and wellness"
-      >
-        <source src={VIDEO_SRC} type="video/mp4" />
-      </video>
-    </div>
+    <video
+      ref={videoRef}
+      className={cn("object-cover", className)}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      aria-hidden
+    >
+      <source src={VIDEO_SRC} type="video/mp4" />
+    </video>
   );
 }

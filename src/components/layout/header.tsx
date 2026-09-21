@@ -46,15 +46,33 @@ function isNavLinkActive(href: string, pathname: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-const navLinkClass = (isActive: boolean) =>
+const navLinkClass = (isActive: boolean, overlay: boolean) =>
   cn(
-    "eyebrow relative cursor-pointer pb-1 transition-colors duration-150 hover:text-botanical",
-    isActive
-      ? "text-ink after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-botanical"
-      : "text-muted",
+    "eyebrow relative cursor-pointer pb-1 transition-colors duration-150",
+    overlay
+      ? cn(
+          "hover:text-surface",
+          isActive
+            ? "text-surface after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface"
+            : "text-surface/75",
+        )
+      : cn(
+          "hover:text-botanical",
+          isActive
+            ? "text-ink after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-botanical"
+            : "text-muted",
+        ),
   );
 
-export function Header() {
+const iconActionClass = (overlay: boolean) =>
+  cn(
+    "transition-colors duration-150",
+    overlay
+      ? "text-surface hover:bg-surface/10 focus-visible:ring-surface focus-visible:ring-offset-0"
+      : "text-ink hover:bg-surface-muted focus-visible:ring-ink",
+  );
+
+export function Header({ overlay = false }: { overlay?: boolean }) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -80,11 +98,18 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-border bg-surface">
+      <header
+        className={cn(
+          "transition-[background-color,border-color] duration-200",
+          overlay
+            ? "border-b border-transparent bg-transparent"
+            : "border-b border-border bg-surface",
+        )}
+      >
         <PageContainer className="relative flex h-16 items-center justify-between sm:h-[4.5rem]">
           <div className="flex min-w-0 items-center gap-1 sm:gap-4">
             <IconButton
-              className="lg:hidden"
+              className={cn("lg:hidden", iconActionClass(overlay))}
               onClick={() => setMobileOpen(true)}
               aria-label="Open menu"
               aria-expanded={mobileOpen}
@@ -98,7 +123,7 @@ export function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={navLinkClass(isActive)}
+                    className={navLinkClass(isActive, overlay)}
                     aria-current={isActive ? "page" : undefined}
                   >
                     {link.label}
@@ -111,6 +136,7 @@ export function Header() {
           <BrandLogo
             variant="logo"
             className="absolute left-1/2 -translate-x-1/2"
+            imageClassName={cn(overlay && "brightness-0 invert")}
             priority
           />
 
@@ -118,25 +144,36 @@ export function Header() {
             <Link
               href="/account"
               aria-label="My account"
-              className="pressable hidden min-h-11 min-w-11 items-center justify-center text-ink transition-colors hover:bg-surface-muted sm:inline-flex"
+              className={cn(
+                "pressable hidden min-h-11 min-w-11 items-center justify-center sm:inline-flex",
+                iconActionClass(overlay),
+              )}
             >
               <User className="h-5 w-5" strokeWidth={1.5} />
             </Link>
-            <WishlistHeaderLink />
+            <WishlistHeaderLink overlay={overlay} />
             <IconButton
               onClick={() => setSearchOpen(true)}
               aria-label="Search products"
+              className={iconActionClass(overlay)}
             >
               <Search className="h-5 w-5" strokeWidth={1.5} />
             </IconButton>
             <div className="relative">
-              <IconButton onClick={openCart} aria-label={`Open cart, ${itemCount} items`}>
+              <IconButton
+                onClick={openCart}
+                aria-label={`Open cart, ${itemCount} items`}
+                className={iconActionClass(overlay)}
+              >
                 <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
               </IconButton>
               {itemCount > 0 && (
                 <span
                   ref={bumpRef}
-                  className="cart-bump pointer-events-none absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center bg-ink px-1 text-[10px] font-medium text-surface"
+                  className={cn(
+                    "cart-bump pointer-events-none absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center px-1 text-[10px] font-medium",
+                    overlay ? "bg-surface text-ink" : "bg-ink text-surface",
+                  )}
                   aria-live="polite"
                   aria-atomic="true"
                 >
