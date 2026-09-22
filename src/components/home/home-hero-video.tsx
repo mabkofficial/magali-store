@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
-const VIDEO_SRC = "/videos/magali-brand.mp4";
+const VIDEO_WEBM = "/videos/magali-brand.webm";
+const VIDEO_MP4 = "/videos/magali-brand.mp4";
 
 export function HomeHeroVideo({
   className,
@@ -46,7 +47,8 @@ export function HomeHeroVideo({
       preload="metadata"
       aria-hidden
     >
-      <source src={VIDEO_SRC} type="video/mp4" />
+      <source src={VIDEO_WEBM} type="video/webm" />
+      <source src={VIDEO_MP4} type="video/mp4" />
     </video>
   );
 }
